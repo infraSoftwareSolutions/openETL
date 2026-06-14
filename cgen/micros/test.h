@@ -1,13 +1,13 @@
-#ifndef METACORE___CGEN_MICROS_TEST_H
-#define METACORE___CGEN_MICROS_TEST_H
+#ifndef METACORE___CGEN___MICROS_TEST_H
+#define METACORE___CGEN___MICROS_TEST_H
 
-    #define INIT_TEST(name)        \
+    #define TEST_INIT(name)        \
         double tests_passed = 0.0; \
         double tests_failed = 0.0; \
         double total_tests = 0.0;  \
         char testName[] = #name
 
-    #define printSummary                                       \
+    #define TEST_SUMMARY                                       \
         printf("\n-------------------------------");           \
         printf("\n<<<<<<<<< test summary >>>>>>>>");           \
         printf("\n-------------------------------");           \
@@ -29,7 +29,7 @@
         }                                                      \
         printf("\n-------------------------------\n")
 
-    #define MAIN_TEST(name)            \
+    #define TEST_MAIN(name)            \
         int main()                     \
         {                              \
             double tests_passed = 0.0; \
@@ -37,8 +37,8 @@
             double total_tests = 0.0;  \
             char testName[] = #name
 
-    #define EXIT_TEST(PS)             \
-            if (PS) printSummary;     \
+    #define TEST_EXIT(PS)             \
+            if (PS) TEST_SUMMARY;     \
             return (int)tests_failed; \
         }
 
@@ -78,18 +78,11 @@
         }                                                    \
         total_tests++
 
-    #define ASSERT_TEST(cond)                       \
+    #define TEST_ASSERT(cond)                       \
         if(!(cond)) {                               \
             tests_failed++;                         \
             printf("FAIL[%d]\n", (int)total_tests); \
         } else { tests_passed++; }                  \
         total_tests++
 
-    #define ASSERT(cond)                \
-        if (!(cond))                    \
-        {                               \
-            retval = 1;                 \
-            printf("FAILED: %s", cond); \
-        }
-
-#endif // METACORE___CGEN_MICROS_TEST_H
+#endif // METACORE___CGEN___MICROS_TEST_H

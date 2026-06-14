@@ -1,24 +1,19 @@
-
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <unordered_map>
-    #include <string>
-    #include <iostream>
-#endif
+#include <unordered_map>
+#include <string>
+#include <iostream>
 
 #include "cgen/micros.h"
 
 #pragma once
-#ifndef METACORE___ADVA_INFORMATIONSYSTEM_HPP
-#define METACORE___ADVA_INFORMATIONSYSTEM_HPP
+#ifndef METACORE___ADVA___INFORMATIONSYSTEM_HPP
+#define METACORE___ADVA___INFORMATIONSYSTEM_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___ADVA_HPP
+#ifdef METACORE___ADVA___HPP
 namespace adva {
-#endif // METACORE___ADVA_HPP
+#endif // METACORE___ADVA___HPP
 
     using std::unordered_map;
 
@@ -108,11 +103,11 @@ namespace adva {
 
     class system64 {};
     
-#ifdef METACORE___ADVA_HPP
+#ifdef METACORE___ADVA___HPP
 }
-#endif // METACORE___ADVA_HPP
+#endif // METACORE___ADVA___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___ADVA_INFORMATIONSYSTEM_HPP
+#endif // METACORE___ADVA___INFORMATIONSYSTEM_HPP

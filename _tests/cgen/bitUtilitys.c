@@ -14,7 +14,7 @@
  *          Covers uint8, int8, uint16, int16, uint32, int32, uint64, int64
  */
 
-MAIN_TEST(bitUtilitys);
+TEST_MAIN(bitUtilitys);
 
   // ==================== 8-BIT UNSIGNED INTEGER TESTS ====================
   // Testing: get_u8bit, set_u8bit, reset_u8bit, toggle_u8bit, xchg_u8bit, count_u8bit
@@ -252,4 +252,4 @@ MAIN_TEST(bitUtilitys);
   TEST_2(count_bit(value_1, true), 1); // value_1 should have 1 set bit
   TEST_2(count_bit(value_1, false), 7); // value_1 should have 7 unset bits
 
-EXIT_TEST(true);
+TEST_EXIT(true);

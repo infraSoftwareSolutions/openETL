@@ -14,15 +14,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#ifndef METACORE___CGEN_TERNARY_TIRT_H
-#define METACORE___CGEN_TERNARY_TIRT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___TERNARY_TIRT_H
+#define METACORE___CGEN___TERNARY_TIRT_H
 
 typedef int8_t tirt;
 
@@ -167,10 +160,4 @@ static inline tirt tirt_xnor(tirt first, tirt second) {
     return tirt_not(tirt_xor(first, second));
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_TERNARY_TIRT_H
+#endif // METACORE___CGEN___TERNARY_TIRT_H

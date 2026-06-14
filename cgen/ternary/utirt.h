@@ -15,15 +15,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#ifndef METACORE___CGEN_TERNARY_UTIRT_H
-#define METACORE___CGEN_TERNARY_UTIRT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___TERNARY_UTIRT_H
+#define METACORE___CGEN___TERNARY_UTIRT_H
 
 typedef uint8_t utirt;
 
@@ -163,10 +156,4 @@ static inline utirt utirt_xnor(utirt first, utirt second) {
     return utirt_not(utirt_xor(first, second));
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_TERNARY_UTIRT_H
+#endif // METACORE___CGEN___TERNARY_UTIRT_H

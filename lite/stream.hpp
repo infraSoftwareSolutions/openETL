@@ -18,37 +18,31 @@
  * @note This file is intended to be included in C++ projects that require stream-like operations on vectors, benchmarking capabilities, and safe function execution with error handling.
  */
 
-// std headers
-
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <iostream>
-    #include <cmath>
-    #include <vector>
-    #include <functional>
-    #include <stdexcept>
-    #include <queue>
-    #include <type_traits>
-    #include <string>
-    #include <cerrno>
-    #include <stack>
-#endif
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <functional>
+#include <stdexcept>
+#include <queue>
+#include <type_traits>
+#include <string>
+#include <cerrno>
+#include <stack>
 
 #include "io.hpp"
 #include "benchmark.hpp"
 #include "UnitTest.hpp"
 
 #pragma once
-#ifndef METACORE___LITE_STREAM_HPP
-#define METACORE___LITE_STREAM_HPP
+#ifndef METACORE___LITE___STREAM_HPP
+#define METACORE___LITE___STREAM_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 namespace lite {
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 
     /**
      * @class vstream
@@ -279,7 +273,7 @@ namespace lite {
         }
     };
 
-    #ifdef METACORE___LITE_BENCHMARK_HPP
+    #ifdef METACORE___LITE___BENCHMARK_HPP
         /**
          * @brief A template class for benchmarking function execution time.
          *       The benchmark_stream class allows users to measure the execution time
@@ -477,9 +471,9 @@ namespace lite {
                 io::println("Max time: " + std::to_string(max_time) + s);
             }
         };
-    #endif // METACORE___LITE_BENCHMARK_HPP
+    #endif // METACORE___LITE___BENCHMARK_HPP
 
-    #ifdef METACORE___LITE_UNITTEST_HPP
+    #ifdef METACORE___LITE___UNITTEST_HPP
         /**
          * @brief A class that aggregates boolean test results with exception handling.
          */
@@ -759,7 +753,7 @@ namespace lite {
                 }
             }
         };
-    #endif // METACORE___LITE_UNITTEST_HPP
+    #endif // METACORE___LITE___UNITTEST_HPP
 
     namespace function
     {   
@@ -1212,11 +1206,11 @@ namespace lite {
         };
     }
 
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 }
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___LITE_STREAM_HPP
+#endif // METACORE___LITE___STREAM_HPP

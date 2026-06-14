@@ -28,15 +28,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#ifndef METACORE___CGEN_BITUTILITYS_TOGGLE_BIT_H
-#define METACORE___CGEN_BITUTILITYS_TOGGLE_BIT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___BITUTILITYS_TOGGLE_BIT_H
+#define METACORE___CGEN___BITUTILITYS_TOGGLE_BIT_H
 
 /// @brief Toggle (flip) bit at specified position in 8-bit number
 /// @param num The value to modify
@@ -166,10 +159,4 @@ static inline long toggle_long_bit(long num, uint8_t position) {
     return (long)toggle_64bit((int64_t)num, position);
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_BITUTILITYS_TOGGLE_BIT_H
+#endif // METACORE___CGEN___BITUTILITYS_TOGGLE_BIT_H

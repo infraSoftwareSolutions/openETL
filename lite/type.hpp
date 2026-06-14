@@ -14,25 +14,19 @@
  * file defines the actual logic for the functions declared in CXXType.hpp, including specializations for common types and the boolean_msg() function.
  */
 
-// std headers
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <string>
-#endif
-
+#include <string>
 #include "cgen/micros/structure.h"
 
 #pragma once
-#ifndef METACORE___LITE_TYPE_HPP
-#define METACORE___LITE_TYPE_HPP
+#ifndef METACORE___LITE___TYPE_HPP
+#define METACORE___LITE___TYPE_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 namespace lite {
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 
     /// @brief Get the type name as a string.
     /// @tparam T The type to get the name of.
@@ -413,11 +407,11 @@ namespace lite {
     /// @return The string representation of the boolean value.
     inline str boolean_msg(bool value) noexcept { return value ? "true" : "false"; }
 
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 }
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___LITE_TYPE_HPP
+#endif // METACORE___LITE___TYPE_HPP

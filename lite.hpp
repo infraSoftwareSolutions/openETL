@@ -49,8 +49,8 @@
  * @see lite/micros.hpp for macro definitions
  */
 
-#ifndef METACORE___LITE_HPP
-#define METACORE___LITE_HPP
+#ifndef METACORE___LITE___HPP
+#define METACORE___LITE___HPP
 
 #include "lite/benchmark.hpp"
 #include "lite/error.hpp"
@@ -252,4 +252,4 @@ namespace lite {
     } ecosystem;
 }
 
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP

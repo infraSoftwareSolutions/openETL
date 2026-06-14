@@ -13,8 +13,8 @@
  */
 
 
-#ifndef METACORE___CGEN_H
-#define METACORE___CGEN_H
+#ifndef METACORE___CGEN___H
+#define METACORE___CGEN___H
 
 #include "cgen/IOUtilitys.h"
 #include "cgen/UnitTest.h"
@@ -251,4 +251,4 @@ static inline void free_clite_system64(clite_system64* self) {
 /** @brief Global system variable for environment */
 static clite_system64 clite_ecosystem = {NULL, 0, NULL, 0, {NULL, NULL, NULL, NULL, 0}, false};
 
-#endif // METACORE___CGEN_H
+#endif // METACORE___CGEN___H

@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#ifndef METACORE___CGEN_MICROS_OBJECT_DATA_H
-#define METACORE___CGEN_MICROS_OBJECT_DATA_H
+#ifndef METACORE___CGEN___MICROS_OBJECT_DATA_H
+#define METACORE___CGEN___MICROS_OBJECT_DATA_H
 
     /// Section attribute for placing data in a specific section of memory
     #define DATA_SEC __attribute__((section(".cdata_space")))
@@ -111,4 +111,4 @@
 
     #endif // ALLOW_LOGIC_MODE
 
-#endif // METACORE___CGEN_MICROS_OBJECT_DATA_H
+#endif // METACORE___CGEN___MICROS_OBJECT_DATA_H

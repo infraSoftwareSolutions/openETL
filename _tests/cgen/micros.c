@@ -1,4 +1,5 @@
 #include "cgen/micros.h"
+#include "cgen/string.h"
 
 /**
  * @file micros.c
@@ -29,7 +30,7 @@ extern const int value18[];
 extern const double value19[];
 extern const int value20;
 
-MAIN_TEST(micros);
+TEST_MAIN(micros);
     
     // ==================== JUMP MACROS TESTS ====================
     // Test basic jump loop
@@ -260,4 +261,4 @@ MAIN_TEST(micros);
     TEST_2(sub_exist(s_ops, "Middle"), true);
     TEST_2(sub_exist(s_ops, "Start-Middle"), true);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

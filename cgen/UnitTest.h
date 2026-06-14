@@ -14,21 +14,14 @@
  */
 
 #include "IOUtilitys.h"
-#include "micros.h"
+#include "string.h"
 
 #include <string.h>
 #include <math.h>
 #include <stdbool.h>
 
-#ifndef METACORE___CGEN_UNITTEST_H
-#define METACORE___CGEN_UNITTEST_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___UNITTEST_H
+#define METACORE___CGEN___UNITTEST_H
 
 size_t ctestCounter = 0;
 
@@ -492,12 +485,6 @@ static inline void print_test_summary(test_stream testResults) {
     printf("Average failed rate: %.2f%%\n", AFR(testResults));
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
 #define addTest(current, real, expected, details) _Generic((real), \
     bool: addTestBool(current, real, expected, details),           \
     char: addTestChar(current, real, expected, details),           \
@@ -528,4 +515,4 @@ static inline void print_test_summary(test_stream testResults) {
     float: ctest_float(real, expected, 0.01f, name, description), \
     double: ctest_double(real, expected, 0.01, name, description))
 
-#endif // METACORE___CGEN_UNITTEST_H
+#endif // METACORE___CGEN___UNITTEST_H

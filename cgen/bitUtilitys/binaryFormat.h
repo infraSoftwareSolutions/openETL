@@ -36,15 +36,8 @@
 #include "get_bit.h"
 #include <stdlib.h>
 
-#ifndef METACORE___CGEN_BITUTILITYS_BINARYFORMAT_H
-#define METACORE___CGEN_BITUTILITYS_BINARYFORMAT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___BITUTILITYS_BINARYFORMAT_H
+#define METACORE___CGEN___BITUTILITYS_BINARYFORMAT_H
 
 /**
  * @brief Converts a boolean value to its character representation ('0' or '1').
@@ -368,10 +361,4 @@ static inline void print_u64bit(uint64_t value, bool pnl) {
     if(pnl) printf("%c", '\n');
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_BITUTILITYS_BINARYFORMAT_H
+#endif // METACORE___CGEN___BITUTILITYS_BINARYFORMAT_H

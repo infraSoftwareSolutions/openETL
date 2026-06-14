@@ -18,18 +18,8 @@
 #include <math.h>
 #include <stdbool.h>
 
-#ifndef METACORE___CGEN_IOUTILITYS_H
-#define METACORE___CGEN_IOUTILITYS_H
-
-#define nl '\n'
-#define tab '\t'
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___IOUTILITYS_H
+#define METACORE___CGEN___IOUTILITYS_H
 
 /// @brief Prints a newline character.
 static inline void PNL() { printf("\n"); }
@@ -377,12 +367,6 @@ static inline void print_test_string(const char *real, const char *expected,
     separator(seplen, sepch);
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
 #define print_test(real, expected, seplen, sepch) _Generic((real), \
     bool: print_test_bool(real, expected, seplen, sepch),          \
     char: print_test_char(real, expected, seplen, sepch),          \
@@ -394,4 +378,4 @@ static inline void print_test_string(const char *real, const char *expected,
     double: print_test_double(real, expected, seplen, sepch),      \
     const char*: print_test_string(real, expected, seplen, sepch))
 
-#endif // METACORE___CGEN_IOUTILITYS_H
+#endif // METACORE___CGEN___IOUTILITYS_H

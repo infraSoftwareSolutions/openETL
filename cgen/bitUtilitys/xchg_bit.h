@@ -28,15 +28,8 @@
 #include "set_bit.h"
 #include "reset_bit.h"
 
-#ifndef METACORE___CGEN_BITUTILITYS_XCHG_BIT_H
-#define METACORE___CGEN_BITUTILITYS_XCHG_BIT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___BITUTILITYS_XCHG_BIT_H
+#define METACORE___CGEN___BITUTILITYS_XCHG_BIT_H
 
 /// @brief Exchange (swap) two bit positions in an 8-bit unsigned integer
 /// @details Swaps the bits at positions pos1 and pos2. If both bits have the same value,
@@ -188,10 +181,4 @@ static inline int64_t xchg_64bit(int64_t value, uint8_t pos1, uint8_t pos2) {
     return (int64_t)xchg_u64bit((uint64_t) value, pos1, pos2);
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_BITUTILITYS_XCHG_BIT_H
+#endif // METACORE___CGEN___BITUTILITYS_XCHG_BIT_H

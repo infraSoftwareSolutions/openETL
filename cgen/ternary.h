@@ -1,5 +1,5 @@
-#ifndef METACORE___CGEN_TERNARY_H
-#define METACORE___CGEN_TERNARY_H
+#ifndef METACORE___CGEN___TERNARY_H
+#define METACORE___CGEN___TERNARY_H
 
 #include "ternary/B27.h"
 #include "ternary/tirt.h"
@@ -9,4 +9,4 @@
 #include "ternary/utirt.h"
 #include "ternary/utyrt.h"
 
-#endif // METACORE___CGEN_TERNARY_H
+#endif // METACORE___CGEN___TERNARY_H

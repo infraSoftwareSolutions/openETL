@@ -10,15 +10,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#ifndef METACORE___CGEN_TERNARY_TYRT_H
-#define METACORE___CGEN_TERNARY_TYRT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___TERNARY_TYRT_H
+#define METACORE___CGEN___TERNARY_TYRT_H
 
 typedef int16_t tyrt;
 
@@ -233,10 +226,4 @@ static tyrt tyrt_xnor(tyrt a, tyrt b) {
     return tyrt_not(xor(a, b));
 }
 
-#ifdef __cplusplus
-    #ifdef METACORE___META_HPP
-    }}
-    #endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_TERNARY_TYRT_H
+#endif // METACORE___CGEN___TERNARY_TYRT_H

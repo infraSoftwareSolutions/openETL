@@ -60,27 +60,24 @@
  * @note Requires C++23 or later for full compatibility.
  */
 
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <iostream>
-    #include <vector>
-    #include <string>
-    #include <memory>
-#endif
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <memory>
 
 #include "cgen/micros/structure.h"
 
 #pragma once
-#ifndef METACORE___LITE_UNITTEST_HPP
-#define METACORE___LITE_UNITTEST_HPP
+#ifndef METACORE___LITE___UNITTEST_HPP
+#define METACORE___LITE___UNITTEST_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 namespace lite {
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 
     /**
      * @class TEST
@@ -829,11 +826,11 @@ namespace lite {
         }
     }
 
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 }
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___LITE_UNITTEST_HPP
+#endif // METACORE___LITE___UNITTEST_HPP

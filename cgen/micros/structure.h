@@ -1,9 +1,20 @@
 
-#ifndef METACORE___CGEN_MICROS_STRUCTURE_H
-#define METACORE___CGEN_MICROS_STRUCTURE_H
+#ifndef METACORE___CGEN___MICROS_STRUCTURE_H
+#define METACORE___CGEN___MICROS_STRUCTURE_H
+
+    #define nl '\n'
+    
+    #define tab '\t'
 
     #define meta_main   \
         int main() {
+
+    #define ASSERT(cond)                \
+        if (!(cond))                    \
+        {                               \
+            retval = 1;                 \
+            printf("FAILED: %s", cond); \
+        }
 
     #define ret(retval)         \
             return (int)retval; }
@@ -39,4 +50,4 @@
 
     #endif // __cplusplus
 
-#endif // METACORE___CGEN_MICROS_STRUCTURE_H
+#endif // METACORE___CGEN___MICROS_STRUCTURE_H

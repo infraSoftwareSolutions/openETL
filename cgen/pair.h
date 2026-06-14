@@ -3,13 +3,6 @@
 #ifndef METACORE___CGEN___PAIR_H
 #define METACORE___CGEN___PAIR_H
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
-
 cobject {
     bool first;
     bool second;
@@ -49,12 +42,6 @@ cobject {
     size_t first;
     size_t second;
 } pair_size_t;
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
 
 #define pair(type) _Generic((type) \
     bool: pair_bool,               \

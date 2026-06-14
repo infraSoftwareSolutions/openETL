@@ -1,5 +1,5 @@
-#ifndef METACORE___CGEN_BITUTILITYS_H
-#define METACORE___CGEN_BITUTILITYS_H
+#ifndef METACORE___CGEN___BITUTILITYS_H
+#define METACORE___CGEN___BITUTILITYS_H
 
 #include "bitUtilitys/count_bit.h"
 #include "bitUtilitys/get_bit.h"
@@ -92,4 +92,4 @@
     int32_t: xchg_32bit(value, pos1, pos2),   \
     int64_t: xchg_64bit(value, pos1, pos2))
 
-#endif // METACORE___CGEN_BITUTILITYS_H
+#endif // METACORE___CGEN___BITUTILITYS_H

@@ -30,15 +30,8 @@
 
 #include "get_bit.h"
 
-#ifndef METACORE___CGEN_BITUTILITYS_COUNT_BIT_H
-#define METACORE___CGEN_BITUTILITYS_COUNT_BIT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___BITUTILITYS_COUNT_BIT_H
+#define METACORE___CGEN___BITUTILITYS_COUNT_BIT_H
 
 /// @brief Count set (1) or unset (0) bits in an 8-bit value
 /// @param num The value to analyze
@@ -156,10 +149,4 @@ static inline uint8_t count_long_bit(long num, bool ones) {
     return count_u64bit((uint64_t)num, ones);
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_BITUTILITYS_COUNT_BIT_H
+#endif // METACORE___CGEN___BITUTILITYS_COUNT_BIT_H

@@ -10,15 +10,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#ifndef METACORE___CGEN_TERNARY_UTYRT_H
-#define METACORE___CGEN_TERNARY_UTYRT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___TERNARY_UTYRT_H
+#define METACORE___CGEN___TERNARY_UTYRT_H
 
 typedef uint16_t utyrt;
 
@@ -231,10 +224,4 @@ static inline utyrt utyrt_shift_right(utyrt *value, uint8_t positions) {
     return *value >> (positions * 5);
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_TERNARY_UTYRT_H
+#endif // METACORE___CGEN___TERNARY_UTYRT_H

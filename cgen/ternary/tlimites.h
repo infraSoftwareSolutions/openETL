@@ -7,15 +7,8 @@
 
 #include <stdint.h>
 
-#ifndef METACORE___CGEN_TERNARY_TLIMITES_H
-#define METACORE___CGEN_TERNARY_TLIMITES_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___TERNARY_TLIMITES_H
+#define METACORE___CGEN___TERNARY_TLIMITES_H
 
 const uint8_t nullValue = 0;
 // for Balanced Ternary Logic
@@ -26,12 +19,6 @@ const uint8_t false_b = -1;
 const uint8_t true_u = 3;
 const uint8_t unknown_u = 2;
 const uint8_t false_u = 1;
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
 
 #define MAX_VALUE_TIRT 1
 #define MIN_VALUE_TIRT -1
@@ -46,4 +33,4 @@ const uint8_t false_u = 1;
 #define MAX_VALUE_B27 13
 #define MIN_VALUE_B27 -13
 
-#endif // METACORE___CGEN_TERNARY_TLIMITES_H
+#endif // METACORE___CGEN___TERNARY_TLIMITES_H

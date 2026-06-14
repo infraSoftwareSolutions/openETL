@@ -4,27 +4,23 @@
  * @author Ali Lafi
  */
 
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <type_traits>
-    #include <vector>
-    #include <iostream>
-    #include <stdexcept>
-    #include <algorithm>
-    #include <functional>
-#endif
+#include <type_traits>
+#include <vector>
+#include <iostream>
+#include <stdexcept>
+#include <algorithm>
+#include <functional>
 
 #pragma once
-#ifndef OPENUDT___ADVA_FUNCTION_HPP
-#define OPENUDT___ADVA_FUNCTION_HPP
+#ifndef OPENUDT___ADVA___FUNCTION_HPP
+#define OPENUDT___ADVA___FUNCTION_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___ADVA_HPP
+#ifdef METACORE___ADVA___HPP
 namespace adva {
-#endif // METACORE___ADVA_HPP
+#endif // METACORE___ADVA___HPP
 
     /**
      * Reverses a vector of any type.
@@ -1406,11 +1402,11 @@ namespace adva {
         return result;
     }
 
-#ifdef METACORE___ADVA_HPP
+#ifdef METACORE___ADVA___HPP
 }
-#endif // METACORE___ADVA_HPP
+#endif // METACORE___ADVA___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // OPENUDT___ADVA_FUNCTION_HPP
+#endif // OPENUDT___ADVA___FUNCTION_HPP

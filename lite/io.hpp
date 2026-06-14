@@ -28,33 +28,29 @@
  * @note This library is designed for C++23 and is part of the metaCore library, specifically within the CXXLite module, and is intended for simplifying I/O operations in C++.
  */
 
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <iostream>
-    #include <string>
-    #include <vector>
-    #include <limits>
-    #include <algorithm>
-    #include <functional>
-    #include <type_traits>
-    #include <climits>
-    #include <stdexcept>
-#endif
 
-#include "cgen/micros/io.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <limits>
+#include <algorithm>
+#include <functional>
+#include <type_traits>
+#include <climits>
+#include <stdexcept>
+
 #include "cgen/micros/structure.h"
 
 #pragma once
-#ifndef METACORE___LITE_IO_HPP
-#define METACORE___LITE_IO_HPP
+#ifndef METACORE___LITE___IO_HPP
+#define METACORE___LITE___IO_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 namespace lite {
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 
     namespace io
     {
@@ -666,11 +662,11 @@ namespace lite {
         inline void println_if(bool result, const T& data) { if(result) print(data); }
     }
 
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 }
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___LITE_IO_HPP
+#endif // METACORE___LITE___IO_HPP

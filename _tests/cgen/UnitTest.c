@@ -9,7 +9,7 @@
  *          float, double, and string testing.
  */
 
-MAIN_TEST(CUTest);
+TEST_MAIN(CUTest);
     
     // ==================== CTEST OBJECT CREATION AND MANAGEMENT ====================
     
@@ -332,4 +332,4 @@ MAIN_TEST(CUTest);
     TEST_2(test_empty.name != NULL, true);
     TEST_2(test_empty.description != NULL, true);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

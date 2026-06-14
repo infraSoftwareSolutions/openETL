@@ -39,15 +39,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#ifndef METACORE___CGEN_BITUTILITYS_GET_BIT_H
-#define METACORE___CGEN_BITUTILITYS_GET_BIT_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___BITUTILITYS_GET_BIT_H
+#define METACORE___CGEN___BITUTILITYS_GET_BIT_H
 
 /// @brief Get bit value at specified position from 8-bit number
 /// @param num The value to read
@@ -177,10 +170,4 @@ static inline bool get_long_bit(long num, uint8_t position) {
     return get_64bit((int64_t)num, position);
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_BITUTILITYS_GET_BIT_H
+#endif // METACORE___CGEN___BITUTILITYS_GET_BIT_H

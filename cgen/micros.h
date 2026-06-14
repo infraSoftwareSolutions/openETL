@@ -39,8 +39,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef METACORE___CGEN_MICROS_H
-#define METACORE___CGEN_MICROS_H
+#ifndef METACORE___CGEN___MICROS_H
+#define METACORE___CGEN___MICROS_H
 
 #ifdef cobject_data_micros
     #include "micros/object_data.h"
@@ -48,10 +48,9 @@
 
 #ifndef cobject_data_micros
 
-    #include "micros/string.h"
     #include "micros/structure.h"
     #include "micros/test.h"
 
 #endif // cobject_data_micros
 
-#endif // METACORE___CGEN_MICROS_H
+#endif // METACORE___CGEN___MICROS_H

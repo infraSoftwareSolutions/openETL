@@ -1,14 +1,7 @@
-#include "micros.h"
+#include "string.h"
 
-#ifndef METACORE___CGEN_WARNING_H
-#define METACORE___CGEN_WARNING_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___WARNING_H
+#define METACORE___CGEN___WARNING_H
 
 size_t cwarningCounter = 0;
 
@@ -154,10 +147,4 @@ static void free_cwarning(cwarning* self) {
     free(self->time);
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_WARNING_H
+#endif // METACORE___CGEN___WARNING_H

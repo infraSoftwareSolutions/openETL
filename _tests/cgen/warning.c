@@ -1,7 +1,7 @@
 #include "cgen/micros.h"
 #include "cgen/warning.h"
 
-MAIN_TEST(warning);
+TEST_MAIN(warning);
 
     // Reset counter for consistent testing
     cwarningCounter = 0;
@@ -30,7 +30,7 @@ MAIN_TEST(warning);
     TEST_2(strcmp(w_index.description, "Array boundary check"), 0);  // verify description
     TEST_2(w_index.file != NULL, true);               // file should be set
     TEST_2(w_index.time != NULL, true);               // time should be set
-    ASSERT_TEST(w_index.line > 0);                    // line should be set (> 0)
+    TEST_ASSERT(w_index.line > 0);                    // line should be set (> 0)
     TEST_2(w_index.number, counter_start);            // number should match counter
     TEST_2(cwarningCounter, counter_start + 1);       // counter should increment
     
@@ -101,12 +101,12 @@ MAIN_TEST(warning);
     cwarning wt4 = bad_input("test");
     cwarning wt5 = undefined_behavior("test");
     cwarning wt6 = invalid_argument("test");
-    ASSERT_TEST(wt1.name != NULL && strlen(wt1.name) > 0);  // all names set
-    ASSERT_TEST(wt2.name != NULL && strlen(wt2.name) > 0);
-    ASSERT_TEST(wt3.name != NULL && strlen(wt3.name) > 0);
-    ASSERT_TEST(wt4.name != NULL && strlen(wt4.name) > 0);
-    ASSERT_TEST(wt5.name != NULL && strlen(wt5.name) > 0);
-    ASSERT_TEST(wt6.name != NULL && strlen(wt6.name) > 0);
+    TEST_ASSERT(wt1.name != NULL && strlen(wt1.name) > 0);  // all names set
+    TEST_ASSERT(wt2.name != NULL && strlen(wt2.name) > 0);
+    TEST_ASSERT(wt3.name != NULL && strlen(wt3.name) > 0);
+    TEST_ASSERT(wt4.name != NULL && strlen(wt4.name) > 0);
+    TEST_ASSERT(wt5.name != NULL && strlen(wt5.name) > 0);
+    TEST_ASSERT(wt6.name != NULL && strlen(wt6.name) > 0);
     
     // Test 12: All warnings properly initialized
     TEST_2(wt1.number < wt2.number, true);            // numbers incrementing
@@ -115,4 +115,4 @@ MAIN_TEST(warning);
     TEST_2(wt4.number < wt5.number, true);
     TEST_2(wt5.number < wt6.number, true);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

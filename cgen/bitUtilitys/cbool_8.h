@@ -36,15 +36,8 @@
 #include "reset_bit.h"
 #include "set_bit.h"
 
-#ifndef METACORE___CGEN_BITUTILITYS_CBOOL_8_H
-#define METACORE___CGEN_BITUTILITYS_CBOOL_8_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___BITUTILITYS_CBOOL_8_H
+#define METACORE___CGEN___BITUTILITYS_CBOOL_8_H
 
 /// @brief A structure representing an 8-bit cbool_8 value that can store multiple cbool_8 states
 /// @details This structure encapsulates an 8-bit unsigned integer (uint8_t) to store multiple
@@ -110,10 +103,4 @@ static inline bool isEmpty(cbool_8 current) {
     return (current.value == (uint8_t)0) ? true : false;
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_BITUTILITYS_CBOOL_8_H
+#endif // METACORE___CGEN___BITUTILITYS_CBOOL_8_H

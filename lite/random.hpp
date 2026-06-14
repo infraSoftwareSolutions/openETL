@@ -17,26 +17,23 @@
  * @date 2025 / 9 / 25
  */
 
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <vector>
-    #include <string>
-    #include <random>
-#endif
+
+#include <vector>
+#include <string>
+#include <random>
 
 #include "cgen/micros/structure.h"
 
 #pragma once
-#ifndef METACORE___LITE_RANDOM_HPP
-#define METACORE___LITE_RANDOM_HPP
+#ifndef METACORE___LITE___RANDOM_HPP
+#define METACORE___LITE___RANDOM_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 namespace lite {
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 
     // GRN: generate random number
     /// @brief Generates a random integer within the specified range using Mersenne Twister algorithm.
@@ -132,11 +129,11 @@ namespace lite {
         return result;
     }
 
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 }
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___LITE_RANDOM_HPP
+#endif // METACORE___LITE___RANDOM_HPP

@@ -8,15 +8,8 @@
 #include <stdio.h>
 #include "tlimites.h"
 
-#ifndef METACORE___CGEN_TERNARY_UB27_H
-#define METACORE___CGEN_TERNARY_UB27_H
-
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-namespace meta {
-namespace cgen {
-#endif // METACORE___META_HPP
-#endif
+#ifndef METACORE___CGEN___TERNARY_UB27_H
+#define METACORE___CGEN___TERNARY_UB27_H
 
 /// @brief An array of characters representing the values of a UB27 variable.
 const char UB27Chars[27] = {
@@ -51,10 +44,4 @@ static inline char ub27_get(UB27 value) {
     return UB27Chars[value];
 }
 
-#ifdef __cplusplus
-#ifdef METACORE___META_HPP
-}}
-#endif // METACORE___META_HPP
-#endif
-
-#endif // METACORE___CGEN_TERNARY_UB27_H
+#endif // METACORE___CGEN___TERNARY_UB27_H

@@ -26,35 +26,30 @@
  * it's a part of the lite library, specifically within the lite module, and is intended for benchmarking code performance in C++23.
  */
 
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    // std headers
-    #include <chrono>
-    #include <thread>
-    #include <vector>
-    #include <functional>
-    #include <string>
-    #include <stdexcept>
-    #include <exception>
-    #include <windows.h>
-    #include <psapi.h>
-    #include <memory>
-    #include <algorithm>
-#endif
+#include <chrono>
+#include <thread>
+#include <vector>
+#include <functional>
+#include <string>
+#include <stdexcept>
+#include <exception>
+#include <windows.h>
+#include <psapi.h>
+#include <memory>
+#include <algorithm>
 
 #include "cgen/micros/structure.h"
 
 #pragma once
-#ifndef METACORE___LITE_BENCHMARK_HPP
-#define METACORE___LITE_BENCHMARK_HPP
+#ifndef METACORE___LITE___BENCHMARK_HPP
+#define METACORE___LITE___BENCHMARK_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 namespace lite {
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 
     namespace benchmark
     {
@@ -593,11 +588,11 @@ namespace lite {
         }
     }
 
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 }
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___LITE_BENCHMARK_HPP
+#endif // METACORE___LITE___BENCHMARK_HPP

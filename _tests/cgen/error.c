@@ -1,7 +1,7 @@
 #include "cgen/micros.h"
 #include "cgen/error.h"
 
-MAIN_TEST(error);
+TEST_MAIN(error);
 
     // Test 1: errInit() - Initialize error with default values
     cerror err1 = errInit();
@@ -19,7 +19,7 @@ MAIN_TEST(error);
     TEST_2(strcmp(err_index.description, "Array out of bounds"), 0); // verify description
     TEST_2(err_index.file != NULL, true); // file should be set
     TEST_2(err_index.time != NULL, true); // time should be set
-    ASSERT_TEST(err_index.line > 0); // line should be set (> 0)
+    TEST_ASSERT(err_index.line > 0); // line should be set (> 0)
     
     // Test 3: errDeclaration() - Create wrong declaration error
     cerror err_decl = errDeclaration("Invalid variable type");
@@ -72,11 +72,11 @@ MAIN_TEST(error);
     cerror e4 = errBadInput("test");
     cerror e5 = errUndefinedBehavior("test");
     cerror e6 = errInvalidArgument("test");
-    ASSERT_TEST(e1.name != NULL && strlen(e1.name) > 0); // all names set
-    ASSERT_TEST(e2.name != NULL && strlen(e2.name) > 0);
-    ASSERT_TEST(e3.name != NULL && strlen(e3.name) > 0);
-    ASSERT_TEST(e4.name != NULL && strlen(e4.name) > 0);
-    ASSERT_TEST(e5.name != NULL && strlen(e5.name) > 0);
-    ASSERT_TEST(e6.name != NULL && strlen(e6.name) > 0);
+    TEST_ASSERT(e1.name != NULL && strlen(e1.name) > 0); // all names set
+    TEST_ASSERT(e2.name != NULL && strlen(e2.name) > 0);
+    TEST_ASSERT(e3.name != NULL && strlen(e3.name) > 0);
+    TEST_ASSERT(e4.name != NULL && strlen(e4.name) > 0);
+    TEST_ASSERT(e5.name != NULL && strlen(e5.name) > 0);
+    TEST_ASSERT(e6.name != NULL && strlen(e6.name) > 0);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

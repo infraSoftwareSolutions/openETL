@@ -11,13 +11,10 @@
  * @see Lite/UnitTest.hpp for related testing functions and structures.
  */
 
-#if defined(__cpp_modules) && (__cplusplus >= 202302L)
-    import std;
-#else
-    #include <string>
-    #include <iostream>
-    #include <source_location>
-#endif
+
+#include <string>
+#include <iostream>
+#include <source_location>
 
 // local headers
 #include "io.hpp"
@@ -25,15 +22,15 @@
 #include "cgen/micros/structure.h"
 
 #pragma once
-#ifndef METACORE___LITE_WARNING_HPP
-#define METACORE___LITE_WARNING_HPP
+#ifndef METACORE___LITE___WARNING_HPP
+#define METACORE___LITE___WARNING_HPP
 
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 namespace lite {
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 
     benchmark::code_timer<true> warning_time;
 
@@ -392,11 +389,11 @@ namespace lite {
         }
     }
 
-#ifdef METACORE___LITE_HPP
+#ifdef METACORE___LITE___HPP
 }
-#endif // METACORE___LITE_HPP
+#endif // METACORE___LITE___HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP
 
-#endif // METACORE___LITE_WARNING_HPP
+#endif // METACORE___LITE___WARNING_HPP
