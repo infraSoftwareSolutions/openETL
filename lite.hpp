@@ -63,7 +63,6 @@
 #include "lite/UnitTest.hpp"
 #include "lite/warning.hpp"
 
-
 namespace lite {
     /**
      * @brief Converts a std::string to std::wstring for Windows API compatibility.
@@ -106,15 +105,15 @@ namespace lite {
      */
     class system64 {
         private:
-        std::queue<warning> sys_w;
-        error sys_err;
+        std::queue<lite::warning> sys_w;
+        lite::error sys_err;
         bool retval;
         protected:
         const std::string wm = "meta lite ecosystem warning",
         em = "meta lite ecosystem error";
         public:
 
-        test_stream sys_test;
+        lite::test_stream sys_test;
 
         system64() = default;
 
@@ -131,9 +130,9 @@ namespace lite {
          *
          * @see printcsys_test() for viewing all collected tests
          */
-        void add(TEST& value, bool PTS) {
+        void add(lite::TEST& value, bool PTS) {
             sys_test << value;
-            if(PTS) io::print_test(value.get(true), value.get(false), value.get(), sys_test.get_total_tests());
+            if(PTS) lite::io::print_test(value.get(true), value.get(false), value.get(), sys_test.get_total_tests());
         }
         
         /**
@@ -168,7 +167,7 @@ namespace lite {
          * @see warning class in lite/warning.hpp
          * @see exit_value() for checking accumulated warning status
          */
-        void Catch(const warning& w, bool msgbox = false) noexcept {
+        void Catch(const lite::warning& w, bool msgbox = false) noexcept {
             const char* s1 = "lite ecosystem warning";
             
             if(msgbox) {
@@ -201,7 +200,7 @@ namespace lite {
          * @see error class in lite/error.hpp
          * @see Catch(const warning&, bool) for non-fatal warning handling
          */
-        void Catch(error& e) noexcept {
+        void Catch(lite::error& e) noexcept {
             MessageBoxW(NULL, 
                 toWide(em).c_str(),
                 toWide(e.printingFormat()).c_str(),

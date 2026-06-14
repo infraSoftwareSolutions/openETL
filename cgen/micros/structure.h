@@ -2,10 +2,10 @@
 #ifndef METACORE___CGEN_MICROS_STRUCTURE_H
 #define METACORE___CGEN_MICROS_STRUCTURE_H
 
-    #define MAIN   \
+    #define meta_main   \
         int main() {
 
-    #define RET(retval)         \
+    #define ret(retval)         \
             return (int)retval; }
 
     #define cobject typedef struct 

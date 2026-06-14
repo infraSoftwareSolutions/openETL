@@ -72,34 +72,29 @@ namespace lite {
         /**
          * @brief Default constructor that creates an unknown error.
          */
-        error() {
-            name = "Unknown Error";
-            description = "no description for this error";
-            errLocation = std::source_location::current();
-            event = errTimer.get_duration();
-        }
+        error() noexcept : 
+        name("Unknown Error"), 
+        description("no description for this error"), 
+        errLocation(std::source_location::current()),
+        event(errTimer.get_duration()) {}
 
         /**
          * @brief Constructor that creates an error with a name.
          * @param name The name/type of the error.
          */
-        error(const str& name) noexcept {
-            this->name = name;
-            errLocation = std::source_location::current();
-            event = errTimer.get_duration();
-        }
+        error(const str& Name) noexcept : name(Name), 
+        errLocation(std::source_location::current()),
+        event(errTimer.get_duration()) {}
 
         /**
          * @brief Constructor that creates an error with name and description.
          * @param name The name/type of the error.
          * @param description A detailed description of the error.
          */
-        error(const str& name, const str& description) noexcept {
-            this->name = name;
-            this->description = description;
-            errLocation = std::source_location::current();
-            event = errTimer.get_duration();
-        }
+        error(const str& Name, const str& Description) noexcept : 
+        name(Name), description(Description), 
+        errLocation(std::source_location::current()), 
+        event(errTimer.get_duration()) {}
 
         /**
          * @brief Checks if the error name or description is empty.

@@ -40,19 +40,18 @@ namespace lite {
         std::filesystem::path directory;
 
     public:
-        file() noexcept {
-            directory = std::filesystem::current_path();
-        }
-
+        
+        file() noexcept : directory(std::filesystem::current_path()) {}
+        
         /**
          * @brief Constructs a txtfile_manager for managing text files in a specified directory.
          * @param dirPath The path to the directory where text files will be managed.
          */
         file(const str &dirPath) noexcept
         {
-            directory = dirPath;
             if (!std::filesystem::exists(directory))
                 std::filesystem::create_directories(directory);
+            directory = dirPath;
         }
 
         /**
@@ -62,9 +61,9 @@ namespace lite {
          */
         inline void change_directory(const str &dirPath) noexcept
         {
-            directory = dirPath;
             if (!std::filesystem::exists(directory))
                 std::filesystem::create_directories(directory);
+            directory = dirPath;
         }
 
         /**
@@ -73,7 +72,7 @@ namespace lite {
          * @details This method creates a new directory at the specified path if it does not already exist. If the directory already exists, this method does nothing. If the directory cannot be created (e.g., due to permissions issues), an exception may be thrown by the underlying filesystem library, which should be handled by the caller if necessary.
          * @note This method uses the C++17 `<filesystem>` library, which provides a convenient way to work with directories and files. It is important to ensure that the C++17 standard is enabled in your project to use this functionality.
          */
-        inline void make_directory(const str &dirPath) noexcept
+        static inline void make_directory(const str &dirPath) noexcept
         {
             std::filesystem::create_directories(dirPath);
         }

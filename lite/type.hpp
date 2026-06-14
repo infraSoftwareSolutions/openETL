@@ -412,6 +412,7 @@ namespace lite {
     /// @param value The boolean value to convert.
     /// @return The string representation of the boolean value.
     inline str boolean_msg(bool value) noexcept { return value ? "true" : "false"; }
+
 #ifdef METACORE___LITE_HPP
 }
 #endif // METACORE___LITE_HPP

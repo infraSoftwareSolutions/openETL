@@ -70,13 +70,13 @@ namespace lite {
          * @param vec The vector to initialize the stream with
          * @note This constructor copies the vector
          */
-        vstream(const que<vec<T>> &vec) noexcept : vs(vec) {}
+        vstream(const que<vec<T>> &_vec) noexcept : vs(_vec) {}
         
         /** Constructor from rvalue vec
          * @param vec The vector to initialize the stream with
          * @note This constructor moves the vector
          */
-        vstream(que<vec<T>> &&vec) noexcept : vs(std::move(vec)) {}
+        vstream(que<vec<T>> &&_vec) noexcept : vs(std::move(_vec)) {}
         
         /**
          * Constructor from initializer list
@@ -245,10 +245,11 @@ namespace lite {
         str split_str;
         que<str> ss;
         public:
-        sstream() noexcept : split(false), split_str("") {};
+
+        sstream() noexcept : split(false), split_str(""), ss(que<str>()) {};
         sstream(const que<str> &strVal) noexcept : split(false), split_str(""), ss(strVal) {}
-        sstream(const str &ssplit) noexcept : split(true), split_str(ssplit) {}
-        sstream(bool isSplit) noexcept : split(isSplit), split_str("") {}
+        sstream(const str &ssplit) noexcept : split(true), split_str(ssplit), ss(que<str>()) {}
+        sstream(bool isSplit) noexcept : split(isSplit), split_str(""), ss(que<str>()) {}
 
         void set_split(bool isSplit) noexcept { split = isSplit; }
         void set_split_str(const str &ssplit) noexcept { split_str = ssplit; }

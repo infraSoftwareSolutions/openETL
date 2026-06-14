@@ -7,7 +7,9 @@
 
 namespace meta {
     namespace system70 {
-        
+        void Catch() noexcept {
+            
+        }
     }
 }
 

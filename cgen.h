@@ -23,6 +23,9 @@
 #include "cgen/bitUtilitys.h"
 #include "cgen/micros.h"
 #include "cgen/ternary.h"
+#include "cgen/string.h"
+#include "cgen/random.h"
+#include "cgen/ddt.h"
 #include <windows.h>
 
 /** @brief Main system structure for environment management */

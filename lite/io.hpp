@@ -63,10 +63,8 @@ namespace lite {
          * @brief Prints a number of newline characters.
          * @param num Number of new lines to print (default = 2).
          */
-        void NewLines(size_t num = 1)
+        inline void NewLines(size_t num = 1) noexcept
         {
-            if (SHRT_MAX <= num)
-                throw std::out_of_range("num is bigger than SHRT_MAX");
             for (size_t i = 0; i < num; i++)
                 std::cout << nl;
         }
@@ -76,16 +74,11 @@ namespace lite {
          * @param length The number of characters in the line.
          * @param ch The character to use (must be one of: ~, -, #, *, =).
          */
-        void separator(size_t length, char ch = '-')
+        inline void separator(size_t length, char ch = '-') noexcept
         {
-            if (ch == '~' || ch == '-' || ch == '#' || ch == '*' || ch == '=')
-            {
-                for (size_t i = length; i >= 0; i--)
-                    std::cout << ch;
-                std::cout << nl;
-            }
-            else
-                throw std::invalid_argument("Invalid separator character.");
+            for (size_t i = length; i != 0; i--)
+                std::cout << ch;
+            std::cout << nl;
         }
 
         /**
@@ -95,7 +88,7 @@ namespace lite {
          * @param ch The character to use for the separator lines (must be one of: ~, -, #, *, =).
          * @details This function prints a specified number of separator lines, each consisting of a specific character repeated a certain number of times. The character used for the separator lines must be one of the following: ~, -, #, *, =. If an invalid character is provided, an exception is thrown.
          */
-        void separators(size_t numsep, size_t length, char ch)
+        inline void separators(size_t numsep, size_t length, char ch) noexcept
         {
             for (size_t i = 0; i < numsep; i++)
                 separator(length, ch);
@@ -108,7 +101,7 @@ namespace lite {
          */
         void println() noexcept { std::cout << nl; }
         template <typename T, typename... Args>
-        inline void println(const T &output, Args... remaining_t) noexcept
+        void println(const T &output, Args... remaining_t) noexcept
         {
             std::cout << output;
             println(remaining_t...);
@@ -121,7 +114,7 @@ namespace lite {
          */
         void print() noexcept { return; }
         template <typename T, typename... Args>
-        inline void print(const T &output, Args... remaining_t) noexcept
+        void print(const T &output, Args... remaining_t) noexcept
         {
             std::cout << output;
             print(remaining_t...);
@@ -134,7 +127,7 @@ namespace lite {
          */
         void println_error() noexcept { std::cerr << nl; }
         template <typename T, typename... Args>
-        inline void println_error(const T &output, Args... remaining_t) noexcept
+        void println_error(const T &output, Args... remaining_t) noexcept
         {
             std::cerr << output;
             println_error(remaining_t...);
@@ -147,7 +140,7 @@ namespace lite {
          */
         void print_error() noexcept { return; }
         template <typename T, typename... Args>
-        inline void print_error(const T &output, Args... remaining_t) noexcept
+        void print_error(const T &output, Args... remaining_t) noexcept
         {
             std::cerr << output;
             print_error(remaining_t...);
@@ -160,7 +153,7 @@ namespace lite {
          * @return T The user input.
          */
         template <typename T>
-        T input(const str &output)
+        inline T input(const str &output)
         {
             T var;
             std::cout << output << std::endl;
@@ -178,17 +171,15 @@ namespace lite {
         template <typename T>
         vec<T> input_vector(const str &output, size_t size)
         {
-            if (size <= 0)
-                throw std::invalid_argument("Size must be greater than zero");
-            vec<T> vec;
+            vec<T> _vec;
             T var;
             std::cout << output << std::endl;
             for (size_t i = 0; i < size; i++)
             {
                 std::cin >> var;
-                vec.push_back(var);
+                _vec.push_back(var);
             }
-            return vec;
+            return _vec;
         }
 
         /**
@@ -203,8 +194,6 @@ namespace lite {
         template <typename T>
         vec<vec<T>> input_vector_2d(const str &output, size_t rows, size_t cols)
         {
-            if (rows <= 0 || cols <= 0)
-                throw std::invalid_argument("Rows and columns must be greater than zero");
             vec<vec<T>> vec2d;
             T var;
             std::cout << output << std::endl;
@@ -234,8 +223,6 @@ namespace lite {
         template <typename T>
         vec<vec<vec<T>>> input_vector_3d(const str &output, size_t x, size_t y, size_t z)
         {
-            if (x <= 0 || y <= 0 || z <= 0)
-                throw std::invalid_argument("Dimensions must be greater than zero");
             vec<vec<vec<T>>> vec3d;
             T var;
             std::cout << output << std::endl;
@@ -261,10 +248,8 @@ namespace lite {
          * @brief Prints a number of tab characters.
          * @param num Number of tabs to print (default = 2).
          */
-        void Tabs(short num = 1)
+        inline void Tabs(size_t num = 1) noexcept
         {
-            if (num >= SHRT_MAX)
-                throw std::out_of_range("num is bigger than SHRT_MAX");
             for (short i = 0; i < num; i++)
                 std::cout << tab;
         }
@@ -276,9 +261,10 @@ namespace lite {
          * @param OutPut The output value to print.
          */
         template <typename T>
-        void print_test(size_t testNum, const T &OutPut)
+        inline void print_test(size_t testNum, const T &OutPut) noexcept
         {
-            std::cout << "Test(" << testNum << "): " 
+            std::cout << "Test("
+            << testNum << "): " 
             << OutPut << nl;
         }
 
@@ -286,7 +272,7 @@ namespace lite {
          * @brief Prints a standardized test output without a specific value.
          * @param testNum The test number.
          */
-        void print_test(size_t testNum) noexcept
+        inline void print_test(size_t testNum) noexcept
         {
             std::cout << "Test(" 
             << testNum << "): " 
@@ -320,10 +306,10 @@ namespace lite {
          * @param vec The vector to print.
          */
         template <typename T>
-        void print(const vec<T> &_vec)
+        void print(const vec<T> &_vec) noexcept
         {
             if (vec.empty())
-                throw std::invalid_argument("The vector is empty");
+                std::cout << "[]";
             if (vec.size() == 1)
             {
                 std::cout << " [" << vec[0] << "] ";
@@ -351,7 +337,7 @@ namespace lite {
          * @note The function is marked noexcept and does not throw exceptions.
          */
         template <typename T>
-        inline void println(const vec<T> &output) noexcept
+        void println(const vec<T> &output) noexcept
         {
             if (output.empty())
             {
@@ -379,7 +365,7 @@ namespace lite {
          * @param output The 2D vector to be printed.
          */
         template <typename T>
-        inline void print(const vec<vec<T>> &output) noexcept
+        void print(const vec<vec<T>> &output) noexcept
         {
             if (output.empty())
             {
@@ -414,7 +400,7 @@ namespace lite {
          * @param output The 2D vector to be printed.
          */
         template <typename T>
-        inline void println(const vec<vec<T>> &output) noexcept
+        void println(const vec<vec<T>> &output) noexcept
         {
             if (output.empty())
             {
@@ -453,7 +439,7 @@ namespace lite {
          * };
          */
         template <typename T>
-        inline void print(const vec<vec<vec<T>>> &output) noexcept
+        void print(const vec<vec<vec<T>>> &output) noexcept
         {
             if (output.empty())
             {
@@ -499,7 +485,7 @@ namespace lite {
          * };
          */
         template <typename T>
-        inline void println(const vec<vec<vec<T>>> &output) noexcept
+        void println(const vec<vec<vec<T>>> &output) noexcept
         {
             if (output.empty())
             {
@@ -537,12 +523,11 @@ namespace lite {
          * @param vec The vector to test and print.
          */
         template <typename T>
-        void print_test(long testNum, const vec<T> &_vec)
+        inline void print_test(long testNum,
+            const vec<T> &_vec) noexcept
         {
-            if (vec.empty())
-                throw std::invalid_argument("The vector is empty");
             print_test(testNum);
-            print<T>(vec);
+            print<T>(_vec);
         }
 
         /**
@@ -558,12 +543,11 @@ namespace lite {
          * };
          */
         template <typename T>
-        void print_test(long testNum, const vec<vec<T>> &_vec)
+        inline void print_test(long testNum,
+            const vec<vec<T>> &_vec) noexcept
         {
-            if (vec.empty())
-                throw std::invalid_argument("The vector is empty");
             print_test(testNum);
-            print<T>(vec);
+            print<T>(_vec);
         }
 
         /**
@@ -579,12 +563,11 @@ namespace lite {
          * };
          */
         template <typename T>
-        void print_test(long testNum, const vec<vec<vec<T>>> &_vec)
+        inline void print_test(long testNum,
+            const vec<vec<vec<T>>> &_vec) noexcept
         {
-            if (vec.empty())
-                throw std::invalid_argument("The vector is empty");
             print_test(testNum);
-            print<T>(vec);
+            print<T>(_vec);
         }
 
         /**
@@ -593,7 +576,7 @@ namespace lite {
          * @param str The string to print.
          * @param index Starting index (default = 0). If out of range, starts from 0.
          */
-        void print_char_str(const str &_str, size_t index) noexcept
+        inline void print_char_str(const str &_str, size_t index) noexcept
         {
             if (index < 0 || index >= _str.length())
                 index = 0;
@@ -606,7 +589,7 @@ namespace lite {
          * @brief Prints a decorated category title.
          * @param category The category title to print.
          */
-        void print_category(const str &category)
+        inline void print_category(const str &category) noexcept
         {
             separator(2 * category.length());
             Tabs(category.length() / 10);
@@ -641,7 +624,10 @@ namespace lite {
          *     Settings
          * ====================
          */
-        void print_category(const str &category_s, int tabs_num, int seplen, char sepch)
+        inline void print_category(
+            const str &category_s,
+            int tabs_num, int seplen,
+            char sepch) noexcept
         {
             separator(seplen, sepch);
             Tabs(tabs_num);
@@ -657,9 +643,9 @@ namespace lite {
          * @details This function evaluates the provided value using the given function pointer (or lambda). If the function returns true for the provided data, the value is printed to standard output followed by a newline. If the function returns false, nothing is printed.
          */
         template<typename T>
-        void print_if(std::function<bool(T)> Fp, const T& data) noexcept {
-            if(Fp(data)) print(data);
-        }
+        inline void print_if(
+            std::function<bool(T)> Fp, 
+            const T& data) noexcept { if(Fp(data)) print(data); }
 
         /**
          * @brief Prints a value followed by a newline to standard output if a given condition is true.
@@ -669,19 +655,15 @@ namespace lite {
          * @details This function evaluates the provided value using the given function pointer (or lambda). If the function returns true for the provided data, the value is printed to standard output followed by a newline. If the function returns false, nothing is printed.
          */
         template<typename T>
-        void println_if(std::function<bool(T)> Fp, const T& data) noexcept {
-            if(Fp(data)) println(data);
-        }
+        inline void println_if(
+            std::function<bool(T)> Fp,
+            const T& data) noexcept { if(Fp(data)) println(data); }
 
         template<typename T>
-        void print_if(bool result, const T& data) noexcept {
-            if(result) print(data);
-        }
+        inline void print_if(bool result, const T& data) noexcept { if(result) print(data); }
 
         template<typename T>
-        void println_if(bool result, const T& data) noexcept {
-            if(result) print(data);
-        }
+        inline void println_if(bool result, const T& data) { if(result) print(data); }
     }
 
 #ifdef METACORE___LITE_HPP
