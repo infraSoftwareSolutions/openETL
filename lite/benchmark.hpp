@@ -38,8 +38,6 @@
 #include <memory>
 #include <algorithm>
 
-#include "cgen/micros/structure.h"
-
 #pragma once
 #ifndef METACORE___LITE___BENCHMARK_HPP
 #define METACORE___LITE___BENCHMARK_HPP
@@ -47,9 +45,9 @@
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 namespace lite {
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 
     namespace benchmark
     {
@@ -140,7 +138,6 @@ namespace lite {
                 {
                     end = std::chrono::high_resolution_clock::now();
                     mycodetime = end - start;
-                    float ms = mycodetime.count();
                 }
             }
         };
@@ -153,7 +150,7 @@ namespace lite {
          * using @ref code_timer in manual mode.
          *
          * @tparam T Return type of the _function.
-         * @param _func A func<T()> representing the callable to measure.
+         * @param _func A std::function<T()> representing the callable to measure.
          * @return Execution time in seconds as a floating-point value.
          *
          * @note The measured duration is in seconds. Multiply by 1000.0f if milliseconds
@@ -168,7 +165,7 @@ namespace lite {
          * @endcode
          */
         template <typename T>
-        float execution_time(func<T()> _func)
+        float execution_time(std::function<T()> _func)
         {
             code_timer<false> timer;
             timer.start_time();
@@ -185,7 +182,7 @@ namespace lite {
          * of its execution using @ref code_timer in manual mode.
          *
          * @tparam T The type of both the argument and return value of the _function.
-         * @param _func A func<T(T)> representing the callable to measure.
+         * @param _func A std::function<T(T)> representing the callable to measure.
          * @param arg The argument to pass to the _function.
          * @return Execution time in seconds as a floating-point value.
          *
@@ -202,7 +199,7 @@ namespace lite {
          * @endcode
          */
         template <typename T>
-        float execution_time(func<T(T)> _func, T arg)
+        float execution_time(std::function<T(T)> _func, T arg)
         {
             code_timer<false> timer;
             timer.start_time();
@@ -219,7 +216,7 @@ namespace lite {
          *
          * @tparam T1 Return type of the _function.
          * @tparam T2 Argument type of the _function (both arguments are the same type).
-         * @param _func A func<T1(T2, T2)> representing the callable to measure.
+         * @param _func A std::function<T1(T2, T2)> representing the callable to measure.
          * @param arg1 First argument to pass to the _function.
          * @param arg2 Second argument to pass to the _function.
          * @return Execution time in seconds as a floating-point value.
@@ -234,7 +231,7 @@ namespace lite {
          * @endcode
          */
         template <typename T1, typename T2>
-        float execution_time(func<T1(T2, T2)> _func, T2 arg1, T2 arg2)
+        float execution_time(std::function<T1(T2, T2)> _func, T2 arg1, T2 arg2)
         {
             code_timer<false> timer;
             timer.start_time();
@@ -251,7 +248,7 @@ namespace lite {
          *
          * @tparam T1 Return type of the _function.
          * @tparam T2 Argument type of the _function.
-         * @param _func A func<T1(T2)> representing the callable to measure.
+         * @param _func A std::function<T1(T2)> representing the callable to measure.
          * @param arg Argument to pass to the _function.
          * @return Execution time in seconds as a floating-point value.
          *
@@ -265,7 +262,7 @@ namespace lite {
          * @endcode
          */
         template <typename T1, typename T2>
-        float execution__time(func<T1(T2)> _func, T2 arg)
+        float execution__time(std::function<T1(T2)> _func, T2 arg)
         {
             code_timer<false> timer;
             timer.start_time();
@@ -283,7 +280,7 @@ namespace lite {
          * @tparam T1 Return type of the _function.
          * @tparam T2 Type of the first argument.
          * @tparam T3 Type of the second argument.
-         * @param _func A func<T1(T2, T3)> representing the callable to measure.
+         * @param _func A std::function<T1(T2, T3)> representing the callable to measure.
          * @param arg1 First argument to pass to the _function.
          * @param arg2 Second argument to pass to the _function.
          * @return Execution time in seconds as a floating-point value.
@@ -301,7 +298,7 @@ namespace lite {
          * @endcode
          */
         template <typename T1, typename T2, typename T3>
-        float execution__time(func<T1(T2, T3)> _func, T2 arg1, T3 arg2)
+        float execution__time(std::function<T1(T2, T3)> _func, T2 arg1, T3 arg2)
         {
             code_timer<false> timer;
             timer.start_time();
@@ -383,18 +380,18 @@ namespace lite {
          * @code
          * float t = 0.0023f;  // measured execution time
          * int n = 1000;       // input size
-         * str complexity = execution_type(t, n);
+         * std::string complexity = execution_type(t, n);
          * std::cout << "Estimated complexity: " << complexity << "\n";
          * @endcode
          */
-        str execution_type(float time, int num, int logbase = 10) noexcept
+        std::string execution_type(float time, int num, int logbase = 10) noexcept
         {
-            func<void()> O1 = big_O1;
-            func<void(size_t, int)> log_n = logn;
-            func<void(size_t)> On = big_On;
-            func<void(size_t, int)> log_n_n = logn_n;
-            func<void(size_t)> On2 = big_On2;
-            func<void(size_t)> On3 = big_On3;
+            std::function<void()> O1 = big_O1;
+            std::function<void(size_t, int)> log_n = logn;
+            std::function<void(size_t)> On = big_On;
+            std::function<void(size_t, int)> log_n_n = logn_n;
+            std::function<void(size_t)> On2 = big_On2;
+            std::function<void(size_t)> On3 = big_On3;
             if (time < execution_time<void>(O1))
                 return "O(1)";
             else if (time < execution__time<void, size_t, int>(log_n, static_cast<size_t>(num), logbase))
@@ -487,7 +484,7 @@ namespace lite {
          * @param s Reference to the string.
          * @return Heap memory in bytes.
          */
-        size_t heap_data(const str &s) noexcept { return sizeof(char) * s.capacity(); }
+        size_t heap_data(const std::string &s) noexcept { return sizeof(char) * s.capacity(); }
 
         /**
          * @brief Measures additional memory usage caused by executing a parameterless _function.
@@ -500,7 +497,7 @@ namespace lite {
          * @return Additional memory used in bytes (0 if no increase).
          */
         template <typename T>
-        size_t function_data(func<T()> f)
+        size_t function_data(std::function<T()> f)
         {
             PROCESS_MEMORY_COUNTERS info1, info2;
             GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));
@@ -524,7 +521,7 @@ namespace lite {
          * @return Additional memory used in bytes (0 if no increase).
          */
         template <typename T>
-        size_t function_data(func<T(T)> f, T input)
+        size_t function_data(std::function<T(T)> f, T input)
         {
             PROCESS_MEMORY_COUNTERS info1, info2;
             GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));
@@ -548,7 +545,7 @@ namespace lite {
          * @return Additional memory used in bytes (0 if no increase).
          */
         template <typename T1, typename T2>
-        size_t function__data(func<T1(T2)> f, T2 input)
+        size_t function__data(std::function<T1(T2)> f, T2 input)
         {
             PROCESS_MEMORY_COUNTERS info1, info2;
             GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));
@@ -575,7 +572,7 @@ namespace lite {
          * @return Additional memory used in bytes (0 if no increase).
          */
         template <typename T1, typename T2, typename T3>
-        size_t function__data(func<T1(T2, T3)> f, T2 input1, T3 input2)
+        size_t function__data(std::function<T1(T2, T3)> f, T2 input1, T3 input2)
         {
             PROCESS_MEMORY_COUNTERS info1, info2;
             GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));
@@ -588,9 +585,9 @@ namespace lite {
         }
     }
 
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 }
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP

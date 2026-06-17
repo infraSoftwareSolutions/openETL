@@ -54,7 +54,7 @@ namespace lite {
     class vstream
     {
     private:
-        que<vec<T>> vs;
+        std::queue<std::vector<T>> vs;
 
     public:
         /** Default constructor */
@@ -64,13 +64,13 @@ namespace lite {
          * @param vec The vector to initialize the stream with
          * @note This constructor copies the vector
          */
-        vstream(const que<vec<T>> &_vec) noexcept : vs(_vec) {}
+        vstream(const std::queue<std::vector<T>> &_vec) noexcept : vs(_vec) {}
         
         /** Constructor from rvalue vec
          * @param vec The vector to initialize the stream with
          * @note This constructor moves the vector
          */
-        vstream(que<vec<T>> &&_vec) noexcept : vs(std::move(_vec)) {}
+        vstream(std::queue<std::vector<T>> &&_vec) noexcept : vs(std::move(_vec)) {}
         
         /**
          * Constructor from initializer list
@@ -162,7 +162,7 @@ namespace lite {
          * @param vec The vec<T> whose contents will be copied.
          * @note This operation is noexcept.
          */
-        void operator=(const que<vec<T>> &vec) noexcept { vs = vec; }
+        void operator=(const std::queue<std::vector<T>> &vec) noexcept { vs = vec; }
 
         /**
          * @brief Move assignment operator from a vec<T>.
@@ -173,7 +173,7 @@ namespace lite {
          * @param vec Rvalue reference to a vec<T> whose contents will be moved.
          * @note This operation is noexcept and leaves 'vec' in a valid but unspecified state.
          */
-        void operator=(que<vec<T>> &&vec) noexcept { vs = std::move(vec); }
+        void operator=(std::queue<std::vector<T>> &&vec) noexcept { vs = std::move(vec); }
 
         /**
          * @brief Assignment operator for assigning an initializer list to the container.
@@ -183,7 +183,7 @@ namespace lite {
          *
          * @param il The initializer list whose elements will be assigned to the container.
          */
-        void operator=(std::initializer_list<vec<T>> il) noexcept { vs = il; }
+        void operator=(std::initializer_list<std::vector<T>> il) noexcept { vs = il; }
 
         /**
          * @brief Inserts a value into the vector stream.
@@ -194,7 +194,7 @@ namespace lite {
          * @param value The vector to be inserted into the queue stream.
          * @note This operation does not support chaining as it returns void.
          */
-        void operator<<(const vec<T> &value) noexcept { vs.push(value); }
+        void operator<<(const std::vector<T> &value) noexcept { vs.push(value); }
 
         /**
          * @brief Inserts a value into the vector stream using move semantics.
@@ -205,7 +205,7 @@ namespace lite {
          * @param value The rvalue reference to the vector to be inserted.
          * @note This operation does not support chaining as it returns void.
          */
-        void operator<<(vec<T> &&value) noexcept { vs.push(std::move(value)); }
+        void operator<<(std::vector<T> &&value) noexcept { vs.push(std::move(value)); }
 
         /**
          * @brief Extracts the front element from the internal queue and assigns it to the provided value.
@@ -218,7 +218,7 @@ namespace lite {
          * @param value Reference to the variable where the extracted vector will be stored.
          * @throws std::out_of_range if the internal queue is empty.
          */
-        void operator>>(vec<T> &value)
+        void operator>>(std::vector<T> &value)
         {
             if (!vs.empty())
             {
@@ -236,23 +236,23 @@ namespace lite {
     class sstream {
         private:
         bool split;
-        str split_str;
-        que<str> ss;
+        std::string split_str;
+        std::queue<std::string> ss;
         public:
 
-        sstream() noexcept : split(false), split_str(""), ss(que<str>()) {};
-        sstream(const que<str> &strVal) noexcept : split(false), split_str(""), ss(strVal) {}
-        sstream(const str &ssplit) noexcept : split(true), split_str(ssplit), ss(que<str>()) {}
-        sstream(bool isSplit) noexcept : split(isSplit), split_str(""), ss(que<str>()) {}
+        sstream() noexcept : split(false), split_str(""), ss(std::queue<std::string>()) {};
+        sstream(const std::queue<std::string> &strVal) noexcept : split(false), split_str(""), ss(strVal) {}
+        sstream(const std::string &ssplit) noexcept : split(true), split_str(ssplit), ss(std::queue<std::string>()) {}
+        sstream(bool isSplit) noexcept : split(isSplit), split_str(""), ss(std::queue<std::string>()) {}
 
         void set_split(bool isSplit) noexcept { split = isSplit; }
-        void set_split_str(const str &ssplit) noexcept { split_str = ssplit; }
+        void set_split_str(const std::string &ssplit) noexcept { split_str = ssplit; }
         
-        void operator<<(const str &value) noexcept {
+        void operator<<(const std::string &value) noexcept {
             if (split && !split_str.empty()) {
                 size_t start = 0;
                 size_t end = value.find(split_str);
-                while (end != str::npos) {
+                while (end != std::string::npos) {
                     ss.push(value.substr(start, end - start));
                     start = end + split_str.length();
                     end = value.find(split_str, start);
@@ -263,7 +263,7 @@ namespace lite {
             }
         }
 
-        void operator>>(str &value) {
+        void operator>>(std::string &value) {
             if (!ss.empty()) {
                 value = ss.front();
                 ss.pop();
@@ -286,10 +286,10 @@ namespace lite {
         {
         private:
             size_t count = 1;
-            str s = "s";
+            std::string s = "s";
             long long factor = 1;
-            vec<float> time_v;
-            vec<str> test_names;
+            std::vector<float> time_v;
+            std::vector<std::string> test_names;
             float min_time = std::numeric_limits<float>::max();
             float max_time = std::numeric_limits<float>::min();
 
@@ -400,7 +400,7 @@ namespace lite {
              * - Results are printed with test number and scaled time (factor * measured_time)
              * @throws noexcept This function does not throw exceptions
              */
-            void operator<<(func<bool()> fx) noexcept
+            void operator<<(std::function<bool()> fx) noexcept
             {
                 time_v.push_back(benchmark::execution_time<bool>(fx));
                 float current_time = factor * time_v[count - 1];
@@ -480,12 +480,12 @@ namespace lite {
         class test_stream
         {
         private:
-            vec<TEST> container;
+            std::vector<TEST> container;
             bool result_ts = true;
             size_t total_tests = 0;
             size_t passed_tests = 0;
             size_t failed_tests = 0;
-            vec<str> error_log;
+            std::vector<std::string> error_log;
 
         public:
             test_stream() = default;
@@ -510,11 +510,11 @@ namespace lite {
              *
              * On any exception, result_ts is set to false and an error message is output to std::cerr
              */
-            void operator<<(func<bool()> fx) noexcept
+            void operator<<(std::function<bool()> fx) noexcept
             {
                 total_tests++;
                 bool test_result = false;
-                if (std::is_nothrow_invocable_r_v<bool, func<bool()>, bool>)
+                if (std::is_nothrow_invocable_r_v<bool, std::function<bool()>, bool>)
                 {
                     test_result = fx();
                     result_ts &= test_result;
@@ -528,7 +528,7 @@ namespace lite {
                     }
                     catch (const std::invalid_argument &e)
                     {
-                        str err_msg = "invalid argument: " + str(e.what());
+                        std::string err_msg = "invalid argument: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -536,7 +536,7 @@ namespace lite {
                     }
                     catch (const std::length_error &e)
                     {
-                        str err_msg = "length error: " + str(e.what());
+                        std::string err_msg = "length error: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -544,7 +544,7 @@ namespace lite {
                     }
                     catch (const std::exception &e)
                     {
-                        str err_msg = "Exception: " + str(e.what());
+                        std::string err_msg = "Exception: " + std::string(e.what());
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -552,7 +552,7 @@ namespace lite {
                     }
                     catch (const char *msg)
                     {
-                        str err_msg = "Error: " + str(msg);
+                        std::string err_msg = "Error: " + std::string(msg);
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -560,7 +560,7 @@ namespace lite {
                     }
                     catch (...)
                     {
-                        str err_msg = "Unknown error occurred";
+                        std::string err_msg = "Unknown error occurred";
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -574,11 +574,11 @@ namespace lite {
                 container.push_back(TEST{fx()});
             }
 
-            void operator<<(func<TEST()> fx) noexcept
+            void operator<<(std::function<TEST()> fx) noexcept
             {
                 total_tests++;
                 bool test_result = false;
-                if (std::is_nothrow_invocable_r_v<bool, func<bool()>, bool>)
+                if (std::is_nothrow_invocable_r_v<bool, std::function<bool()>, bool>)
                 {
                     test_result = fx().get();
                     result_ts &= test_result;
@@ -592,7 +592,7 @@ namespace lite {
                     }
                     catch (const std::invalid_argument &e)
                     {
-                        str err_msg = "invalid argument: " + str(e.what());
+                        std::string err_msg = "invalid argument: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -600,7 +600,7 @@ namespace lite {
                     }
                     catch (const std::length_error &e)
                     {
-                        str err_msg = "length error: " + str(e.what());
+                        std::string err_msg = "length error: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -608,7 +608,7 @@ namespace lite {
                     }
                     catch (const std::exception &e)
                     {
-                        str err_msg = "Exception: " + str(e.what());
+                        std::string err_msg = "Exception: " + std::string(e.what());
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -616,7 +616,7 @@ namespace lite {
                     }
                     catch (const char *msg)
                     {
-                        str err_msg = "Error: " + str(msg);
+                        std::string err_msg = "Error: " + std::string(msg);
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -624,7 +624,7 @@ namespace lite {
                     }
                     catch (...)
                     {
-                        str err_msg = "Unknown error occurred";
+                        std::string err_msg = "Unknown error occurred";
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -696,7 +696,7 @@ namespace lite {
              * @brief Retrieves the error log
              * @return Vector containing all error messages
              */
-            const vec<str> &get_error_log() const noexcept { return error_log; }
+            const std::vector<std::string> &get_error_log() const noexcept { return error_log; }
 
             /**
              * @brief Clears all test statistics and error log
@@ -711,8 +711,8 @@ namespace lite {
                 result_ts = true;
             }
 
-            vec<size_t> findIndex(bool isFailed) noexcept {
-                vec<size_t> result;
+            std::vector<size_t> findIndex(bool isFailed) noexcept {
+                std::vector<size_t> result;
                 for(size_t i = 0; i < container.size(); i++) {
                     if(!isFailed && container[i].get()) {
                         result.push_back(i);
@@ -762,7 +762,7 @@ namespace lite {
          *        safe execution with built-in error handling.
          *
          * The stream_t class acts as a minimal stream-like container for
-         * function objects (func<T()>). It allows storing a function,
+         * function objects (std::function<T()>). It allows storing a function,
          * retrieving it, and executing it with exception handling.
          *
          * @tparam T The return type of the function object.
@@ -777,7 +777,7 @@ namespace lite {
              * This holds the function object that will be executed when
              * handler() or run_test() is called.
              */
-            func<T()> f;
+            std::function<T()> f;
 
         protected:
             /**
@@ -833,7 +833,7 @@ namespace lite {
              *
              * @param fx The function object to be stored.
              */
-            void operator<<(func<T()> fx) noexcept
+            void operator<<(std::function<T()> fx) noexcept
             {
                 f = fx;
                 if (immediate_run)
@@ -845,13 +845,13 @@ namespace lite {
              *
              * Example usage:
              * @code
-             * func<int()> func;
+             * std::function<int()> func;
              * s >> func; // func now holds the stored function
              * @endcode
              *
              * @param fx Reference to a function object where the stored function will be copied.
              */
-            void operator>>(func<T()> &fx) noexcept { fx = f; }
+            void operator>>(std::function<T()> &fx) noexcept { fx = f; }
             
             /**
              * @brief Executes the stored function safely.
@@ -872,7 +872,7 @@ namespace lite {
          * @brief A template class that wraps a unary function (T -> T)
          *        and provides safe execution with built-in error handling.
          *
-         * The stream_tp class stores a function of type func<T(T)>,
+         * The stream_tp class stores a function of type std::function<T(T)>,
          * allowing input transformation and safe execution with exception handling.
          *
          * @tparam T The input and output type of the function object.
@@ -887,7 +887,7 @@ namespace lite {
              * This holds the unary function (T -> T) that will be executed
              * when handler() or run_test() is called.
              */
-            func<T(T)> f;
+            std::function<T(T)> f;
 
         protected:
             /**
@@ -942,20 +942,20 @@ namespace lite {
              *
              * @param fx The function object to be stored.
              */
-            void operator<<(func<T(T)> fx) noexcept { f = fx; }
+            void operator<<(std::function<T(T)> fx) noexcept { f = fx; }
             
             /**
              * @brief Extracts the stored function into another func.
              *
              * Example usage:
              * @code
-             * func<int(int)> func;
+             * std::function<int(int)> func;
              * s >> func; // func now holds the stored function
              * @endcode
              *
              * @param fx Reference to a function object where the stored function will be copied.
              */
-            void operator>>(func<T(T)> &fx) noexcept { fx = f; }
+            void operator>>(std::function<T(T)> &fx) noexcept { fx = f; }
             
             /**
              * @brief Executes the stored function with an lvalue reference input.
@@ -987,7 +987,7 @@ namespace lite {
          * @brief A template class that wraps a unary transformation function (T2 -> T1)
          *        and provides safe execution with built-in error handling.
          *
-         * The stream__tp class stores a function of type func<T1(T2)>,
+         * The stream__tp class stores a function of type std::function<T1(T2)>,
          * allowing input of type T2 to be transformed into output of type T1.
          * It also provides exception handling for common errors.
          *
@@ -1004,7 +1004,7 @@ namespace lite {
              * Holds the unary function (T2 -> T1) that will be executed
              * when handler() or run_test() is called.
              */
-            func<T1(T2)> f;
+            std::function<T1(T2)> f;
 
         protected:
             /**
@@ -1062,20 +1062,20 @@ namespace lite {
              *
              * @param fx The function object to be stored.
              */
-            void operator<<(func<T1(T2)> fx) noexcept { f = fx; }
+            void operator<<(std::function<T1(T2)> fx) noexcept { f = fx; }
            
             /**
              * @brief Extracts the stored function into another func.
              *
              * Example usage:
              * @code
-             * func<int(double)> func;
+             * std::function<int(double)> func;
              * s >> func; // func now holds the stored function
              * @endcode
              *
              * @param fx Reference to a function object where the stored function will be copied.
              */
-            void operator>>(func<T1(T2)> &fx) noexcept { fx = f; }
+            void operator>>(std::function<T1(T2)> &fx) noexcept { fx = f; }
             
             /**
              * @brief Executes the stored function safely with a given input.
@@ -1097,7 +1097,7 @@ namespace lite {
          * @brief A template class that wraps a binary function (T2, T3 -> T1)
          *        and provides safe execution with built-in error handling.
          *
-         * The stream__t_p class stores a function of type func<T1(T2, T3)>,
+         * The stream__t_p class stores a function of type std::function<T1(T2, T3)>,
          * allowing transformation of two inputs (T2 and T3) into one output (T1).
          * It also provides exception handling for common errors.
          *
@@ -1115,7 +1115,7 @@ namespace lite {
              * Holds the binary function (T2, T3 -> T1) that will be executed
              * when handler() or run_test() is called.
              */
-            func<T1(T2, T3)> f;
+            std::function<T1(T2, T3)> f;
 
         protected:
             /**
@@ -1174,20 +1174,20 @@ namespace lite {
              *
              * @param fx The function object to be stored.
              */
-            void operator<<(func<T1(T2, T3)> fx) noexcept { f = fx; }
+            void operator<<(std::function<T1(T2, T3)> fx) noexcept { f = fx; }
             
             /**
              * @brief Extracts the stored function into another func.
              *
              * Example usage:
              * @code
-             * func<int(int,int)> func;
+             * std::function<int(int,int)> func;
              * s >> func; // func now holds the stored function
              * @endcode
              *
              * @param fx Reference to a function object where the stored function will be copied.
              */
-            void operator>>(func<T1(T2, T3)> &fx) noexcept { fx = f; }
+            void operator>>(std::function<T1(T2, T3)> &fx) noexcept { fx = f; }
             
             /**
              * @brief Executes the stored function safely with two inputs.

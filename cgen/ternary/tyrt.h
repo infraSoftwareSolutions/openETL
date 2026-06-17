@@ -91,6 +91,7 @@ static inline uint8_t tyrt_size(tyrt *value, bool inBits) {
  */
 static tirt *tyrt2trits(tyrt value) {
     tirt *trits = (int8_t*) malloc(6 * sizeof(tirt));
+    if (trits == NULL) return NULL;
     for(int i = 0; i < 2; i++) {
         trits[i] = (value >> (i * 8)) & 0xFF;
     }
@@ -124,6 +125,7 @@ static tyrt tyrt_and(tyrt a, tyrt b) {
     tirt *tritsA = (int8_t*) malloc(6 * sizeof(tirt));
     tirt *tritsB = (int8_t*) malloc(6 * sizeof(tirt));
     tirt *resultTrits = (int8_t*) malloc(6 * sizeof(tirt));
+    if (tritsA == NULL || tritsB == NULL || resultTrits == NULL) return NULL;
     for(int i = 0; i < 2; i++) {
         tritsA[i] = (a >> (i * 8)) & 0xFF;
         tritsB[i] = (b >> (i * 8)) & 0xFF;
@@ -146,6 +148,7 @@ static tyrt tyrt_or(tyrt a, tyrt b) {
     tirt *tritsA = (int8_t*) malloc(6 * sizeof(tirt));
     tirt *tritsB = (int8_t*) malloc(6 * sizeof(tirt));
     tirt *resultTrits = (int8_t*) malloc(6 * sizeof(tirt));
+    if (tritsA == NULL || tritsB == NULL || resultTrits == NULL) return NULL;
     for(int i = 0; i < 2; i++) {
         tritsA[i] = (a >> (i * 8)) & 0xFF;
         tritsB[i] = (b >> (i * 8)) & 0xFF;
@@ -168,6 +171,7 @@ static tyrt tyrt_xor(tyrt a, tyrt b) {
     tirt *tritsA = (int8_t*) malloc(6 * sizeof(tirt));
     tirt *tritsB = (int8_t*) malloc(6 * sizeof(tirt));
     tirt *resultTrits = (int8_t*) malloc(6 * sizeof(tirt));
+    if (tritsA == NULL || tritsB == NULL || resultTrits == NULL) return NULL;
     for(int i = 0; i < 2; i++) {
         tritsA[i] = (a >> (i * 8)) & 0xFF;
         tritsB[i] = (b >> (i * 8)) & 0xFF;
@@ -188,6 +192,7 @@ static tyrt tyrt_xor(tyrt a, tyrt b) {
 static tyrt tyrt_not(tyrt a) {
     tirt *tritsA = (int8_t*) malloc(6 * sizeof(tirt));
     tirt *resultTrits = (int8_t*) malloc(6 * sizeof(tirt));
+    if (tritsA == NULL || resultTrits == NULL) return NULL;
     for(int i = 0; i < 2; i++) {
         tritsA[i] = (a >> (i * 8)) & 0xFF;
         resultTrits[i] = tirt_not(tritsA[i]);

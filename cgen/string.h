@@ -12,23 +12,23 @@
     #define cstr(name, sizeValue) \
         char name[sizeValue]
 
-    static inline size_t length(const cstrptr value) { return (value != NULL) ? strlen(value) : 0; }
+    static inline size_t length(const char * value) { return (value != NULL) ? strlen(value) : 0; }
 
-    static inline bool equal(const cstrptr value_1, const cstrptr value_2)
+    static inline bool equal(const char * value_1, const char * value_2)
     {
         if (value_1 == NULL || value_2 == NULL)
         return false;
         return strcmp(value_1, value_2) == 0 ? true : false;
     }
 
-    static inline cstrptr concatenate(cstrptr value_1, const cstrptr value_2)
+    static inline cstrptr concatenate(char* value_1, const char * value_2)
     {
         if (value_1 == NULL || value_2 == NULL)
         return value_1;
         return strcat(value_1, value_2);
     }
 
-    static inline bool is_empty(const cstrptr value) { return (value == NULL || strlen(value) == 0) ? true : false; }
+    static inline bool is_empty(const char * value) { return (value == NULL || strlen(value) == 0) ? true : false; }
 
     /**
      * @brief Clear string content by reallocating to empty string
@@ -36,13 +36,13 @@
      * @return Pointer to cleared string or NULL if input is NULL
      * @note Properly handles memory reallocation for empty string
      */
-    static void *cstr_empty(cstrptr value)
+    static void *cstr_empty(char* value)
     {
         if (value == NULL)
         return NULL;
         
         // Free old memory and allocate fresh 1 byte for empty string
-        cstrptr temp = (cstrptr )malloc(1);
+        cstrptr temp = (char*) malloc(1);
         if (temp != NULL) {
         temp[0] = '\0';
         free(value);
@@ -56,7 +56,7 @@
      * @param value The string to free
      * @note Safely handles NULL pointers, frees any non-NULL string regardless of content
      */
-    static void cstr_free(cstrptr value)
+    static void cstr_free(char* value)
     {
         if (value == NULL)
         {
@@ -66,7 +66,7 @@
         free(value);
     }
 
-    static bool exist(const cstrptr value, char c)
+    static bool exist(const char * value, char c)
     {
         if (value == NULL || is_empty(value))
         {
@@ -88,7 +88,7 @@
      * @return true if substring is found, false otherwise
      * @note Uses standard strstr for reliable substring search with proper pattern handling
      */
-    static bool sub_exist(const cstrptr value_1, const cstrptr value_2)
+    static bool sub_exist(const char * value_1, const char * value_2)
     {
         if (value_1 == NULL || value_2 == NULL || is_empty(value_1) || is_empty(value_2))
         {
@@ -101,7 +101,7 @@
         return strstr(value_1, value_2) != NULL ? true : false;
     }
 
-    static size_t count(const cstrptr value, char c)
+    static size_t count(const char * value, char c)
     {
         if (value == NULL || is_empty(value))
         {
@@ -117,7 +117,7 @@
         return result;
     }
 
-static inline size_t length(const cstrptr _str_)
+static inline size_t length(const char * _str_)
 {
     size_t len = 0;
     while (_str_[len] != '\0')
@@ -127,7 +127,7 @@ static inline size_t length(const cstrptr _str_)
     return len;
 }
 
-static inline size_t find(const cstrptr _str_, char ch)
+static inline size_t find(const char * _str_, char ch)
 {
     size_t index = 0;
     while (_str_[index] != '\0')
@@ -141,7 +141,7 @@ static inline size_t find(const cstrptr _str_, char ch)
     return -1; // Not found
 }
 
-static inline bool compare(const cstrptr _str_1, const cstrptr _str_2)
+static inline bool compare(const char * _str_1, const char * _str_2)
 {
     size_t index = 0;
     while (_str_1[index] != '\0' && _str_2[index] != '\0')
@@ -155,7 +155,7 @@ static inline bool compare(const cstrptr _str_1, const cstrptr _str_2)
     return _str_1[index] == '\0' && _str_2[index] == '\0'; // Both should end at the same time
 }
 
-static inline void copy(cstrptr destination, const cstrptr source)
+static inline void copy(char* destination, const char * source)
 {
     size_t index = 0;
     while (source[index] != '\0')
@@ -166,7 +166,7 @@ static inline void copy(cstrptr destination, const cstrptr source)
     destination[index] = '\0'; // Null-terminate the destination _str_ing
 }
 
-static inline size_t count_char(const cstrptr _str_, char ch)
+static inline size_t count_char(const char * _str_, char ch)
 {
     size_t count = 0;
     size_t index = 0;
@@ -181,7 +181,7 @@ static inline size_t count_char(const cstrptr _str_, char ch)
     return count;
 }
 
-static size_t count_substr(const cstrptr _str_, const cstrptr sub_str_)
+static size_t count_substr(const char * _str_, const char * sub_str_)
 {
     size_t count = 0;
     size_t index = 0;
@@ -201,7 +201,7 @@ static size_t count_substr(const cstrptr _str_, const cstrptr sub_str_)
     return count;
 }
 
-static int *locations(const cstrptr _str_, char ch, size_t out_count)
+static int *locations(const char * _str_, char ch, size_t out_count)
 {
     size_t char_count = count_char(_str_, ch);
     int *indices = (int *)malloc(char_count * sizeof(int));
@@ -241,7 +241,7 @@ void cstring_init(cstring *_str)
 {
     _str->capacity = 16;
     _str->length = 0;
-    _str->data = (cstrptr )malloc(_str->capacity);
+    _str->data = (char* )malloc(_str->capacity);
     _str->data[0] = '\0';
 }
 
@@ -255,14 +255,14 @@ void cstring_init(cstring *_str)
  * @param dest Pointer to the target cstring.
  * @param src  Null‑terminated source string to append.
  */
-static inline void cstring_append(cstring *dest, const cstrptr src)
+static inline void cstring_append(cstring *dest, const char * src)
 {
     size_t src_len = strlen(src);
 
     if (dest->length + src_len + 1 > dest->capacity)
     {
         dest->capacity = (dest->length + src_len + 1) * 2;
-        dest->data = (cstrptr )realloc(dest->data, dest->capacity);
+        dest->data = (char* )realloc(dest->data, dest->capacity);
     }
 
     strcpy(dest->data + dest->length, src);
@@ -293,7 +293,7 @@ static inline void cstring_free(cstring *_str)
  * @param destination Copy of the destination cstring structure.
  * @param source      Null‑terminated C string to assign.
  */
-static inline void set(cstring destination, cstrptr source)
+static inline void set(cstring destination, char* source)
 {
     destination.data = source;
     destination.length = strlen(destination.data);
@@ -330,7 +330,7 @@ static inline void resize(cstring _str, size_t NLength)
     if (NLength + 1 > _str.capacity)
     {
         _str.capacity = (NLength + 1) * 2;
-        _str.data = (cstrptr )realloc(_str.data, _str.capacity);
+        _str.data = (char* )realloc(_str.data, _str.capacity);
     }
     _str.length = NLength;
     _str.data[NLength] = '\0';
@@ -345,7 +345,7 @@ static inline void resize(cstring _str, size_t NLength)
  * @param destination Buffer where data will be stored.
  * @param source      Source cstring to copy from.
  */
-static inline void copy(cstrptr destination, cstring source) { strcpy(destination, source.data); }
+static inline void copy(char* destination, cstring source) { strcpy(destination, source.data); }
 
 /**
  * @brief Return the length of a cstring.
@@ -368,7 +368,7 @@ static inline size_t length(cstring source) { return source.length; }
 static cstring lower(cstring source)
 {
     cstring result;
-    result.data = (cstrptr )malloc(source.length + 1);
+    result.data = (char* )malloc(source.length + 1);
     strcpy(result.data, source.data);
     result.length = source.length;
     result.capacity = source.capacity;
@@ -389,7 +389,7 @@ static cstring lower(cstring source)
 static cstring upper(cstring source)
 {
     cstring result;
-    result.data = (cstrptr )malloc(source.length + 1);
+    result.data = (char* )malloc(source.length + 1);
     strcpy(result.data, source.data);
     result.length = source.length;
     result.capacity = source.capacity;
@@ -412,7 +412,7 @@ static cstring upper(cstring source)
 static cstring append_cstring(cstring destination, cstring source)
 {
     cstring result;
-    result.data = (cstrptr )malloc(destination.length + source.length + 1);
+    result.data = (char* )malloc(destination.length + source.length + 1);
         if(destination.capacity <= destination.length + source.length) {
         result.capacity = destination.capacity + source.length + source.length / 2;
     } else {
@@ -434,10 +434,10 @@ static cstring append_cstring(cstring destination, cstring source)
  * @param source      Null‑terminated C string to append.
  * @return New cstring containing the concatenation.
  */
-static cstring append_string(cstring destination, cstrptr source)
+static cstring append_string(cstring destination, char* source)
 {
     cstring result;
-    result.data = (cstrptr )malloc(destination.length + strlen(source) + 1);
+    result.data = (char* )malloc(destination.length + strlen(source) + 1);
     if(destination.capacity <= destination.length + strlen(source)) {
         result.capacity = destination.capacity + strlen(source) + strlen(source) / 2;
     } else {
@@ -462,7 +462,7 @@ static cstring append_string(cstring destination, cstrptr source)
 static cstring append_char(cstring destination, char source)
 {
     cstring result;
-    result.data = (cstrptr )malloc(destination.length + 2);
+    result.data = (char* )malloc(destination.length + 2);
     strcpy(result.data, destination.data);
     result.capacity = destination.capacity + 2;
     result.data[destination.length] = source;
@@ -495,7 +495,7 @@ static inline bool search(cstring source, char target)
  * @param target Null‑terminated substring to find.
  * @return true if @p target is found, false otherwise.
  */
-static inline bool search(cstring source, cstrptr target)
+static inline bool search(cstring source, char* target)
 {
     return strstr(source.data, target) != NULL;
 }
@@ -561,7 +561,7 @@ static cstring *split(cstring source, char delimiter, size_t *count)
 static cstring substring(cstring source, size_t start, size_t length)
 {
     cstring result;
-    result.data = (cstrptr )malloc(length + 1);
+    result.data = (char*)malloc(length + 1);
     strncpy(result.data, source.data + start, length);
     result.data[length] = '\0';
     result.length = length;
@@ -580,7 +580,7 @@ static cstring substring(cstring source, size_t start, size_t length)
 static cstring reverse(cstring source)
 {
     cstring result;
-    result.data = (cstrptr )malloc(source.length + 1);
+    result.data = (char*)malloc(source.length + 1);
     for (size_t i = 0; i < source.length; i++)
         result.data[i] = source.data[source.length - 1 - i];
     result.data[source.length] = '\0';
@@ -602,7 +602,7 @@ static cstring reverse(cstring source)
  * @param substring Null‑terminated substring to insert.
  * @param position  Insertion index (0 = beginning).
  */
-static void insertBE(cstring *source, cstrptr substring, size_t position)
+static void insertBE(cstring *source, char* substring, size_t position)
 {
     if (position > source->length)
         position = source->length;
@@ -613,7 +613,7 @@ static void insertBE(cstring *source, cstrptr substring, size_t position)
     if (new_length + 1 > source->capacity)
     {
         source->capacity = (new_length + 1) * 2;
-        source->data = (cstrptr )realloc(source->data, source->capacity);
+        source->data = (char* )realloc(source->data, source->capacity);
     }
 
     memmove(source->data + position + substring_len, source->data + position, source->length - position + 1);
@@ -629,7 +629,7 @@ static void insertBE(cstring *source, cstrptr substring, size_t position)
  * @param source    Pointer to the string to modify.
  * @param substring Null‑terminated substring to insert.
  */
-static inline void insertB(cstring *source, cstrptr substring)
+static inline void insertB(cstring *source, char* substring)
 {
     insertBE(source, substring, 0);
 }
@@ -645,7 +645,7 @@ static inline void insertB(cstring *source, cstrptr substring)
  * @param source    Pointer to the string to modify.
  * @param substring Null‑terminated substring to insert.
  */
-static inline void insertE(cstring *source, cstrptr substring)
+static inline void insertE(cstring *source, char* substring)
 {
     insertBE(source, substring, source->length);
 }
@@ -674,7 +674,7 @@ static inline bool exist(cstring _str, char ch)
     return false; // Not found
 }
 
-static inline bool exist(cstring _str, cstrptr substr)
+static inline bool exist(cstring _str, char* substr)
 {
     return strstr(_str.data, substr) != NULL;
 }

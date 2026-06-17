@@ -66,8 +66,6 @@
 #include <string>
 #include <memory>
 
-#include "cgen/micros/structure.h"
-
 #pragma once
 #ifndef METACORE___LITE___UNITTEST_HPP
 #define METACORE___LITE___UNITTEST_HPP
@@ -75,9 +73,9 @@
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 namespace lite {
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 
     /**
      * @class TEST
@@ -86,44 +84,44 @@ namespace lite {
      * The TEST class encapsulates a test case with optional name, description,
      * and boolean result. It provides comprehensive operators for logical operations.
      */
-    object TEST
+    class TEST
     {
     private:
-        str name;
-        str description;
+        std::string name;
+        std::string description;
         bool result;
     public:
         /**
          * @brief Default constructor initializing a test with default values.
          */
-        TEST() : name("default"), description("no description"), result(false) {};
+        TEST() : name("default"),
+        description("no description"),
+        result(false) {};
 
         /**
          * @brief Constructor with test result only.
          * @param value The boolean result of the test
          */
-        TEST(bool value) noexcept {
-            name = "default";
-            description = "no description";
-            result = value;
-        }
+        TEST(bool value) noexcept :
+        name("default"),
+        description("no description"),
+        result(value) {}
         
         /**
          * @brief Constructor with test name only.
          * @param name The name/identifier of the test
          */
-        TEST(const str& name) noexcept { 
-            this->name = name;
-            description = "no description";
-            result = false;
-        }
+        TEST(const std::string& Name) noexcept : 
+        name(Name), 
+        description("no description"), 
+        result(false) {}
         
         /**
          * @brief Constructor with test name and description.
          * @param name The name/identifier of the test
          * @param description The detailed description of the test
          */
-        TEST(const str& name, const str& description) noexcept {
+        TEST(const std::string& name, const std::string& description) noexcept {
             this->name = name;
             this->description = description;
             result = false;
@@ -135,21 +133,21 @@ namespace lite {
          * @param description The detailed description of the test
          * @param result The boolean result of the test
          */
-        TEST(const str& name, const str& description, bool result) noexcept {
-            this->name = name;
-            this->description = description;
-            this->result = result;
-        }
+        TEST(const std::string& Name,
+            const std::string& Description,
+            bool Result) noexcept : 
+            name(Name),
+            description(Description),
+            result(Result) {}
 
         /**
          * @brief Copy constructor.
-         * @param other The TEST object to copy from
+         * @param other The TEST class to copy from
          */
-        TEST(const TEST& other) {
-            name = other.name;
-            description = other.description;
-            result = other.result;
-        }
+        TEST(const TEST& other) noexcept : 
+        name(other.name),
+        description(other.description),
+        result(other.result) {}
 
         /**
          * @brief Destructor.
@@ -160,7 +158,7 @@ namespace lite {
          * @brief Set the test name.
          * @param name The new test name
          */
-        void set(const str& name) noexcept {
+        void set(const std::string& name) noexcept {
             this->name = name;
         }
 
@@ -177,7 +175,7 @@ namespace lite {
          * @param isName If true, returns the name; if false, returns the description
          * @return The requested string property
          */
-        str get(bool isName) noexcept {
+        std::string get(bool isName) noexcept {
             return isName ? name : description;
         }
 
@@ -268,7 +266,7 @@ namespace lite {
 
         /**
          * @brief Copy assignment operator with another TEST object.
-         * @param other The TEST object to copy from
+         * @param other The TEST class to copy from
          */
         void operator=(const TEST& other) noexcept {
             name = other.name;
@@ -278,7 +276,7 @@ namespace lite {
 
         /**
          * @brief Equality comparison operator with another TEST object.
-         * @param value The TEST object to compare with
+         * @param value The TEST class to compare with
          * @return True if both results are equal
          */
         constexpr bool operator==(const TEST& value) noexcept {
@@ -287,7 +285,7 @@ namespace lite {
 
         /**
          * @brief Inequality comparison operator with another TEST object.
-         * @param value The TEST object to compare with
+         * @param value The TEST class to compare with
          * @return True if results are not equal
          */
         constexpr bool operator!=(const TEST& value) noexcept {
@@ -296,7 +294,7 @@ namespace lite {
 
         /**
          * @brief Logical OR operator with another TEST object.
-         * @param value The TEST object to OR with
+         * @param value The TEST class to OR with
          * @return Logical OR of both results
          */
         constexpr bool operator||(const TEST& value) noexcept {
@@ -305,7 +303,7 @@ namespace lite {
 
         /**
          * @brief Logical AND operator with another TEST object.
-         * @param value The TEST object to AND with
+         * @param value The TEST class to AND with
          * @return Logical AND of both results
          */
         constexpr bool operator&&(const TEST& value) noexcept {
@@ -314,7 +312,7 @@ namespace lite {
 
         /**
          * @brief Bitwise XOR operator with another TEST object.
-         * @param value The TEST object to XOR with
+         * @param value The TEST class to XOR with
          * @return Bitwise XOR of both results
          */
         constexpr bool operator^(const TEST& value) noexcept {
@@ -323,7 +321,7 @@ namespace lite {
 
         /**
          * @brief Bitwise OR assignment operator with another TEST object.
-         * @param value The TEST object to OR assign with
+         * @param value The TEST class to OR assign with
          */
         constexpr void operator|=(const TEST& value) noexcept {
             result |= value.result;
@@ -331,7 +329,7 @@ namespace lite {
 
         /**
          * @brief Bitwise AND assignment operator with another TEST object.
-         * @param value The TEST object to AND assign with
+         * @param value The TEST class to AND assign with
          */
         constexpr void operator&=(const TEST& value) noexcept {
             result &= value.result;
@@ -339,7 +337,7 @@ namespace lite {
 
         /**
          * @brief Bitwise XOR assignment operator with another TEST object.
-         * @param value The TEST object to XOR assign with
+         * @param value The TEST class to XOR assign with
          */
         constexpr void operator^=(const TEST& value) noexcept {
             result ^= value.result;
@@ -350,7 +348,7 @@ namespace lite {
          * @param name The test name to look up
          * @return The test result if name matches, bool() otherwise with error message
          */
-        bool operator[](const str& name) noexcept {
+        bool operator[](const std::string& name) noexcept {
             if(name == this->name) return result;
             std::cerr << "Name Error: Unknown name." << std::endl;
             return bool();
@@ -386,7 +384,7 @@ namespace lite {
          * @return const char* A string message representing the test result.
          * @note This function is noexcept and guarantees not to throw exceptions.
          */
-        const str test_message(bool test_result) noexcept
+        const std::string test_message(bool test_result) noexcept
         {
             return test_result ? 
             "Success" : "Failed";
@@ -414,15 +412,15 @@ namespace lite {
          * @param expvalue The expected value
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the basic test counter
          */
         template <typename T>
         TEST basic(
             const T& realvalue,
             const T& expvalue,
-            const str& name,
-            const str& description) noexcept
+            const std::string& name,
+            const std::string& description) noexcept
         {
             index.basic++;
             return !(name.empty()) && !(description.empty()) ?
@@ -437,7 +435,7 @@ namespace lite {
 
         template <typename T>
         TEST range(T realvalue, T uplimit, T downlimit,
-            const str& name, const str& description) noexcept {
+            const std::string& name, const std::string& description) noexcept {
             return name.empty() && description.empty() ? 
             TEST{range(realvalue, uplimit, downlimit)} : 
             TEST{name, description, range(realvalue, uplimit, downlimit)};
@@ -472,15 +470,15 @@ namespace lite {
          * @param expected_v The expected vector
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the vector test counter
          */
         template <typename T>
         TEST vector(
             const std::vector<T>& real_v,
             const std::vector<T>& expected_v,
-            const str& name,
-            const str& description) noexcept
+            const std::string& name,
+            const std::string& description) noexcept
         {
             index.vector++;
             if (real_v.size() != expected_v.size()) {
@@ -533,14 +531,14 @@ namespace lite {
          * @param expected_2dv The expected 2D vector
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the vector test counter
          */
         template <typename T>
         TEST vector_2d(const std::vector<std::vector<T>>& real_2dv,
                        const std::vector<std::vector<T>>& expected_2dv,
-                       const str& name,
-                       const str& description) noexcept
+                       const std::string& name,
+                       const std::string& description) noexcept
         {
             index.vector++;
             if (real_2dv.size() != expected_2dv.size()) {
@@ -604,13 +602,13 @@ namespace lite {
          * @param expected_3dv The expected 3D vector
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the vector test counter
          */
         template <typename T>
         TEST vector_3d(const std::vector<std::vector<std::vector<T>>>& real_3dv,
                        const std::vector<std::vector<std::vector<T>>>& expected_3dv,
-                       const str& name, const str& description) noexcept
+                       const std::string& name, const std::string& description) noexcept
         {
             if (real_3dv.size() != expected_3dv.size()) {
                 return !(name.empty()) && !(description.empty()) ? 
@@ -660,13 +658,13 @@ namespace lite {
          * @param expected The expected return value
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the function test counter
          */
         template <typename T>
         TEST function(std::function<T()> fx, T expected,
-                    const str& name,
-                    const str& description) noexcept
+                    const std::string& name,
+                    const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -698,13 +696,13 @@ namespace lite {
          * @param expected The expected return value
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the function test counter
          */
         template <typename T>
         TEST function(std::function<T(T)> fx, T value, T expected,
-                    const str& name,
-                    const str& description) noexcept
+                    const std::string& name,
+                    const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -738,12 +736,12 @@ namespace lite {
          * @param expected The expected return value
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the function test counter
          */
         template <typename T1, typename T2>
         TEST function(std::function<T1(T2)> fx, T2 value, T1 expected,
-                    const str& name, const str& description) noexcept
+                    const std::string& name, const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -781,13 +779,13 @@ namespace lite {
          * @param value2 The second input value
          * @param name The test name
          * @param description The test description
-         * @return TEST object containing result and metadata
+         * @return TEST class containing result and metadata
          * @note Increments the function test counter
          */
         template <typename T1, typename T2, typename T3>
         TEST function(std::function<T1(T2, T3)> fx, T1 expected,
-                    T2 value1, T3 value2, const str& name,
-                    const str& description) noexcept
+                    T2 value1, T3 value2, const std::string& name,
+                    const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -826,9 +824,9 @@ namespace lite {
         }
     }
 
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 }
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP

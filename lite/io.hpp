@@ -39,8 +39,6 @@
 #include <climits>
 #include <stdexcept>
 
-#include "cgen/micros/structure.h"
-
 #pragma once
 #ifndef METACORE___LITE___IO_HPP
 #define METACORE___LITE___IO_HPP
@@ -48,9 +46,9 @@
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 namespace lite {
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 
     namespace io
     {
@@ -62,7 +60,7 @@ namespace lite {
         inline void NewLines(size_t num = 1) noexcept
         {
             for (size_t i = 0; i < num; i++)
-                std::cout << nl;
+                std::cout << '\n';
         }
 
         /**
@@ -74,7 +72,7 @@ namespace lite {
         {
             for (size_t i = length; i != 0; i--)
                 std::cout << ch;
-            std::cout << nl;
+            std::cout << '\n';
         }
 
         /**
@@ -95,7 +93,7 @@ namespace lite {
          * @tparam T Type of the value to print.
          * @param output The value to be printed.
          */
-        void println() noexcept { std::cout << nl; }
+        void println() noexcept { std::cout << '\n'; }
         template <typename T, typename... Args>
         void println(const T &output, Args... remaining_t) noexcept
         {
@@ -121,7 +119,7 @@ namespace lite {
          * @tparam T Type of the message to print.
          * @param output The error message to be printed.
          */
-        void println_error() noexcept { std::cerr << nl; }
+        void println_error() noexcept { std::cerr << '\n'; }
         template <typename T, typename... Args>
         void println_error(const T &output, Args... remaining_t) noexcept
         {
@@ -149,7 +147,7 @@ namespace lite {
          * @return T The user input.
          */
         template <typename T>
-        inline T input(const str &output)
+        inline T input(const std::string &output)
         {
             T var;
             std::cout << output << std::endl;
@@ -162,12 +160,12 @@ namespace lite {
          * @tparam T Type of the input variable.
          * @param output The prompt message to display.
          * @param size The number of elements in the vector.
-         * @return vec<T> The user input vector.
+         * @return std::vector<T> The user input vector.
          */
         template <typename T>
-        vec<T> input_vector(const str &output, size_t size)
+        std::vector<T> input_vector(const std::string &output, size_t size)
         {
-            vec<T> _vec;
+            std::vector<T> _vec;
             T var;
             std::cout << output << std::endl;
             for (size_t i = 0; i < size; i++)
@@ -188,14 +186,14 @@ namespace lite {
          * @throws std::invalid_argument if rows or cols is less than or equal to zero
          */
         template <typename T>
-        vec<vec<T>> input_vector_2d(const str &output, size_t rows, size_t cols)
+        std::vector<std::vector<T>> input_vector_2d(const std::string &output, size_t rows, size_t cols)
         {
-            vec<vec<T>> vec2d;
+            std::vector<std::vector<T>> vec2d;
             T var;
             std::cout << output << std::endl;
             for (size_t i = 0; i < rows; i++)
             {
-                vec<T> row;
+                std::vector<T> row;
                 for (size_t j = 0; j < cols; j++)
                 {
                     std::cin >> var;
@@ -217,17 +215,17 @@ namespace lite {
          * @throws std::invalid_argument if any dimension is less than or equal to zero.
          */
         template <typename T>
-        vec<vec<vec<T>>> input_vector_3d(const str &output, size_t x, size_t y, size_t z)
+        std::vector<std::vector<std::vector<T>>> input_vector_3d(const std::string &output, size_t x, size_t y, size_t z)
         {
-            vec<vec<vec<T>>> vec3d;
+            std::vector<std::vector<std::vector<T>>> vec3d;
             T var;
             std::cout << output << std::endl;
             for (size_t i = 0; i < x; i++)
             {
-                vec<vec<T>> layer;
+                std::vector<std::vector<T>> layer;
                 for (size_t j = 0; j < y; j++)
                 {
-                    vec<T> row;
+                    std::vector<T> row;
                     for (size_t k = 0; k < z; k++)
                     {
                         std::cin >> var;
@@ -247,7 +245,7 @@ namespace lite {
         inline void Tabs(size_t num = 1) noexcept
         {
             for (short i = 0; i < num; i++)
-                std::cout << tab;
+                std::cout << '\t';
         }
 
         /**
@@ -261,7 +259,7 @@ namespace lite {
         {
             std::cout << "Test("
             << testNum << "): " 
-            << OutPut << nl;
+            << OutPut << '\n';
         }
 
         /**
@@ -272,11 +270,11 @@ namespace lite {
         {
             std::cout << "Test(" 
             << testNum << "): " 
-            << nl;
+            << '\n';
         }
 
-        void print_test(const str& name,
-            const str& description,
+        void print_test(const std::string& name,
+            const std::string& description,
             bool result, size_t testNum,
             size_t whiteSpace = 2,
             size_t seplen = 25,
@@ -302,7 +300,7 @@ namespace lite {
          * @param vec The vector to print.
          */
         template <typename T>
-        void print(const vec<T> &_vec) noexcept
+        void print(const std::vector<T> &_vec) noexcept
         {
             if (vec.empty())
                 std::cout << "[]";
@@ -333,11 +331,11 @@ namespace lite {
          * @note The function is marked noexcept and does not throw exceptions.
          */
         template <typename T>
-        void println(const vec<T> &output) noexcept
+        void println(const std::vector<T> &output) noexcept
         {
             if (output.empty())
             {
-                std::cout << "[]" << nl;
+                std::cout << "[]" << '\n';
                 return;
             }
             std::cout << "[";
@@ -347,7 +345,7 @@ namespace lite {
                 if (i != output.size() - 1)
                     std::cout << ", ";
             }
-            std::cout << "]" << nl;
+            std::cout << "]" << '\n';
         }
 
         /**
@@ -361,7 +359,7 @@ namespace lite {
          * @param output The 2D vector to be printed.
          */
         template <typename T>
-        void print(const vec<vec<T>> &output) noexcept
+        void print(const std::vector<std::vector<T>> &output) noexcept
         {
             if (output.empty())
             {
@@ -396,11 +394,11 @@ namespace lite {
          * @param output The 2D vector to be printed.
          */
         template <typename T>
-        void println(const vec<vec<T>> &output) noexcept
+        void println(const std::vector<std::vector<T>> &output) noexcept
         {
             if (output.empty())
             {
-                std::cout << "[]" << nl;
+                std::cout << "[]" << '\n';
                 return;
             }
             std::cout << "[";
@@ -417,7 +415,7 @@ namespace lite {
                 if (i != output.size() - 1)
                     std::cout << ", ";
             }
-            std::cout << "]" << nl;
+            std::cout << "]" << '\n';
         }
 
         /**
@@ -429,13 +427,13 @@ namespace lite {
          * @tparam T The type of the elements stored in the innermost vectors.
          * @note The function is marked noexcept and does not throw exceptions.
          * @example
-         * vec<vec<vec<int>>> vec3d = {
+         * std::vector<std::vector<std::vector<int>>> vec3d = {
          *     {{1, 2}, {3, 4}},
          *     {{5, 6}, {7, 8}}
          * };
          */
         template <typename T>
-        void print(const vec<vec<vec<T>>> &output) noexcept
+        void print(const std::vector<std::vector<std::vector<T>>> &output) noexcept
         {
             if (output.empty())
             {
@@ -475,17 +473,17 @@ namespace lite {
          * @tparam T The type of the elements stored in the innermost vectors.
          * @note The function is marked noexcept and does not throw exceptions.
          * @example
-         * vec<vec<vec<int>>> vec3d = {
+         * std::vector<std::vector<std::vector<int>>> vec3d = {
          *     {{1, 2}, {3, 4}},
          *     {{5, 6}, {7, 8}}
          * };
          */
         template <typename T>
-        void println(const vec<vec<vec<T>>> &output) noexcept
+        void println(const std::vector<std::vector<std::vector<T>>> &output) noexcept
         {
             if (output.empty())
             {
-                std::cout << "[]" << nl;
+                std::cout << "[]" << '\n';
                 return;
             }
             std::cout << "[";
@@ -509,7 +507,7 @@ namespace lite {
                 if (i != output.size() - 1)
                     std::cout << ", ";
             }
-            std::cout << "]" << nl;
+            std::cout << "]" << '\n';
         }
 
         /**
@@ -520,7 +518,7 @@ namespace lite {
          */
         template <typename T>
         inline void print_test(long testNum,
-            const vec<T> &_vec) noexcept
+            const std::vector<T> &_vec) noexcept
         {
             print_test(testNum);
             print<T>(_vec);
@@ -533,14 +531,14 @@ namespace lite {
          * @param vec The 2D vector to test and print.
          * @note This function throws an exception if the input vector is empty.
          * @example
-         * vec<vec<int>> vec2d = {
+         * std::vector<std::vector<int>> vec2d = {
          *    {1, 2},
          *    {3, 4}
          * };
          */
         template <typename T>
         inline void print_test(long testNum,
-            const vec<vec<T>> &_vec) noexcept
+            const std::vector<std::vector<T>> &_vec) noexcept
         {
             print_test(testNum);
             print<T>(_vec);
@@ -553,14 +551,14 @@ namespace lite {
          * @param vec The 3D vector to test and print.
          * @note This function throws an exception if the input vector is empty.
          * @example
-         * vec<vec<vec<int>>> vec3d = {
+         * std::vector<std::vector<std::vector<int>>> vec3d = {
          *    {{1, 2}, {3, 4}},
          *    {{5, 6}, {7, 8}}
          * };
          */
         template <typename T>
         inline void print_test(long testNum,
-            const vec<vec<vec<T>>> &_vec) noexcept
+            const std::vector<std::vector<std::vector<T>>> &_vec) noexcept
         {
             print_test(testNum);
             print<T>(_vec);
@@ -569,27 +567,27 @@ namespace lite {
         /**
          * @brief Prints characters of a string individually starting from a given
          * index.
-         * @param str The string to print.
+         * @param std::string The string to print.
          * @param index Starting index (default = 0). If out of range, starts from 0.
          */
-        inline void print_char_str(const str &_str, size_t index) noexcept
+        inline void print_char_str(const std::string &_str, size_t index) noexcept
         {
-            if (index < 0 || index >= _str.length())
+            if (index >= _str.length())
                 index = 0;
             for (size_t i = index; i < _str.length(); i++)
                 std::cout << _str[i] << ' ';
-            std::cout << nl;
+            std::cout << '\n';
         }
 
         /**
          * @brief Prints a decorated category title.
          * @param category The category title to print.
          */
-        inline void print_category(const str &category) noexcept
+        inline void print_category(const std::string &category) noexcept
         {
             separator(2 * category.length());
             Tabs(category.length() / 10);
-            std::cout << category << nl;
+            std::cout << category << '\n';
             separator(2 * category.length());
         }
 
@@ -621,13 +619,13 @@ namespace lite {
          * ====================
          */
         inline void print_category(
-            const str &category_s,
+            const std::string &category_s,
             int tabs_num, int seplen,
             char sepch) noexcept
         {
             separator(seplen, sepch);
             Tabs(tabs_num);
-            std::cout << category_s << nl;
+            std::cout << category_s << '\n';
             separator(seplen, sepch);
         }
 
@@ -662,9 +660,9 @@ namespace lite {
         inline void println_if(bool result, const T& data) { if(result) print(data); }
     }
 
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 }
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP

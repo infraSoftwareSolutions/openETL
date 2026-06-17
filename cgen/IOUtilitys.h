@@ -367,7 +367,7 @@ static inline void print_test_string(const char *real, const char *expected,
     separator(seplen, sepch);
 }
 
-#define print_test(real, expected, seplen, sepch) _Generic((real), \
+#define cprint_test(real, expected, seplen, sepch) _Generic((real), \
     bool: print_test_bool(real, expected, seplen, sepch),          \
     char: print_test_char(real, expected, seplen, sepch),          \
     short: print_test_short(real, expected, seplen, sepch),        \

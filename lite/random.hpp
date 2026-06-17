@@ -22,8 +22,6 @@
 #include <string>
 #include <random>
 
-#include "cgen/micros/structure.h"
-
 #pragma once
 #ifndef METACORE___LITE___RANDOM_HPP
 #define METACORE___LITE___RANDOM_HPP
@@ -31,9 +29,9 @@
 #ifdef METACORE___META_HPP
 namespace meta {
 #endif // METACORE___META_HPP
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 namespace lite {
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 
     // GRN: generate random number
     /// @brief Generates a random integer within the specified range using Mersenne Twister algorithm.
@@ -60,9 +58,9 @@ namespace lite {
     /// @param start The lower bound of the range (inclusive).
     /// @param end The upper bound of the range (inclusive).
     /// @return A vector containing ele_num random integers between start and end (inclusive).
-    vec<int> GRV(size_t ele_num, int start, int end) noexcept
+    std::vector<int> GRV(size_t ele_num, int start, int end) noexcept
     {
-        vec<int> result;
+        std::vector<int> result;
         for (size_t i = 0; i < ele_num; i++)
             result.push_back(GRN(start, end));
         return result;
@@ -74,9 +72,9 @@ namespace lite {
     /// @param start The lower bound of the range (inclusive).
     /// @param end The upper bound of the range (inclusive).
     /// @return A 2D vector containing vec_num vectors, each with ele_num random integers between start and end (inclusive).
-    vec<vec<int>> GRV(size_t vec_num, size_t ele_num, int start, int end) noexcept
+    std::vector<std::vector<int>> GRV(size_t vec_num, size_t ele_num, int start, int end) noexcept
     {
-        vec<vec<int>> result;
+        std::vector<std::vector<int>> result;
         for (size_t i = 0; i < vec_num; i++)
             result.push_back(GRV(ele_num, start, end));
         return result;
@@ -89,9 +87,9 @@ namespace lite {
     /// @param start The lower bound of the range (inclusive).
     /// @param end The upper bound of the range (inclusive).
     /// @return A 3D vector containing vv_num 2D vectors, each with
-    vec<vec<vec<int>>> GRV(size_t vv_num, size_t vec_num, size_t ele_num, int start, int end) noexcept
+    std::vector<std::vector<std::vector<int>>> GRV(size_t vv_num, size_t vec_num, size_t ele_num, int start, int end) noexcept
     {
-        vec<vec<vec<int>>> result;
+        std::vector<std::vector<std::vector<int>>> result;
         for (size_t i = 0; i < vv_num; i++)
             result.push_back(GRV(vec_num, ele_num, start, end));
         return result;
@@ -101,9 +99,9 @@ namespace lite {
     // GRCV: generaterandom char vector
     /// @brief Generates a vector of random printable ASCII characters.
     /// @return A vector containing random characters in the range of printable ASCII characters (32 to 126).
-    vec<char> GRCV() noexcept {
-        vec<int> temp = GRV(94, 32, 126);
-        vec<char> result;
+    std::vector<char> GRCV() noexcept {
+        std::vector<int> temp = GRV(94, 32, 126);
+        std::vector<char> result;
         for(size_t i = 0; i < 94; i++)
             result.push_back(static_cast<char>(temp[i]));
         return result;
@@ -112,8 +110,8 @@ namespace lite {
     // GRC2DV: generate random char 2d vector
     /// @brief Generates a 2D vector of random printable ASCII characters.
     /// @return A 2D vector containing random characters in the range of printable ASCII characters
-    vec<vec<char>> GRC2DV() noexcept {
-        vec<vec<char>> result;
+    std::vector<std::vector<char>> GRC2DV() noexcept {
+        std::vector<std::vector<char>> result;
         for(size_t i = 0; i < 94; i++)
             result.push_back(GRCV());
         return result;
@@ -122,16 +120,16 @@ namespace lite {
     // GRC3DV: generate random char 3d vector
     /// @brief Generates a 3D vector of random printable ASCII characters.
     /// @return A 3D vector containing random characters in the range of printable ASCII characters
-    vec<vec<vec<char>>> GRC3DV() noexcept {
-        vec<vec<vec<char>>> result;
+    std::vector<std::vector<std::vector<char>>> GRC3DV() noexcept {
+        std::vector<std::vector<std::vector<char>>> result;
         for(size_t i = 0; i < 94; i++)
             result.push_back(GRC2DV());
         return result;
     }
 
-#ifdef METACORE___LITE___HPP
+#ifdef METACORE___LITE_HPP
 }
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
 #ifdef METACORE___META_HPP
 }
 #endif // METACORE___META_HPP

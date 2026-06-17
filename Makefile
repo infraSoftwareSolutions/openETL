@@ -3,6 +3,8 @@ CC      := gcc
 CXX     := g++
 CFLAGS  := -I.
 CXXFLAGS:= -I.
+CSTD := -I/C/msys64/ucrt64/include
+CXXSTD := -I/C/msys64/ucrt64/include/c++/15.2.0
 
 # Output files
 CGEN_EXAMPLES_OUT := _output/examples/cgen
@@ -30,18 +32,18 @@ LITE_HEADERS     := lite/*.hpp
 # --------------------------------------------------
 
 bitUtilitys-check:
-	cppcheck $(BITUTILS_HEADERS)
+	cppcheck $(CSTD) $(CXXSTD) -I. --std=c11 --enable=all $(BITUTILS_HEADERS)
 
-clite-check: bitUtilitys-check
-	cppcheck $(CGEN_HEADERS)
+cgen-check: bitUtilitys-check
+	cppcheck $(CSTD) $(CXXSTD) -I. --std=c11 --enable=all $(CGEN_HEADERS)
 
 lite-check:
-	cppcheck $(LITE_HEADERS)
+	cppcheck $(CSTD) $(CXXSTD) -I. --std=c++20 --enable=all $(LITE_HEADERS)
 
 static-check:
-	cppcheck $(BITUTILS_HEADERS)
-	cppcheck $(CGEN_HEADERS)
-	cppcheck $(LITE_HEADERS)
+	cppcheck $(CSTD) $(CXXSTD) -I. --std=c++20 --enable=all $(BITUTILS_HEADERS)
+	cppcheck $(CSTD) $(CXXSTD) -I. --std=c++20 --enable=all $(CGEN_HEADERS)
+	cppcheck $(CSTD) $(CXXSTD) -I. --std=c++20 --enable=all $(LITE_HEADERS)
 
 # --------------------------------------------------
 # Tests

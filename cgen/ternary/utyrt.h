@@ -79,9 +79,8 @@ static inline uint8_t utyrt_size(utyrt *value, bool inBits) {
  */
 static utirt *utyrt2trits(utyrt *value) {
     utirt *trits = (uint8_t*) malloc(6 * sizeof(utirt));
-    for(int i = 0; i < 6; i++) {
-        trits[i] = (*value >> (i * 5)) & 0x1F;
-    }
+    if (trits == NULL) return NULL;
+    for(int i = 0; i < 6; i++) trits[i] = (*value >> (i * 5)) & 0x1F;
     return trits;
 }
 

@@ -13,8 +13,8 @@
  */
 
 
-#ifndef METACORE___CGEN___H
-#define METACORE___CGEN___H
+#ifndef METACORE___CGEN_H
+#define METACORE___CGEN_H
 
 #include "cgen/IOUtilitys.h"
 #include "cgen/UnitTest.h"
@@ -36,7 +36,7 @@ cobject {
     size_t csys_wnum; // Number of warnings
     cerror csys_e;    // Current error
     bool retVal;      // Return value
-} clite_system64;
+} cgen_sys;
 
 /** @brief Default warning message */
 static const char wm_msg[] = "meta clite ecosystem warning";
@@ -48,10 +48,10 @@ static const char em_msg[] = "meta clite ecosystem error";
  * @brief Initialize the system structure
  * 
  * @details Creates a new system structure and initializes all fields with default values
- * @return clite_system64 The initialized system structure
+ * @return cgen_sys The initialized system structure
  */
-static inline clite_system64 clite_system64_init() {
-    clite_system64 system;
+static inline cgen_sys cgen_sys_init() {
+    cgen_sys system;
     system.csys_test = NULL;
     system.csys_tnum = 0;
     system.csys_w = NULL;
@@ -68,9 +68,9 @@ static inline clite_system64 clite_system64_init() {
  *          for the new test
  * @param self The system structure
  * @param ct The test to be added
- * @return clite_system64 The updated system structure
+ * @return cgen_sys The updated system structure
  */
-static inline clite_system64 add(clite_system64 self, CTEST ct) {
+static inline cgen_sys add(cgen_sys self, CTEST ct) {
     if (self.csys_test == NULL) {
         self.csys_test = (CTEST*)malloc(sizeof(CTEST));
     } else {
@@ -101,7 +101,7 @@ static inline clite_system64 add(clite_system64 self, CTEST ct) {
  * 
  * @warning This function terminates the program - only call if error is critical
  */
-static inline void catch_error(clite_system64 self, cerror err) {
+static inline void catch_error(cgen_sys self, cerror err) {
     self.csys_e = err;
     
     // Print error to standard output
@@ -138,9 +138,9 @@ static inline void catch_error(clite_system64 self, cerror err) {
  *          Unlike error handling, this does not terminate the program
  * @param self The system structure
  * @param cwar The warning to be handled
- * @return clite_system64 The updated system structure
+ * @return cgen_sys The updated system structure
  */
-static inline clite_system64 catch_warning(clite_system64 self, cwarning cwar) {
+static inline cgen_sys catch_warning(cgen_sys self, cwarning cwar) {
     // Add warning to array
     if (self.csys_w == NULL) {
         self.csys_w = (cwarning*)malloc(sizeof(cwarning));
@@ -179,7 +179,7 @@ static inline clite_system64 catch_warning(clite_system64 self, cwarning cwar) {
  * @param self The system structure
  * @return int The return value (0 or 1)
  */
-static inline int exit_value(clite_system64 self) {
+static inline int exit_value(cgen_sys self) {
     return (int)self.retVal;
 }
 
@@ -192,7 +192,7 @@ static inline int exit_value(clite_system64 self) {
  * 
  * @warning This function must be called only once at program end
  */
-static inline void free_clite_system64(clite_system64* self) {
+static inline void free_cgen_sys(cgen_sys* self) {
     if (self == NULL) {
         return;
     }
@@ -249,6 +249,6 @@ static inline void free_clite_system64(clite_system64* self) {
 }
 
 /** @brief Global system variable for environment */
-static clite_system64 clite_ecosystem = {NULL, 0, NULL, 0, {NULL, NULL, NULL, NULL, 0}, false};
+static cgen_sys clite_ecosystem = {NULL, 0, NULL, 0, {NULL, NULL, NULL, NULL, 0}, false};
 
-#endif // METACORE___CGEN___H
+#endif // METACORE___CGEN_H

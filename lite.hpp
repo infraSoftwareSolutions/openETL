@@ -49,8 +49,8 @@
  * @see lite/micros.hpp for macro definitions
  */
 
-#ifndef METACORE___LITE___HPP
-#define METACORE___LITE___HPP
+#ifndef METACORE___LITE_HPP
+#define METACORE___LITE_HPP
 
 #include "lite/benchmark.hpp"
 #include "lite/error.hpp"
@@ -103,9 +103,9 @@ namespace lite {
      * @note This class uses protected members to prevent direct access to internal state.
      *       All interactions are through public member methods.
      */
-    class system64 {
+    class sys {
         private:
-        std::queue<lite::warning> sys_w;
+        que<lite::warning> sys_w;
         lite::error sys_err;
         bool retval;
         protected:
@@ -113,9 +113,9 @@ namespace lite {
         em = "meta lite ecosystem error";
         public:
 
-        lite::test_stream sys_test;
+        test_stream sys_test;
 
-        system64() = default;
+        sys() = default;
 
         /**
          * @brief Adds a test result to the ecosystem's test collection.
@@ -252,4 +252,4 @@ namespace lite {
     } ecosystem;
 }
 
-#endif // METACORE___LITE___HPP
+#endif // METACORE___LITE_HPP
