@@ -3,42 +3,42 @@
 #ifndef METACORE___CGEN___PAIR_H
 #define METACORE___CGEN___PAIR_H
 
-cobject {
+object {
     bool first;
     bool second;
 } pair_bool;
 
-cobject {
+object {
     char first;
     char second;
 } pair_char;
 
-cobject {
+object {
     short first;
     short second;
 } pair_short;
 
-cobject {
+object {
     int first;
     int second;
 } pair_int;
 
-cobject {
+object {
     float first;
     float second;
 } pair_float;
 
-cobject {
+object {
     double first;
     double second;
 } pair_double;
 
-cobject {
+object {
     long first;
     long second;
 } pair_long;
 
-cobject {
+object {
     size_t first;
     size_t second;
 } pair_size_t;

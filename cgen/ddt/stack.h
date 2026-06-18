@@ -15,7 +15,7 @@
 #ifndef METACORE___CGEN___DDT_STACK_H
 #define METACORE___CGEN___DDT_STACK_H
 
-cobject
+object
 {
     size_t size;
     size_t capacity;

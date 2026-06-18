@@ -1,6 +1,6 @@
 #include "lite/UnitTest.hpp"
 #include "cgen/micros.h"
 
-MAIN_TEST(UnitTestHpp);
+TEST_MAIN(UnitTestHpp);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

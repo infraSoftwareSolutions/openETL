@@ -43,628 +43,623 @@
 #ifndef METACORE___LITE___IO_HPP
 #define METACORE___LITE___IO_HPP
 
-#ifdef METACORE___META_HPP
 namespace meta {
-#endif // METACORE___META_HPP
-#ifdef METACORE___LITE_HPP
-namespace lite {
-#endif // METACORE___LITE_HPP
 
-    namespace io
-    {
+    namespace lite {
 
-        /**
-         * @brief Prints a number of newline characters.
-         * @param num Number of new lines to print (default = 2).
-         */
-        inline void NewLines(size_t num = 1) noexcept
+        namespace io
         {
-            for (size_t i = 0; i < num; i++)
-                std::cout << '\n';
-        }
 
-        /**
-         * @brief Prints a horizontal line using a specific character.
-         * @param length The number of characters in the line.
-         * @param ch The character to use (must be one of: ~, -, #, *, =).
-         */
-        inline void separator(size_t length, char ch = '-') noexcept
-        {
-            for (size_t i = length; i != 0; i--)
-                std::cout << ch;
-            std::cout << '\n';
-        }
-
-        /**
-         * @brief Prints multiple separator lines.
-         * @param numsep The number of separator lines to print.
-         * @param length The number of characters in each separator line.
-         * @param ch The character to use for the separator lines (must be one of: ~, -, #, *, =).
-         * @details This function prints a specified number of separator lines, each consisting of a specific character repeated a certain number of times. The character used for the separator lines must be one of the following: ~, -, #, *, =. If an invalid character is provided, an exception is thrown.
-         */
-        inline void separators(size_t numsep, size_t length, char ch) noexcept
-        {
-            for (size_t i = 0; i < numsep; i++)
-                separator(length, ch);
-        }
-
-        /**
-         * @brief Prints a value followed by a newline to standard output.
-         * @tparam T Type of the value to print.
-         * @param output The value to be printed.
-         */
-        void println() noexcept { std::cout << '\n'; }
-        template <typename T, typename... Args>
-        void println(const T &output, Args... remaining_t) noexcept
-        {
-            std::cout << output;
-            println(remaining_t...);
-        }
-
-        /**
-         * @brief Prints a value without a newline to standard output.
-         * @tparam T Type of the value to print.
-         * @param output The value to be printed.
-         */
-        void print() noexcept { return; }
-        template <typename T, typename... Args>
-        void print(const T &output, Args... remaining_t) noexcept
-        {
-            std::cout << output;
-            print(remaining_t...);
-        }
-
-        /**
-         * @brief Prints an error message followed by a newline to standard error.
-         * @tparam T Type of the message to print.
-         * @param output The error message to be printed.
-         */
-        void println_error() noexcept { std::cerr << '\n'; }
-        template <typename T, typename... Args>
-        void println_error(const T &output, Args... remaining_t) noexcept
-        {
-            std::cerr << output;
-            println_error(remaining_t...);
-        }
-
-        /**
-         * @brief Prints an error message without a newline to standard error.
-         * @tparam T Type of the message to print.
-         * @param output The error message to be printed.
-         */
-        void print_error() noexcept { return; }
-        template <typename T, typename... Args>
-        void print_error(const T &output, Args... remaining_t) noexcept
-        {
-            std::cerr << output;
-            print_error(remaining_t...);
-        }
-
-        /**
-         * @brief Prints a prompt message and takes user input of a different type.
-         * @tparam T Type of the input variable.
-         * @param output The prompt message to display.
-         * @return T The user input.
-         */
-        template <typename T>
-        inline T input(const std::string &output)
-        {
-            T var;
-            std::cout << output << std::endl;
-            std::cin >> var;
-            return var;
-        }
-
-        /**
-         * @brief Prints a prompt message and takes user input for a vector of a different type.
-         * @tparam T Type of the input variable.
-         * @param output The prompt message to display.
-         * @param size The number of elements in the vector.
-         * @return std::vector<T> The user input vector.
-         */
-        template <typename T>
-        std::vector<T> input_vector(const std::string &output, size_t size)
-        {
-            std::vector<T> _vec;
-            T var;
-            std::cout << output << std::endl;
-            for (size_t i = 0; i < size; i++)
+            /**
+             * @brief Prints a number of newline characters.
+             * @param num Number of new lines to print (default = 2).
+             */
+            inline void NewLines(size_t num = 1) noexcept
             {
-                std::cin >> var;
-                _vec.push_back(var);
+                for (size_t i = 0; i < num; i++)
+                    std::cout << '\n';
             }
-            return _vec;
-        }
 
-        /**
-         * @brief Prompts the user for input to fill a 2D vector.
-         * @tparam T The type of elements in the 2D vector.
-         * @param output The prompt message to display.
-         * @param rows The number of rows (must be > 0).
-         * @param cols The number of columns (must be > 0).
-         * @return A 2D vector filled with user input.
-         * @throws std::invalid_argument if rows or cols is less than or equal to zero
-         */
-        template <typename T>
-        std::vector<std::vector<T>> input_vector_2d(const std::string &output, size_t rows, size_t cols)
-        {
-            std::vector<std::vector<T>> vec2d;
-            T var;
-            std::cout << output << std::endl;
-            for (size_t i = 0; i < rows; i++)
+            /**
+             * @brief Prints a horizontal line using a specific character.
+             * @param length The number of characters in the line.
+             * @param ch The character to use (must be one of: ~, -, #, *, =).
+             */
+            inline void separator(size_t length, char ch = '-') noexcept
             {
-                std::vector<T> row;
-                for (size_t j = 0; j < cols; j++)
+                for (size_t i = length; i != 0; i--)
+                    std::cout << ch;
+                std::cout << '\n';
+            }
+
+            /**
+             * @brief Prints multiple separator lines.
+             * @param numsep The number of separator lines to print.
+             * @param length The number of characters in each separator line.
+             * @param ch The character to use for the separator lines (must be one of: ~, -, #, *, =).
+             * @details This function prints a specified number of separator lines, each consisting of a specific character repeated a certain number of times. The character used for the separator lines must be one of the following: ~, -, #, *, =. If an invalid character is provided, an exception is thrown.
+             */
+            inline void separators(size_t numsep, size_t length, char ch) noexcept
+            {
+                for (size_t i = 0; i < numsep; i++)
+                    separator(length, ch);
+            }
+
+            /**
+             * @brief Prints a value followed by a newline to standard output.
+             * @tparam T Type of the value to print.
+             * @param output The value to be printed.
+             */
+            void println() noexcept { std::cout << '\n'; }
+            template <typename T, typename... Args>
+            void println(const T &output, Args... remaining_t) noexcept
+            {
+                std::cout << output;
+                println(remaining_t...);
+            }
+
+            /**
+             * @brief Prints a value without a newline to standard output.
+             * @tparam T Type of the value to print.
+             * @param output The value to be printed.
+             */
+            void print() noexcept { return; }
+            template <typename T, typename... Args>
+            void print(const T &output, Args... remaining_t) noexcept
+            {
+                std::cout << output;
+                print(remaining_t...);
+            }
+
+            /**
+             * @brief Prints an error message followed by a newline to standard error.
+             * @tparam T Type of the message to print.
+             * @param output The error message to be printed.
+             */
+            void println_error() noexcept { std::cerr << '\n'; }
+            template <typename T, typename... Args>
+            void println_error(const T &output, Args... remaining_t) noexcept
+            {
+                std::cerr << output;
+                println_error(remaining_t...);
+            }
+
+            /**
+             * @brief Prints an error message without a newline to standard error.
+             * @tparam T Type of the message to print.
+             * @param output The error message to be printed.
+             */
+            void print_error() noexcept { return; }
+            template <typename T, typename... Args>
+            void print_error(const T &output, Args... remaining_t) noexcept
+            {
+                std::cerr << output;
+                print_error(remaining_t...);
+            }
+
+            /**
+             * @brief Prints a prompt message and takes user input of a different type.
+             * @tparam T Type of the input variable.
+             * @param output The prompt message to display.
+             * @return T The user input.
+             */
+            template <typename T>
+            inline T input(const std::string &output)
+            {
+                T var;
+                std::cout << output << std::endl;
+                std::cin >> var;
+                return var;
+            }
+
+            /**
+             * @brief Prints a prompt message and takes user input for a vector of a different type.
+             * @tparam T Type of the input variable.
+             * @param output The prompt message to display.
+             * @param size The number of elements in the vector.
+             * @return std::vector<T> The user input vector.
+             */
+            template <typename T>
+            std::vector<T> input_vector(const std::string &output, size_t size)
+            {
+                std::vector<T> _vec;
+                T var;
+                std::cout << output << std::endl;
+                for (size_t i = 0; i < size; i++)
                 {
                     std::cin >> var;
-                    row.push_back(var);
+                    _vec.push_back(var);
                 }
-                vec2d.push_back(row);
+                return _vec;
             }
-            return vec2d;
-        }
 
-        /**
-         * @brief Prompts the user for input to fill a 3D vector.
-         * @tparam T The type of elements in the 3D vector.
-         * @param output The prompt message to display.
-         * @param x The size of the first dimension (must be > 0).
-         * @param y The size of the second dimension (must be > 0).
-         * @param z The size of the third dimension (must be > 0).
-         * @return A 3D vector filled with user input.
-         * @throws std::invalid_argument if any dimension is less than or equal to zero.
-         */
-        template <typename T>
-        std::vector<std::vector<std::vector<T>>> input_vector_3d(const std::string &output, size_t x, size_t y, size_t z)
-        {
-            std::vector<std::vector<std::vector<T>>> vec3d;
-            T var;
-            std::cout << output << std::endl;
-            for (size_t i = 0; i < x; i++)
+            /**
+             * @brief Prompts the user for input to fill a 2D vector.
+             * @tparam T The type of elements in the 2D vector.
+             * @param output The prompt message to display.
+             * @param rows The number of rows (must be > 0).
+             * @param cols The number of columns (must be > 0).
+             * @return A 2D vector filled with user input.
+             * @throws std::invalid_argument if rows or cols is less than or equal to zero
+             */
+            template <typename T>
+            std::vector<std::vector<T>> input_vector_2d(const std::string &output, size_t rows, size_t cols)
             {
-                std::vector<std::vector<T>> layer;
-                for (size_t j = 0; j < y; j++)
+                std::vector<std::vector<T>> vec2d;
+                T var;
+                std::cout << output << std::endl;
+                for (size_t i = 0; i < rows; i++)
                 {
                     std::vector<T> row;
-                    for (size_t k = 0; k < z; k++)
+                    for (size_t j = 0; j < cols; j++)
                     {
                         std::cin >> var;
                         row.push_back(var);
                     }
-                    layer.push_back(row);
+                    vec2d.push_back(row);
                 }
-                vec3d.push_back(layer);
+                return vec2d;
             }
-            return vec3d;
-        }
 
-        /**
-         * @brief Prints a number of tab characters.
-         * @param num Number of tabs to print (default = 2).
-         */
-        inline void Tabs(size_t num = 1) noexcept
-        {
-            for (short i = 0; i < num; i++)
-                std::cout << '\t';
-        }
-
-        /**
-         * @brief Prints a standardized test output.
-         * @tparam T The type of the output value.
-         * @param testNum The test number.
-         * @param OutPut The output value to print.
-         */
-        template <typename T>
-        inline void print_test(size_t testNum, const T &OutPut) noexcept
-        {
-            std::cout << "Test("
-            << testNum << "): " 
-            << OutPut << '\n';
-        }
-
-        /**
-         * @brief Prints a standardized test output without a specific value.
-         * @param testNum The test number.
-         */
-        inline void print_test(size_t testNum) noexcept
-        {
-            std::cout << "Test(" 
-            << testNum << "): " 
-            << '\n';
-        }
-
-        void print_test(const std::string& name,
-            const std::string& description,
-            bool result, size_t testNum,
-            size_t whiteSpace = 2,
-            size_t seplen = 25,
-            size_t sepch = '-') noexcept {
-            NewLines(whiteSpace);
-            separator(seplen, sepch);
-            println("<<< TEST >>>");
-            separator(seplen, sepch);
-            if(name.length() != 0) {
-                println("NAME: ", name);
-            }
-            if(description.length() != 0) {
-                println("DESCRIPTION: ", description);
-            }
-            println("NUMBER: ", testNum);
-            println("RESULT: ", result ? "PASSED" : "FAILED");
-            separator(seplen, sepch);
-        }
-
-        /**
-         * @brief Prints all elements in a vector with formatting.
-         * @tparam T The type of vector elements.
-         * @param vec The vector to print.
-         */
-        template <typename T>
-        void print(const std::vector<T> &_vec) noexcept
-        {
-            if (vec.empty())
-                std::cout << "[]";
-            if (vec.size() == 1)
+            /**
+             * @brief Prompts the user for input to fill a 3D vector.
+             * @tparam T The type of elements in the 3D vector.
+             * @param output The prompt message to display.
+             * @param x The size of the first dimension (must be > 0).
+             * @param y The size of the second dimension (must be > 0).
+             * @param z The size of the third dimension (must be > 0).
+             * @return A 3D vector filled with user input.
+             * @throws std::invalid_argument if any dimension is less than or equal to zero.
+             */
+            template <typename T>
+            std::vector<std::vector<std::vector<T>>> input_vector_3d(const std::string &output, size_t x, size_t y, size_t z)
             {
-                std::cout << " [" << vec[0] << "] ";
-                return;
-            }
-            for (size_t i = 0; i < vec.size(); i++)
-            {
-                if (i == 0)
-                    std::cout << " [" << vec[i] << ", ";
-                else if (i == vec.size() - 1)
-                    std::cout << vec[i] << "] ";
-                else
-                    std::cout << vec[i] << ", ";
-            }
-        }
-
-        /**
-         * @brief Prints the contents of a vec to the standard output in a formatted manner.
-         *
-         * This function outputs the elements of the given vector enclosed in square brackets and separated by commas.
-         * If the vector is empty, it prints "[]".
-         *
-         * @tparam T The type of the elements stored in the vector.
-         * @param output The vector whose contents are to be printed.
-         * @note The function is marked noexcept and does not throw exceptions.
-         */
-        template <typename T>
-        void println(const std::vector<T> &output) noexcept
-        {
-            if (output.empty())
-            {
-                std::cout << "[]" << '\n';
-                return;
-            }
-            std::cout << "[";
-            for (size_t i = 0; i < output.size(); ++i)
-            {
-                std::cout << output[i];
-                if (i != output.size() - 1)
-                    std::cout << ", ";
-            }
-            std::cout << "]" << '\n';
-        }
-
-        /**
-         * @brief Prints a 2D vector to the standard output in a formatted manner.
-         *
-         * This function outputs the contents of a two-dimensional vec to std::cout,
-         * formatting it as nested lists (e.g., [[1, 2], [3, 4]]). If the input vector is empty,
-         * it prints "[]".
-         *
-         * @tparam T The type of the elements stored in the inner vectors.
-         * @param output The 2D vector to be printed.
-         */
-        template <typename T>
-        void print(const std::vector<std::vector<T>> &output) noexcept
-        {
-            if (output.empty())
-            {
-                std::cout << "[]";
-                return;
-            }
-            std::cout << "[";
-            for (size_t i = 0; i < output.size(); ++i)
-            {
-                std::cout << "[";
-                for (size_t j = 0; j < output[i].size(); ++j)
+                std::vector<std::vector<std::vector<T>>> vec3d;
+                T var;
+                std::cout << output << std::endl;
+                for (size_t i = 0; i < x; i++)
                 {
-                    std::cout << output[i][j];
-                    if (j != output[i].size() - 1)
+                    std::vector<std::vector<T>> layer;
+                    for (size_t j = 0; j < y; j++)
+                    {
+                        std::vector<T> row;
+                        for (size_t k = 0; k < z; k++)
+                        {
+                            std::cin >> var;
+                            row.push_back(var);
+                        }
+                        layer.push_back(row);
+                    }
+                    vec3d.push_back(layer);
+                }
+                return vec3d;
+            }
+
+            /**
+             * @brief Prints a number of tab characters.
+             * @param num Number of tabs to print (default = 2).
+             */
+            inline void Tabs(size_t num = 1) noexcept
+            {
+                for (short i = 0; i < num; i++)
+                    std::cout << '\t';
+            }
+
+            /**
+             * @brief Prints a standardized test output.
+             * @tparam T The type of the output value.
+             * @param testNum The test number.
+             * @param OutPut The output value to print.
+             */
+            template <typename T>
+            inline void print_test(size_t testNum, const T &OutPut) noexcept
+            {
+                std::cout << "Test("
+                << testNum << "): " 
+                << OutPut << '\n';
+            }
+
+            /**
+             * @brief Prints a standardized test output without a specific value.
+             * @param testNum The test number.
+             */
+            inline void print_test(size_t testNum) noexcept
+            {
+                std::cout << "Test(" 
+                << testNum << "): " 
+                << '\n';
+            }
+
+            void print_test(const std::string& name,
+                const std::string& description,
+                bool result, size_t testNum,
+                size_t whiteSpace = 2,
+                size_t seplen = 25,
+                size_t sepch = '-') noexcept {
+                NewLines(whiteSpace);
+                separator(seplen, sepch);
+                println("<<< TEST >>>");
+                separator(seplen, sepch);
+                if(name.length() != 0) {
+                    println("NAME: ", name);
+                }
+                if(description.length() != 0) {
+                    println("DESCRIPTION: ", description);
+                }
+                println("NUMBER: ", testNum);
+                println("RESULT: ", result ? "PASSED" : "FAILED");
+                separator(seplen, sepch);
+            }
+
+            /**
+             * @brief Prints all elements in a vector with formatting.
+             * @tparam T The type of vector elements.
+             * @param vec The vector to print.
+             */
+            template <typename T>
+            void print(const std::vector<T> &_vec) noexcept
+            {
+                if (_vec.empty())
+                    std::cout << "[]";
+                if (_vec.size() == 1)
+                {
+                    std::cout << " [" << _vec[0] << "] ";
+                    return;
+                }
+                for (size_t i = 0; i < _vec.size(); i++)
+                {
+                    if (i == 0)
+                        std::cout << " [" << _vec[i] << ", ";
+                    else if (i == _vec.size() - 1)
+                        std::cout << _vec[i] << "] ";
+                    else
+                        std::cout << _vec[i] << ", ";
+                }
+            }
+
+            /**
+             * @brief Prints the contents of a vec to the standard output in a formatted manner.
+             *
+             * This function outputs the elements of the given vector enclosed in square brackets and separated by commas.
+             * If the vector is empty, it prints "[]".
+             *
+             * @tparam T The type of the elements stored in the vector.
+             * @param output The vector whose contents are to be printed.
+             * @note The function is marked noexcept and does not throw exceptions.
+             */
+            template <typename T>
+            void println(const std::vector<T> &output) noexcept
+            {
+                if (output.empty())
+                {
+                    std::cout << "[]" << '\n';
+                    return;
+                }
+                std::cout << "[";
+                for (size_t i = 0; i < output.size(); ++i)
+                {
+                    std::cout << output[i];
+                    if (i != output.size() - 1)
                         std::cout << ", ";
                 }
-                std::cout << "]";
-                if (i != output.size() - 1)
-                    std::cout << ", ";
+                std::cout << "]" << '\n';
             }
-            std::cout << "]";
-        }
 
-        /**
-         * @brief Prints a 2D vector to the standard output in a formatted manner.
-         *
-         * This function outputs the contents of a two-dimensional vec to std::cout,
-         * formatting it as nested lists (e.g., [[1, 2], [3, 4]]). If the input vector is empty,
-         * it prints "[]".
-         *
-         * @tparam T The type of the elements stored in the inner vectors.
-         * @param output The 2D vector to be printed.
-         */
-        template <typename T>
-        void println(const std::vector<std::vector<T>> &output) noexcept
-        {
-            if (output.empty())
+            /**
+             * @brief Prints a 2D vector to the standard output in a formatted manner.
+             *
+             * This function outputs the contents of a two-dimensional vec to std::cout,
+             * formatting it as nested lists (e.g., [[1, 2], [3, 4]]). If the input vector is empty,
+             * it prints "[]".
+             *
+             * @tparam T The type of the elements stored in the inner vectors.
+             * @param output The 2D vector to be printed.
+             */
+            template <typename T>
+            void print(const std::vector<std::vector<T>> &output) noexcept
             {
-                std::cout << "[]" << '\n';
-                return;
-            }
-            std::cout << "[";
-            for (size_t i = 0; i < output.size(); ++i)
-            {
-                std::cout << "[";
-                for (size_t j = 0; j < output[i].size(); ++j)
+                if (output.empty())
                 {
-                    std::cout << output[i][j];
-                    if (j != output[i].size() - 1)
-                        std::cout << ", ";
+                    std::cout << "[]";
+                    return;
                 }
-                std::cout << "]";
-                if (i != output.size() - 1)
-                    std::cout << ", ";
-            }
-            std::cout << "]" << '\n';
-        }
-
-        /**
-         * @brief Prints a 3D vector to the standard output in a formatted manner.
-         * This function outputs the contents of a three-dimensional vec to std::cout,
-         * formatting it as nested lists (e.g., [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]). If the input vector is empty,
-         * it prints "[]".
-         * @param output The 3D vector to be printed.
-         * @tparam T The type of the elements stored in the innermost vectors.
-         * @note The function is marked noexcept and does not throw exceptions.
-         * @example
-         * std::vector<std::vector<std::vector<int>>> vec3d = {
-         *     {{1, 2}, {3, 4}},
-         *     {{5, 6}, {7, 8}}
-         * };
-         */
-        template <typename T>
-        void print(const std::vector<std::vector<std::vector<T>>> &output) noexcept
-        {
-            if (output.empty())
-            {
-                std::cout << "[]";
-                return;
-            }
-            std::cout << "[";
-            for (size_t i = 0; i < output.size(); ++i)
-            {
                 std::cout << "[";
-                for (size_t j = 0; j < output[i].size(); ++j)
+                for (size_t i = 0; i < output.size(); ++i)
                 {
                     std::cout << "[";
-                    for (size_t k = 0; k < output[i][j].size(); ++k)
+                    for (size_t j = 0; j < output[i].size(); ++j)
                     {
-                        std::cout << output[i][j][k];
-                        if (k != output[i][j].size() - 1)
+                        std::cout << output[i][j];
+                        if (j != output[i].size() - 1)
                             std::cout << ", ";
                     }
                     std::cout << "]";
-                    if (j != output[i].size() - 1)
+                    if (i != output.size() - 1)
                         std::cout << ", ";
                 }
                 std::cout << "]";
-                if (i != output.size() - 1)
-                    std::cout << ", ";
             }
-            std::cout << "]";
-        }
 
-        /**
-         * @brief Prints a 3D vector to the standard output in a formatted manner.
-         * This function outputs the contents of a three-dimensional vec to std::cout,
-         * formatting it as nested lists (e.g., [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]). If the input vector is empty,\
-         * it prints "[]".
-         * @param output The 3D vector to be printed.
-         * @tparam T The type of the elements stored in the innermost vectors.
-         * @note The function is marked noexcept and does not throw exceptions.
-         * @example
-         * std::vector<std::vector<std::vector<int>>> vec3d = {
-         *     {{1, 2}, {3, 4}},
-         *     {{5, 6}, {7, 8}}
-         * };
-         */
-        template <typename T>
-        void println(const std::vector<std::vector<std::vector<T>>> &output) noexcept
-        {
-            if (output.empty())
+            /**
+             * @brief Prints a 2D vector to the standard output in a formatted manner.
+             *
+             * This function outputs the contents of a two-dimensional vec to std::cout,
+             * formatting it as nested lists (e.g., [[1, 2], [3, 4]]). If the input vector is empty,
+             * it prints "[]".
+             *
+             * @tparam T The type of the elements stored in the inner vectors.
+             * @param output The 2D vector to be printed.
+             */
+            template <typename T>
+            void println(const std::vector<std::vector<T>> &output) noexcept
             {
-                std::cout << "[]" << '\n';
-                return;
-            }
-            std::cout << "[";
-            for (size_t i = 0; i < output.size(); ++i)
-            {
+                if (output.empty())
+                {
+                    std::cout << "[]" << '\n';
+                    return;
+                }
                 std::cout << "[";
-                for (size_t j = 0; j < output[i].size(); ++j)
+                for (size_t i = 0; i < output.size(); ++i)
                 {
                     std::cout << "[";
-                    for (size_t k = 0; k < output[i][j].size(); ++k)
+                    for (size_t j = 0; j < output[i].size(); ++j)
                     {
-                        std::cout << output[i][j][k];
-                        if (k != output[i][j].size() - 1)
+                        std::cout << output[i][j];
+                        if (j != output[i].size() - 1)
                             std::cout << ", ";
                     }
                     std::cout << "]";
-                    if (j != output[i].size() - 1)
+                    if (i != output.size() - 1)
+                        std::cout << ", ";
+                }
+                std::cout << "]" << '\n';
+            }
+
+            /**
+             * @brief Prints a 3D vector to the standard output in a formatted manner.
+             * This function outputs the contents of a three-dimensional vec to std::cout,
+             * formatting it as nested lists (e.g., [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]). If the input vector is empty,
+             * it prints "[]".
+             * @param output The 3D vector to be printed.
+             * @tparam T The type of the elements stored in the innermost vectors.
+             * @note The function is marked noexcept and does not throw exceptions.
+             * @example
+             * std::vector<std::vector<std::vector<int>>> vec3d = {
+             *     {{1, 2}, {3, 4}},
+             *     {{5, 6}, {7, 8}}
+             * };
+             */
+            template <typename T>
+            void print(const std::vector<std::vector<std::vector<T>>> &output) noexcept
+            {
+                if (output.empty())
+                {
+                    std::cout << "[]";
+                    return;
+                }
+                std::cout << "[";
+                for (size_t i = 0; i < output.size(); ++i)
+                {
+                    std::cout << "[";
+                    for (size_t j = 0; j < output[i].size(); ++j)
+                    {
+                        std::cout << "[";
+                        for (size_t k = 0; k < output[i][j].size(); ++k)
+                        {
+                            std::cout << output[i][j][k];
+                            if (k != output[i][j].size() - 1)
+                                std::cout << ", ";
+                        }
+                        std::cout << "]";
+                        if (j != output[i].size() - 1)
+                            std::cout << ", ";
+                    }
+                    std::cout << "]";
+                    if (i != output.size() - 1)
                         std::cout << ", ";
                 }
                 std::cout << "]";
-                if (i != output.size() - 1)
-                    std::cout << ", ";
             }
-            std::cout << "]" << '\n';
+
+            /**
+             * @brief Prints a 3D vector to the standard output in a formatted manner.
+             * This function outputs the contents of a three-dimensional vec to std::cout,
+             * formatting it as nested lists (e.g., [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]). If the input vector is empty,\
+             * it prints "[]".
+             * @param output The 3D vector to be printed.
+             * @tparam T The type of the elements stored in the innermost vectors.
+             * @note The function is marked noexcept and does not throw exceptions.
+             * @example
+             * std::vector<std::vector<std::vector<int>>> vec3d = {
+             *     {{1, 2}, {3, 4}},
+             *     {{5, 6}, {7, 8}}
+             * };
+             */
+            template <typename T>
+            void println(const std::vector<std::vector<std::vector<T>>> &output) noexcept
+            {
+                if (output.empty())
+                {
+                    std::cout << "[]" << '\n';
+                    return;
+                }
+                std::cout << "[";
+                for (size_t i = 0; i < output.size(); ++i)
+                {
+                    std::cout << "[";
+                    for (size_t j = 0; j < output[i].size(); ++j)
+                    {
+                        std::cout << "[";
+                        for (size_t k = 0; k < output[i][j].size(); ++k)
+                        {
+                            std::cout << output[i][j][k];
+                            if (k != output[i][j].size() - 1)
+                                std::cout << ", ";
+                        }
+                        std::cout << "]";
+                        if (j != output[i].size() - 1)
+                            std::cout << ", ";
+                    }
+                    std::cout << "]";
+                    if (i != output.size() - 1)
+                        std::cout << ", ";
+                }
+                std::cout << "]" << '\n';
+            }
+
+            /**
+             * @brief Combines Test() and PrintVec() to test and print vector content.
+             * @tparam T The type of vector elements.
+             * @param testNum Test number.
+             * @param vec The vector to test and print.
+             */
+            template <typename T>
+            inline void print_test(long testNum,
+                const std::vector<T> &_vec) noexcept
+            {
+                print_test(testNum);
+                print<T>(_vec);
+            }
+
+            /**
+             * @brief Combines Test() and PrintVec() to test and print 2D vector content.
+             * @tparam T The type of vector elements.
+             * @param testNum Test number.
+             * @param vec The 2D vector to test and print.
+             * @note This function throws an exception if the input vector is empty.
+             * @example
+             * std::vector<std::vector<int>> vec2d = {
+             *    {1, 2},
+             *    {3, 4}
+             * };
+             */
+            template <typename T>
+            inline void print_test(long testNum,
+                const std::vector<std::vector<T>> &_vec) noexcept
+            {
+                print_test(testNum);
+                print<T>(_vec);
+            }
+
+            /**
+             * @brief Combines Test() and PrintVec() to test and print 3D vector content.
+             * @tparam T The type of vector elements.
+             * @param testNum Test number.
+             * @param vec The 3D vector to test and print.
+             * @note This function throws an exception if the input vector is empty.
+             * @example
+             * std::vector<std::vector<std::vector<int>>> vec3d = {
+             *    {{1, 2}, {3, 4}},
+             *    {{5, 6}, {7, 8}}
+             * };
+             */
+            template <typename T>
+            inline void print_test(long testNum,
+                const std::vector<std::vector<std::vector<T>>> &_vec) noexcept
+            {
+                print_test(testNum);
+                print<T>(_vec);
+            }
+
+            /**
+             * @brief Prints characters of a string individually starting from a given
+             * index.
+             * @param std::string The string to print.
+             * @param index Starting index (default = 0). If out of range, starts from 0.
+             */
+            inline void print_char_str(const std::string &_str, size_t index) noexcept
+            {
+                if (index >= _str.length())
+                    index = 0;
+                for (size_t i = index; i < _str.length(); i++)
+                    std::cout << _str[i] << ' ';
+                std::cout << '\n';
+            }
+
+            /**
+             * @brief Prints a decorated category title.
+             * @param category The category title to print.
+             */
+            inline void print_category(const std::string &category) noexcept
+            {
+                separator(2 * category.length());
+                Tabs(category.length() / 10);
+                std::cout << category << '\n';
+                separator(2 * category.length());
+            }
+
+            /**
+             * @brief Prints a formatted category name with separators and indentation.
+             *
+             * This function outputs the given category string (`category_s`) to the
+             * standard output stream, surrounded by separator lines of a specified
+             * length and character. It also indents the category text by a given
+             * number of tab characters before printing.
+             *
+             * @param category_s  The category name to be printed.
+             * @param tabs_num    Number of tab characters to print before the category text.
+             * @param seplen      The length of the separator line (number of repeated characters).
+             * @param sepch       The character used to build the separator line.
+             *
+             * @note This function relies on external helper functions:
+             *       - separator(int length, char ch): prints a separator line.
+             *       - Tabs(int n): prints a number of tab characters.
+             *
+             * @example
+             * // Example: print the word "Settings" with 1 tab,
+             * // a separator of length 20 made of '=' characters:
+             * print_category("Settings", 1, 20, '=');
+             *
+             * // Expected output:
+             * ====================
+             *     Settings
+             * ====================
+             */
+            inline void print_category(
+                const std::string &category_s,
+                int tabs_num, int seplen,
+                char sepch) noexcept
+            {
+                separator(seplen, sepch);
+                Tabs(tabs_num);
+                std::cout << category_s << '\n';
+                separator(seplen, sepch);
+            }
+
+            /**
+             * @brief Prints a value followed by a newline to standard output if a given condition is true.
+             * @tparam T Type of the value to print.
+             * @param Fp A function that takes a value of type T and returns a boolean indicating whether to print the value.
+             * @param data The value to be evaluated and potentially printed.
+             * @details This function evaluates the provided value using the given function pointer (or lambda). If the function returns true for the provided data, the value is printed to standard output followed by a newline. If the function returns false, nothing is printed.
+             */
+            template<typename T>
+            inline void print_if(
+                std::function<bool(T)> Fp, 
+                const T& data) noexcept { if(Fp(data)) print(data); }
+
+            /**
+             * @brief Prints a value followed by a newline to standard output if a given condition is true.
+             * @tparam T Type of the value to print.
+             * @param Fp A function that takes a value of type T and returns a boolean indicating whether to print the value.
+             * @param data The value to be evaluated and potentially printed.
+             * @details This function evaluates the provided value using the given function pointer (or lambda). If the function returns true for the provided data, the value is printed to standard output followed by a newline. If the function returns false, nothing is printed.
+             */
+            template<typename T>
+            inline void println_if(
+                std::function<bool(T)> Fp,
+                const T& data) noexcept { if(Fp(data)) println(data); }
+
+            template<typename T>
+            inline void print_if(bool result, const T& data) noexcept { if(result) print(data); }
+
+            template<typename T>
+            inline void println_if(bool result, const T& data) { if(result) print(data); }
+            
         }
 
-        /**
-         * @brief Combines Test() and PrintVec() to test and print vector content.
-         * @tparam T The type of vector elements.
-         * @param testNum Test number.
-         * @param vec The vector to test and print.
-         */
-        template <typename T>
-        inline void print_test(long testNum,
-            const std::vector<T> &_vec) noexcept
-        {
-            print_test(testNum);
-            print<T>(_vec);
-        }
-
-        /**
-         * @brief Combines Test() and PrintVec() to test and print 2D vector content.
-         * @tparam T The type of vector elements.
-         * @param testNum Test number.
-         * @param vec The 2D vector to test and print.
-         * @note This function throws an exception if the input vector is empty.
-         * @example
-         * std::vector<std::vector<int>> vec2d = {
-         *    {1, 2},
-         *    {3, 4}
-         * };
-         */
-        template <typename T>
-        inline void print_test(long testNum,
-            const std::vector<std::vector<T>> &_vec) noexcept
-        {
-            print_test(testNum);
-            print<T>(_vec);
-        }
-
-        /**
-         * @brief Combines Test() and PrintVec() to test and print 3D vector content.
-         * @tparam T The type of vector elements.
-         * @param testNum Test number.
-         * @param vec The 3D vector to test and print.
-         * @note This function throws an exception if the input vector is empty.
-         * @example
-         * std::vector<std::vector<std::vector<int>>> vec3d = {
-         *    {{1, 2}, {3, 4}},
-         *    {{5, 6}, {7, 8}}
-         * };
-         */
-        template <typename T>
-        inline void print_test(long testNum,
-            const std::vector<std::vector<std::vector<T>>> &_vec) noexcept
-        {
-            print_test(testNum);
-            print<T>(_vec);
-        }
-
-        /**
-         * @brief Prints characters of a string individually starting from a given
-         * index.
-         * @param std::string The string to print.
-         * @param index Starting index (default = 0). If out of range, starts from 0.
-         */
-        inline void print_char_str(const std::string &_str, size_t index) noexcept
-        {
-            if (index >= _str.length())
-                index = 0;
-            for (size_t i = index; i < _str.length(); i++)
-                std::cout << _str[i] << ' ';
-            std::cout << '\n';
-        }
-
-        /**
-         * @brief Prints a decorated category title.
-         * @param category The category title to print.
-         */
-        inline void print_category(const std::string &category) noexcept
-        {
-            separator(2 * category.length());
-            Tabs(category.length() / 10);
-            std::cout << category << '\n';
-            separator(2 * category.length());
-        }
-
-        /**
-         * @brief Prints a formatted category name with separators and indentation.
-         *
-         * This function outputs the given category string (`category_s`) to the
-         * standard output stream, surrounded by separator lines of a specified
-         * length and character. It also indents the category text by a given
-         * number of tab characters before printing.
-         *
-         * @param category_s  The category name to be printed.
-         * @param tabs_num    Number of tab characters to print before the category text.
-         * @param seplen      The length of the separator line (number of repeated characters).
-         * @param sepch       The character used to build the separator line.
-         *
-         * @note This function relies on external helper functions:
-         *       - separator(int length, char ch): prints a separator line.
-         *       - Tabs(int n): prints a number of tab characters.
-         *
-         * @example
-         * // Example: print the word "Settings" with 1 tab,
-         * // a separator of length 20 made of '=' characters:
-         * print_category("Settings", 1, 20, '=');
-         *
-         * // Expected output:
-         * ====================
-         *     Settings
-         * ====================
-         */
-        inline void print_category(
-            const std::string &category_s,
-            int tabs_num, int seplen,
-            char sepch) noexcept
-        {
-            separator(seplen, sepch);
-            Tabs(tabs_num);
-            std::cout << category_s << '\n';
-            separator(seplen, sepch);
-        }
-
-        /**
-         * @brief Prints a value followed by a newline to standard output if a given condition is true.
-         * @tparam T Type of the value to print.
-         * @param Fp A function that takes a value of type T and returns a boolean indicating whether to print the value.
-         * @param data The value to be evaluated and potentially printed.
-         * @details This function evaluates the provided value using the given function pointer (or lambda). If the function returns true for the provided data, the value is printed to standard output followed by a newline. If the function returns false, nothing is printed.
-         */
-        template<typename T>
-        inline void print_if(
-            std::function<bool(T)> Fp, 
-            const T& data) noexcept { if(Fp(data)) print(data); }
-
-        /**
-         * @brief Prints a value followed by a newline to standard output if a given condition is true.
-         * @tparam T Type of the value to print.
-         * @param Fp A function that takes a value of type T and returns a boolean indicating whether to print the value.
-         * @param data The value to be evaluated and potentially printed.
-         * @details This function evaluates the provided value using the given function pointer (or lambda). If the function returns true for the provided data, the value is printed to standard output followed by a newline. If the function returns false, nothing is printed.
-         */
-        template<typename T>
-        inline void println_if(
-            std::function<bool(T)> Fp,
-            const T& data) noexcept { if(Fp(data)) println(data); }
-
-        template<typename T>
-        inline void print_if(bool result, const T& data) noexcept { if(result) print(data); }
-
-        template<typename T>
-        inline void println_if(bool result, const T& data) { if(result) print(data); }
     }
 
-#ifdef METACORE___LITE_HPP
 }
-#endif // METACORE___LITE_HPP
-#ifdef METACORE___META_HPP
-}
-#endif // METACORE___META_HPP
 
 #endif // METACORE___LITE___IO_HPP

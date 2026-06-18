@@ -1,6 +1,6 @@
 #include "lite/exception.hpp"
 #include "cgen/micros.h"
 
-MAIN_TEST(exceptionHpp);
+TEST_MAIN(exceptionHpp);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

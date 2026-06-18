@@ -29,7 +29,7 @@
 #include <windows.h>
 
 /** @brief Main system structure for environment management */
-cobject {
+object {
     CTEST* csys_test; // Array of tests
     size_t csys_tnum; // Number of tests
     cwarning* csys_w; // Array of warnings

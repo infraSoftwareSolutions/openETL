@@ -25,7 +25,7 @@
 
 size_t ctestCounter = 0;
 
-cobject {
+object {
     char* name;
     char* description;
     size_t num;
@@ -243,43 +243,43 @@ static bool string_test(const char *real, const char *expected, bool details, un
     return true;
 }
 
-static inline CTEST ctest_bool(bool real, bool expected, cstrptr name, cstrptr description)
+static inline CTEST ctest_bool(bool real, bool expected, char* name, char* description)
 {
     CTEST newVal;
     return creatNew(newVal, name, description, real == expected);
 }
 
-static inline CTEST ctest_char(char real, char expected, cstrptr name, cstrptr description)
+static inline CTEST ctest_char(char real, char expected, char* name, char* description)
 {
     CTEST newVal;
     return creatNew(newVal, name, description, real == expected);
 }
 
-static inline CTEST ctest_short(short real, short expected, cstrptr name, cstrptr description)
+static inline CTEST ctest_short(short real, short expected, char* name, char* description)
 {
     CTEST newVal;
     return creatNew(newVal, name, description, real == expected);
 }
 
-static inline CTEST ctest_int(int real, int expected, cstrptr name, cstrptr description)
+static inline CTEST ctest_int(int real, int expected, char* name, char* description)
 {
     CTEST newVal;
     return creatNew(newVal, name, description, real == expected);
 }
 
-static inline CTEST ctest_size(size_t real, size_t expected, cstrptr name, cstrptr description)
+static inline CTEST ctest_size(size_t real, size_t expected, char* name, char* description)
 {
     CTEST newVal;
     return creatNew(newVal, name, description, real == expected);
 }
 
-static inline CTEST ctest_long(long real, long expected, cstrptr name, cstrptr description)
+static inline CTEST ctest_long(long real, long expected, char* name, char* description)
 {
     CTEST newVal;
     return creatNew(newVal, name, description, real == expected);
 }
 
-static inline CTEST ctest_float(float real, float expected, float resolution, cstrptr name, cstrptr description)
+static inline CTEST ctest_float(float real, float expected, float resolution, char* name, char* description)
 {
     if (resolution >= 5.0f)
     {
@@ -290,7 +290,7 @@ static inline CTEST ctest_float(float real, float expected, float resolution, cs
     return creatNew(newVal, name, description, 100 * (fabs(expected - real) / fabs(expected)) <= resolution);
 }
 
-static inline CTEST ctest_double(double real, double expected, double resolution, cstrptr name, cstrptr description)
+static inline CTEST ctest_double(double real, double expected, double resolution, char* name, char* description)
 {
     if (resolution >= 5.0)
     {
@@ -301,7 +301,7 @@ static inline CTEST ctest_double(double real, double expected, double resolution
     return creatNew(newVal, name, description, 100 * (fabs(expected - real) / fabs(expected)) <= resolution);
 }
 
-static CTEST string_ctest(const cstrptr real, const cstrptr expected, cstrptr name, cstrptr description)
+static CTEST string_ctest(const char* real, const char* expected, char* name, char* description)
 {
     CTEST newVal;
     if (strlen(real) != strlen(expected))
@@ -322,7 +322,7 @@ static inline bool string_test(cstring real, cstring expected, bool details, uns
 }
 #endif // OPENUDT___CUDT_CSTRING_H
 
-cobject {
+object {
     bool details;
     unsigned int seplen;
     char sepch;

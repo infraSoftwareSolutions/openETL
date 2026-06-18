@@ -7,11 +7,6 @@
 #ifndef METACORE___CGEN___STRING_H
 #define METACORE___CGEN___STRING_H
 
-    #define cstrptr char * 
-
-    #define cstr(name, sizeValue) \
-        char name[sizeValue]
-
     static inline size_t length(const char * value) { return (value != NULL) ? strlen(value) : 0; }
 
     static inline bool equal(const char * value_1, const char * value_2)
@@ -21,7 +16,7 @@
         return strcmp(value_1, value_2) == 0 ? true : false;
     }
 
-    static inline cstrptr concatenate(char* value_1, const char * value_2)
+    static inline char* concatenate(char* value_1, const char * value_2)
     {
         if (value_1 == NULL || value_2 == NULL)
         return value_1;
@@ -42,7 +37,7 @@
         return NULL;
         
         // Free old memory and allocate fresh 1 byte for empty string
-        cstrptr temp = (char*) malloc(1);
+        char* temp = (char*) malloc(1);
         if (temp != NULL) {
         temp[0] = '\0';
         free(value);
@@ -220,9 +215,9 @@ static int *locations(const char * _str_, char ch, size_t out_count)
 }
 
 
-cobject
+object
 {
-    cstrptr data;
+    char* data;
     size_t length;
     size_t capacity;
 }
@@ -530,7 +525,7 @@ static cstring *split(cstring source, char delimiter, size_t *count)
     size_t length = 0;
     cstring *result = (cstring *)malloc(capacity * sizeof(cstring));
 
-    cstrptr token = strtok(source.data, delimiter);
+    char* token = strtok(source.data, delimiter);
     while (token != NULL)
     {
         if (length >= capacity)

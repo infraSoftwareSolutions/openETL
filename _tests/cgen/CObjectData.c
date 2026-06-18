@@ -1,5 +1,4 @@
-#define cobject_data_micros
-#include "cgen/micros.h"
+#include "cgen/micros/object_data.h"
 
 cbool(value1, true)
 cchar(value2, '9')

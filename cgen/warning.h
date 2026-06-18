@@ -5,11 +5,11 @@
 
 size_t cwarningCounter = 0;
 
-cobject {
-    cstrptr name;
-    cstrptr description;
-    cstrptr file;
-    cstrptr time;
+object {
+    char* name;
+    char* description;
+    char* file;
+    char* time;
     size_t line;
     size_t number;
 } cwarning;
@@ -44,7 +44,7 @@ static inline void printWarning(cwarning w) {
     printf("------------\n");
 }
 
-static inline cwarning wrong_indexing(cstrptr description) {
+static inline cwarning wrong_indexing(char* description) {
     cwarning w;
     w.name = "Wrong Indexing";
     w.description = description;
@@ -56,7 +56,7 @@ static inline cwarning wrong_indexing(cstrptr description) {
     return w;
 }
 
-static inline cwarning wrong_declaration(cstrptr description) {
+static inline cwarning wrong_declaration(char* description) {
     cwarning w;
     w.name = "Wrong declaration";
     w.description = description;
@@ -68,7 +68,7 @@ static inline cwarning wrong_declaration(cstrptr description) {
     return w;
 }
 
-static inline cwarning wrong_construction(cstrptr description) {
+static inline cwarning wrong_construction(char* description) {
     cwarning w;
     w.name = "Wrong Construction";
     w.description = description;
@@ -80,7 +80,7 @@ static inline cwarning wrong_construction(cstrptr description) {
     return w;
 }
 
-static inline cwarning bad_input(cstrptr description) {
+static inline cwarning bad_input(char* description) {
     cwarning w;
     w.name = "Bad Input";
     w.description = description;
@@ -92,7 +92,7 @@ static inline cwarning bad_input(cstrptr description) {
     return w;
 }
 
-static inline cwarning undefined_behavior(cstrptr description) {
+static inline cwarning undefined_behavior(char* description) {
     cwarning w;
     w.name = "Undefined Behavior";
     w.description = description;
@@ -104,7 +104,7 @@ static inline cwarning undefined_behavior(cstrptr description) {
     return w;
 }
 
-static inline cwarning invalid_argument(cstrptr description) {
+static inline cwarning invalid_argument(char* description) {
     cwarning w;
     w.name = "Invalid Argument";
     w.description = description;
@@ -116,7 +116,7 @@ static inline cwarning invalid_argument(cstrptr description) {
     return w;
 }
 
-static inline cwarning OutOfRange(cstrptr description) {
+static inline cwarning OutOfRange(char* description) {
     cwarning w;
     w.name = "Out Of Range";
     w.description = description;
@@ -128,7 +128,7 @@ static inline cwarning OutOfRange(cstrptr description) {
     return w;
 }
 
-static inline cwarning internal_problem(cstrptr description) {
+static inline cwarning internal_problem(char* description) {
     cwarning w;
     w.name = "Internal Problem";
     w.description = description;

@@ -1,6 +1,6 @@
 #include "lite/stream.hpp"
 #include "cgen/micros.h"
 
-MAIN_TEST(streamHpp);
+TEST_MAIN(streamHpp);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

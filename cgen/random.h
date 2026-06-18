@@ -15,7 +15,7 @@
 
 #include "cgen/micros/structure.h"
 
-cobject
+object
 {
     int core;
     double state;

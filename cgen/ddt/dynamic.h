@@ -26,7 +26,7 @@ cenum{
     LONG,
     DOUBLE} dynamic_index;
 
-cobject
+object
 {
     dynamic_index id;
     double value;
@@ -149,7 +149,7 @@ static inline cdynamic cdynamic_copy(cdynamic other)
  * @param self Pointer to cdynamic instance.
  * @return String literal representing the current type tag.
  */
-static inline const cstrptr type_name(cdynamic self)
+static inline const char* type_name(cdynamic self)
 {
     switch (self.id)
     {
@@ -437,7 +437,7 @@ static inline bool is_float(cdynamic self) { return self.id == FLOAT; }
 
 static inline bool is_double(cdynamic self) { return self.id == DOUBLE; }
 
-cobject {
+object {
     size_t upper;
     size_t lower;
     dynamic_index t;

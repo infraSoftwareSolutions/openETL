@@ -1,6 +1,6 @@
 #include "lite/warning.hpp"
 #include "cgen/micros.h"
 
-MAIN_TEST(warningHpp);
+TEST_MAIN(warningHpp);
 
-EXIT_TEST(true)
+TEST_EXIT(true)

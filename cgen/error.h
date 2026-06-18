@@ -3,11 +3,11 @@
 #ifndef METACORE___CGEN___ERROR_H
 #define METACORE___CGEN___ERROR_H
 
-cobject {
-    cstrptr name;
-    cstrptr description;
-    cstrptr file;
-    cstrptr time;
+object {
+    char* name;
+    char* description;
+    char* file;
+    char* time;
     size_t line;
 } cerror;
 
@@ -38,7 +38,7 @@ static inline void errPrint(cerror err) {
     printf("------------\n");
 }
 
-static inline cerror errIndexing(cstrptr description) {
+static inline cerror errIndexing(char* description) {
     cerror err;
     err.name = "Indexing Error";
     err.description = description;
@@ -48,7 +48,7 @@ static inline cerror errIndexing(cstrptr description) {
     return err;
 }
 
-static inline cerror errDeclaration(cstrptr description) {
+static inline cerror errDeclaration(char* description) {
     cerror err;
     err.name = "Declaration Error";
     err.description = description;
@@ -58,7 +58,7 @@ static inline cerror errDeclaration(cstrptr description) {
     return err;
 }
 
-static inline cerror errConstruction(cstrptr description) {
+static inline cerror errConstruction(char* description) {
     cerror err;
     err.name = "Construction Error";
     err.description = description;
@@ -68,7 +68,7 @@ static inline cerror errConstruction(cstrptr description) {
     return err;
 }
 
-static inline cerror errBadInput(cstrptr description) {
+static inline cerror errBadInput(char* description) {
     cerror err;
     err.name = "Bad Input";
     err.description = description;
@@ -78,7 +78,7 @@ static inline cerror errBadInput(cstrptr description) {
     return err;
 }
 
-static inline cerror errUndefinedBehavior(cstrptr description) {
+static inline cerror errUndefinedBehavior(char* description) {
     cerror err;
     err.name = "Undefined Behavior";
     err.description = description;
@@ -88,7 +88,7 @@ static inline cerror errUndefinedBehavior(cstrptr description) {
     return err;
 }
 
-static inline cerror errInvalidArgument(cstrptr description) {
+static inline cerror errInvalidArgument(char* description) {
     cerror err;
     err.name = "Invalid Argument";
     err.description = description;
@@ -98,7 +98,7 @@ static inline cerror errInvalidArgument(cstrptr description) {
     return err;
 }
 
-static inline cerror errOutOfRange(cstrptr description) {
+static inline cerror errOutOfRange(char* description) {
     cerror err;
     err.name = "Out Of Range";
     err.description = description;
@@ -108,7 +108,7 @@ static inline cerror errOutOfRange(cstrptr description) {
     return err;
 }
 
-static inline cerror errInternalProblem(cstrptr description) {
+static inline cerror errInternalProblem(char* description) {
     cerror err;
     err.name = "Internal Problem";
     err.description = description;

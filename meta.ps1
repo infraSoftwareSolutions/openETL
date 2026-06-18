@@ -16,11 +16,11 @@
     Optional library path for --help command
 
 .EXAMPLE
-    .\infoSystem.ps1 --version
-    .\infoSystem.ps1 --license
-    .\infoSystem.ps1 --help
-    .\infoSystem.ps1 --help cgen\micros.h
-    .\infoSystem.ps1 --help cgen/UnitTest.h
+    .\meta.ps1 --version
+    .\meta.ps1 --license
+    .\meta.ps1 --help
+    .\meta.ps1 --help cgen\micros.h
+    .\meta.ps1 --help cgen/UnitTest.h
 #>
 
 param(
@@ -33,7 +33,7 @@ param(
 )
 
 # ===================== Global Settings =====================
-$script:Version = "beta 0.2.3"
+$script:Version = "beta 0.2.4"
 $script:LicenseFile = Join-Path -Path $PSScriptRoot -ChildPath "_docs/lic.txt"
 $script:DocRoot = "_docs/textDoc"
 $script:briefFile = "_docs/brief.txt"
@@ -69,14 +69,14 @@ function Show-Brief {
 function Show-Help {
     $helpText = @"
 ===========================================
- metaCore - Information System
+        metaCore - Information System
 ===========================================
 
 Usage:
-    .\infoSystem.ps1 --version
-    .\infoSystem.ps1 --license
-    .\infoSystem.ps1 --help
-    .\infoSystem.ps1 --help <path>
+    .\meta.ps1 --version
+    .\meta.ps1 --license
+    .\meta.ps1 --help
+    .\meta.ps1 --help <path>
 
 Options:
     --version               : Show script version.
@@ -88,8 +88,8 @@ Options:
                               _docs/textDoc/<path_without_extension>.txt
 
 Examples:
-    .\infoSystem.ps1 --help cgen/micros.hpp
-    .\infoSystem.ps1 --help cgen/UnitTest.h
+    .\meta.ps1 --help cgen/micros.hpp
+    .\meta.ps1 --help cgen/UnitTest.h
 
 Note:
     - The documentation root folder is '_docs/textDoc' relative to the script location.
