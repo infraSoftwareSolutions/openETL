@@ -12,8 +12,8 @@
 #include <functional>
 
 #pragma once
-#ifndef OPENUDT___ADVA___FUNCTION_HPP
-#define OPENUDT___ADVA___FUNCTION_HPP
+#ifndef METACORE___ADVA___FUNCTION_HPP
+#define METACORE___ADVA___FUNCTION_HPP
 
 namespace meta {
 
@@ -1400,4 +1400,4 @@ namespace meta {
         }
     }
 }
-#endif // OPENUDT___ADVA___FUNCTION_HPP
+#endif // METACORE___ADVA___FUNCTION_HPP

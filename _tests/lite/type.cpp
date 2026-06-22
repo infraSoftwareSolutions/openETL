@@ -1,7 +1,7 @@
 #include "lite/type.hpp"
 #include "cgen/micros.h"
 
-TEST_MAIN(typeHpp);
+TEST_MAIN(metalite: type);
 
     bool val = true;
     TEST_EQU(meta::lite::type(val), "bool");

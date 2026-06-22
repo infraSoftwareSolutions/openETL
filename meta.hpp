@@ -4,6 +4,7 @@
 
 #include "cgen.h"
 #include "lite.hpp"
+#include "adva.hpp"
 
 namespace meta {
     namespace system70 {

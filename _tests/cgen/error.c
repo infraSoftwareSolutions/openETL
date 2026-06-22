@@ -1,7 +1,7 @@
 #include "cgen/micros.h"
 #include "cgen/error.h"
 
-TEST_MAIN(error);
+TEST_MAIN(meta_cgen: error);
 
     // Test 1: errInit() - Initialize error with default values
     cerror err1 = errInit();

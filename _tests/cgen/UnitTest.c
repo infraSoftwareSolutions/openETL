@@ -9,7 +9,7 @@
  *          float, double, and string testing.
  */
 
-TEST_MAIN(CUTest);
+TEST_MAIN(meta_cgen: UnitTest);
     
     // ==================== CTEST OBJECT CREATION AND MANAGEMENT ====================
     

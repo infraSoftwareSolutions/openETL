@@ -25,7 +25,7 @@
 
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('--version', '--license', '--brief', '--help')]
+    [ValidateSet('--version', '--license', '--author', '--brief', '--help')]
     [string]$Command,
     
     [Parameter(Position = 1)]
@@ -33,7 +33,7 @@ param(
 )
 
 # ===================== Global Settings =====================
-$script:Version = "beta 0.2.4"
+$script:Version = "beta 0.2.5"
 $script:LicenseFile = Join-Path -Path $PSScriptRoot -ChildPath "_docs/lic.txt"
 $script:DocRoot = "_docs/textDoc"
 $script:briefFile = "_docs/brief.txt"
@@ -130,7 +130,10 @@ function Show-Documentation {
 
 # ===================== Main Logic =====================
 
-if ($Command -eq "--version") {
+if ($Command -eq "--author") {
+    Write-Host "author: Ali Lafi (acting under the pseudonym `Ken Roth`)"
+}
+elseif ($Command -eq "--version") {
     Show-Version
 }
 elseif ($Command -eq "--license") {

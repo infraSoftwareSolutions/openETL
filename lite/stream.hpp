@@ -635,6 +635,17 @@ namespace meta {
                     container.push_back(fx());
                 }
 
+                void operator<<(bool testResult) noexcept {
+                    total_tests++;
+                    if(testResult) {
+                        passed_tests++;
+                    } else {
+                        failed_tests++;
+                    }
+                    result_ts &= testResult;
+                    container.push_back(TEST{testResult});
+                }
+
                 void operator<<(TEST& testResult) noexcept {
                     total_tests++;
                     if(testResult.get()) {

@@ -1,4 +1,5 @@
-#include "cgen/micros/structure.h"
+#include <vector>
+#include <string>
 
 #pragma once
 #ifndef METACORE___ADVA___SORT_HPP
@@ -7,7 +8,7 @@
 namespace meta {
     namespace adva {
         
-        bool is_sorted(const str& value) noexcept {
+        bool is_sorted(const std::string& value) noexcept {
             if(value.empty()) return true;
             for(size_t i = 1; i < value.length(); i++) {
                 if(value[i] < value[i - 1]) return false;
@@ -16,7 +17,7 @@ namespace meta {
         }
 
         template<typename T>
-        bool is_sorted(const vec<T>& value) noexcept {
+        bool is_sorted(const std::vector<T>& value) noexcept {
             if(value.empty()) return true;
             for(size_t i = 1; i < value.size(); i++) {
                 if(value[i] < value[i - 1]) return false;
@@ -24,33 +25,33 @@ namespace meta {
             return true;
         }
 
-        str bubble_sort(const str& value) noexcept;
+        std::string bubble_sort(const std::string& value) noexcept;
         template<typename T>
-        vec<T> bubble_sort(const vec<T>& value) noexcept;
+        std::vector<T> bubble_sort(const std::vector<T>& value) noexcept;
 
-        str selection_sort(const str& value) noexcept;
+        std::string selection_sort(const std::string& value) noexcept;
         template<typename T>
-        vec<T> selection_sort(const vec<T>& value) noexcept;
+        std::vector<T> selection_sort(const std::vector<T>& value) noexcept;
 
-        str comb_sort(const str& value) noexcept;
+        std::string comb_sort(const std::string& value) noexcept;
         template<typename T>
-        vec<T> comb_sort(const vec<T>& value) noexcept;
+        std::vector<T> comb_sort(const std::vector<T>& value) noexcept;
 
-        str heap_sort(const str& value) noexcept;
+        std::string heap_sort(const std::string& value) noexcept;
         template<typename T>
-        vec<T> heap_sort(const vec<T>& value) noexcept;
+        std::vector<T> heap_sort(const std::vector<T>& value) noexcept;
 
-        str insertion_sort(const str& value) noexcept;
+        std::string insertion_sort(const std::string& value) noexcept;
         template<typename T>
-        vec<T> insertion_sort(const vec<T>& value) noexcept;
+        std::vector<T> insertion_sort(const std::vector<T>& value) noexcept;
 
-        str merge_sort(const str& value) noexcept;
+        std::string merge_sort(const std::string& value) noexcept;
         template<typename T>
-        vec<T> merge_sort(const vec<T>& value) noexcept;
+        std::vector<T> merge_sort(const std::vector<T>& value) noexcept;
 
-        str quick_sort(const str& value) noexcept;
+        std::string quick_sort(const std::string& value) noexcept;
         template<typename T>
-        vec<T> quick_sort(const vec<T>& value) noexcept;
+        std::vector<T> quick_sort(const std::vector<T>& value) noexcept;
     }
 }
 

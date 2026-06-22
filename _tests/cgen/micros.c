@@ -30,7 +30,7 @@ extern const int value18[];
 extern const double value19[];
 extern const int value20;
 
-TEST_MAIN(micros);
+TEST_MAIN(meta_cgen: micros);
     
     // ==================== JUMP MACROS TESTS ====================
     // Test basic jump loop

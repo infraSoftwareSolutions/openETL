@@ -1,6 +1,6 @@
 #include "lite/stream.hpp"
 #include "cgen/micros.h"
 
-TEST_MAIN(streamHpp);
+TEST_MAIN(metalite: stream);
 
 TEST_EXIT(true)
