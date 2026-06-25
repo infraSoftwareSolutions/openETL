@@ -5,10 +5,10 @@
  * @date 2025 / 9 / 25
  * @details This library provides a simple I/O utility class for handling standard input and output operations.
  * The `io` class encapsulates various functions for printing to the console, taking user input, and formatting output.
- * It includes methods for printing values with or without newlines, printing error messages, and taking user input for different types of variables and vectors.
+ * It includes methods for printing values with or without newLines, printing error messages, and taking user input for different types of variables and vectors.
  * Additionally, it offers functions for printing formatted test outputs and separators for better readability.
  * Overall, this library is designed to simplify common I/O tasks in C++ and enhance the user experience when interacting with the console.
- * - NewLines: Prints a specified number of newline characters.
+ * - newLines: Prints a specified number of newline characters.
  * - println: Prints a value followed by a newline to standard output.
  * - print: Prints a value without a newline to standard output.
  * - println_error: Prints an error message followed by a newline to standard error.
@@ -54,7 +54,7 @@ namespace meta {
              * @brief Prints a number of newline characters.
              * @param num Number of new lines to print (default = 2).
              */
-            inline void NewLines(size_t num = 1) noexcept
+            inline void newLines(size_t num = 1) noexcept
             {
                 for (size_t i = 0; i < num; i++)
                     std::cout << '\n';
@@ -239,7 +239,7 @@ namespace meta {
              * @brief Prints a number of tab characters.
              * @param num Number of tabs to print (default = 2).
              */
-            inline void Tabs(size_t num = 1) noexcept
+            inline void tabs(size_t num = 1) noexcept
             {
                 for (short i = 0; i < num; i++)
                     std::cout << '\t';
@@ -276,7 +276,7 @@ namespace meta {
                 size_t whiteSpace = 2,
                 size_t seplen = 25,
                 size_t sepch = '-') noexcept {
-                NewLines(whiteSpace);
+                newLines(whiteSpace);
                 separator(seplen, sepch);
                 println("<<< TEST >>>");
                 separator(seplen, sepch);
@@ -567,12 +567,12 @@ namespace meta {
              * @param std::string The string to print.
              * @param index Starting index (default = 0). If out of range, starts from 0.
              */
-            inline void print_char_str(const std::string &_str, size_t index) noexcept
+            inline void print_char_str(const std::string &input, size_t index) noexcept
             {
-                if (index >= _str.length())
+                if (index >= input.length())
                     index = 0;
-                for (size_t i = index; i < _str.length(); i++)
-                    std::cout << _str[i] << ' ';
+                for (size_t i = index; i < input.length(); i++)
+                    std::cout << input[i] << ' ';
                 std::cout << '\n';
             }
 
@@ -583,7 +583,7 @@ namespace meta {
             inline void print_category(const std::string &category) noexcept
             {
                 separator(2 * category.length());
-                Tabs(category.length() / 10);
+                tabs(category.length() / 10);
                 std::cout << category << '\n';
                 separator(2 * category.length());
             }
@@ -621,7 +621,7 @@ namespace meta {
                 char sepch) noexcept
             {
                 separator(seplen, sepch);
-                Tabs(tabs_num);
+                tabs(tabs_num);
                 std::cout << category_s << '\n';
                 separator(seplen, sepch);
             }

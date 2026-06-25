@@ -1,5 +1,7 @@
 #include <unordered_map>
 #include <string>
+#include <ctype.h>
+#include <iostream>
 
 #pragma once
 #ifndef METACORE___ADVA___TOKEN_HPP
@@ -8,17 +10,24 @@
 namespace meta {
 
     namespace adva {
-
-        size_t enum_counter = 0;
+        
+        using token = std::pair<std::string, uint8_t>;
 
         class hash_enum {
             private:
-            std::unordered_map<std::string, size_t> enumMap;
+            uint8_t enum_counter = 0;
+            std::unordered_map<std::string, uint8_t> enumMap;
+
             public:
             hash_enum() = default;
             ~hash_enum() = default;
 
-            constexpr inline void addToken(const std::string& enum_val) noexcept {
+            hash_enum(const hash_enum& other) noexcept : enumMap(other.enumMap) {}
+
+            constexpr inline void add(const std::string& enum_val) noexcept {
+                if(enum_counter == UINT8_MAX) {
+                    std::cerr << "out of limit issue: can't add to full enum hast map.\n";
+                }
                 enumMap[enum_val] = enum_counter;
                 enum_counter++;
             }
@@ -35,35 +44,75 @@ namespace meta {
                 return enumMap.end();
             }
 
-            constexpr inline void operator+=(const std::string& enum_val) noexcept { addToken(enum_val); }
+            constexpr inline void operator<<(const std::string& enum_val) noexcept { add(enum_val); }
         
-            constexpr inline size_t operator[](const std::string& enum_val) noexcept { return enumMap.at(enum_val); }
+            constexpr inline uint8_t operator[](const std::string& enum_val) noexcept { return enumMap.at(enum_val); }
+
+            inline void operator=(const hash_enum& other) noexcept {
+                enum_counter = other.enum_counter;
+                enumMap = other.enumMap;
+            }
         };
 
-        template<typename T, typename U>
-        class node {
+        class key_map {
             private:
-            U centerElement;
-            std::unordered_map<T, U> center;
+            std::string keyWord;
+            std::unordered_map<std::string, std::string> elements;
+            
             public:
-            node() = default;
-            ~node() = default;
-            node(const U& element) noexcept : centerElement(element) {}
+            key_map() = default;
+            
+            ~key_map() = default;
+            
+            key_map(const std::string& element) noexcept : 
+            keyWord(element) {}
 
-            void add(const T& key) noexcept { center[key] = centerElement; }
+            key_map(const key_map& other) noexcept : 
+            keyWord(other.keyWord), 
+            elements(other.elements) {}
 
-            void set(const U& element) noexcept { centerElement = element; }
+            void set(const std::string& element) noexcept { keyWord = element; }
 
-            size_t size() noexcept { return center.size() }
+            const std::string& get() noexcept { return keyWord; }
 
-            auto get() noexcept { return center; }
+            size_t size() noexcept { return elements.size(); }
 
-            U operator[](const T& key) { return center.at(key); }
+            std::string operator[](const std::string& key) { return elements.at(key); }
 
-            void operator+=(const T& key) noexcept { add(key); }
+            void operator<<(const std::string& element) noexcept { elements[element] = keyWord; }
+
+            void operator=(const key_map& other) {
+                keyWord = other.keyWord;
+                elements = other.elements;
+            }
         };
 
-        class token {};
+        class tokenizer {
+            private:
+            hash_enum id_number;
+            key_map key_id;
+            std::vector<token> result;
+
+            public:
+            tokenizer() noexcept = default;
+            ~tokenizer() noexcept = default;
+
+            tokenizer(const hash_enum& idNum, const key_map& keyId) noexcept : id_number(idNum), key_id(keyId) {}
+
+            inline const std::vector<token>& get() noexcept { return result; }
+
+            inline void operator<<(const std::string& token_name) noexcept {
+                result.push_back(token(token_name, id_number[key_id[token_name]]));
+            }
+
+            inline void operator<<(const std::vector<std::string>& tokens) noexcept {
+                for(std::string token_name : tokens) {
+                    result.push_back(token(token_name, id_number[key_id[token_name]]));
+                }
+            }
+
+            inline token operator[](const size_t index) noexcept { return result[index]; }
+        };
     }
 }
 

@@ -483,7 +483,7 @@ namespace meta {
          * @return A std::string object containing n newline characters ('\n'). If n is 0, an empty string is returned.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions
          */
-        std::string nl(unsigned int n = 1) noexcept
+        std::string new_lines(unsigned int n = 1) noexcept
         {
             std::string result;
             for (unsigned int i = 0; i < n; i++)
@@ -497,7 +497,7 @@ namespace meta {
          * @return A std::string object containing n tab characters ('\t'). If n is 0, an empty string is returned.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions
          */
-        std::string tab(unsigned int n = 1) noexcept
+        std::string Tabs(unsigned int n = 1) noexcept
         {
             std::string result;
             for (unsigned int i = 0; i < n; i++)
@@ -1022,7 +1022,7 @@ namespace meta {
          * @return     A @c std::vector<std::string> containing the separated substrings.
          *             Returns an empty vector if the input string is empty.
          */
-        std::vector<std::string> sseparator(const std::string &s) noexcept
+        std::vector<std::string> split(const std::string &s, char c = ' ') noexcept
         {
             if (s.empty())
                 return {};
@@ -1030,7 +1030,7 @@ namespace meta {
             std::string temp;
             for (size_t i = 0; i < s.size(); i++)
             {
-                if (s[i] == ' ' || i == s.size() - 1)
+                if (s[i] == c || i == s.size() - 1)
                 {
                     result_v.push_back(temp);
                     temp.clear();
@@ -1239,7 +1239,7 @@ namespace meta {
         {
             if (s.empty())
                 return s;
-            std::vector<std::string> vs = sseparator(s);
+            std::vector<std::string> vs = split(s);
             std::string result;
             for (size_t i = 0; i < vs.size(); i++)
             {

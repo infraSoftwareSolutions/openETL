@@ -34,6 +34,6 @@ void update_core(crandom *self)
     self->state = (double)self->core / 0x7fffffff;
 }
 
-void update_state();
+// void update_state();
 
 #endif // METACORE___CGEN___RANDOM_H

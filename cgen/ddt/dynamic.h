@@ -8,7 +8,7 @@
  * @date 2024-06
  */
 
-#include "cgen/string.h"
+#include "cgen/micros/structure.h"
 #include <stdexcpt.h>
 #include <stdbool.h>
 #include <limits.h>

@@ -5,16 +5,27 @@
 
     #define tab '\t'
 
-    #define ___main___ \
+    #define metaMain \
+        int main(int argc, char* argv[]) {
+
+    #define meta_main \
         int main() {
 
-    #define ___ret(retval) \
+    #define meta_ret(retval) \
             return (int)retval; }
 
     #define jump(label) goto label
 
     #define jump_if(condition, label) \
-        if (condition) goto label    
+        if (condition) goto label
+
+    // note used only with jump_if
+    #define jump_elif(condition, label) \
+        else if(condition) goto label
+    
+    // note used only with jump_if
+    #define jump_else(label) \
+        else goto label
 
     #ifndef __cplusplus
 
@@ -22,13 +33,16 @@
 
         #define cenum typedef enum
 
-        #define cstr(name, sizeValue) \
+        #define cstring(name, sizeValue) \
             char name[sizeValue]
 
     #endif // __cplusplus
 
     #ifdef __cplusplus
 
+        #define lambda_func(capture_clause, parameters, return_type, script) \
+            [capture_clause] parameters -> return_type { script }
+        
         #include <string>
         #include <functional>
         #include <vector>
@@ -44,9 +58,6 @@
 
         template<typename T>
         using que = std::queue<T>;
-
-        #define lambda_func(capture_clause, parameters, return_type, script) \
-            [capture_clause] parameters -> return_type { script }
 
     #endif // __cplusplus
 

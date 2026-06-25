@@ -10,7 +10,7 @@
 #include "bitUtilitys/xchg_bit.h"
 #include "bitUtilitys/binaryFormat.h"
 
-#define to_binary_string(value) _Generic((value), \
+#define binary2string(value) _Generic((value), \
     int8_t: bit8_str(value),                      \
     int16_t: bit16_str(value),                    \
     int32_t: bit32_str(value),                    \

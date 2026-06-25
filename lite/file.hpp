@@ -165,7 +165,7 @@ namespace meta {
                     file.open(fileName, std::ios::in |
                                             std::ios::out | std::ios::app);
                 }
-                file << "#include " << "\"SDT.h\"\n";
+                file << "#include " << "\"metaCore/cgen/micros/object_data.h\"\n";
                 file.close();
             }
 
