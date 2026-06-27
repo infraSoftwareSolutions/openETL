@@ -1,0 +1,64 @@
+﻿lite/file.hpp
+File Management and Data Generation System
+Overview:
+    This file provides a lightweight file management system for handling text files and directories.
+    It also includes a helper namespace for generating and storing primitive C-style data into files.
+Classes  
+    file: Main class for managing files and directories.  
+    CDataGenerator: Helper namespace for generating formatted data output into files.  
+Functions  
+    Constructors  
+        file() noexcept: Creates a file manager using the current working directory.  
+        file(const std::string& dirPath) noexcept: Creates a file manager for a specified directory.  
+    Directory Management Functions  
+        change_directory(const std::string& dirPath) noexcept: Changes the managed directory.  
+        make_directory(const std::string& dirPath) noexcept: Creates a new directory.  
+    File Management Functions  
+        create(const std::string& filename): Creates a new text file.  
+        append(const std::string& filename, const std::string& content): Appends content into a text file.  
+        read(const std::string& filename): Reads and returns file contents.  
+        exists(const std::string& filename) noexcept: Checks if a file exists.  
+        remove(const std::string& filename): Removes a file from the directory.  
+    Data Generator Functions  
+        set(const std::string& fileName): Initializes a file with required include statements.  
+        save(const std::string& fileName, const std::string& varName, char data) noexcept: Saves char data into a file.  
+        save(const std::string& fileName, const std::string& varName, float data) noexcept: Saves float data into a file.  
+        save(const std::string& fileName, const std::string& varName, double data) noexcept: Saves double data into a file.  
+        clear(const std::string& fileName) noexcept: Clears all contents from a file.  
+Key Functions  
+    file Class Methods  
+        change_directory()  
+            Updates the working directory used for file operations.  
+        create()  
+            Creates a new file inside the managed directory.  
+        append()  
+            Adds text content to an existing file.  
+        read()  
+            Reads complete file contents line-by-line.  
+        exists()  
+            Verifies whether a file exists in the managed directory.  
+        remove()  
+            Deletes a file from the managed directory.  
+    Code Structure  
+
+        The code is organized into namespaces:  
+
+            lite: Main namespace containing the file management class.  
+            CDataGenerator: Utility namespace for generating structured file data.  
+    CDataGenerator Namespace Functions  
+
+        set()  
+        save(char)  
+        save(float)  
+        save(double)  
+        clear()  
+    These functions simplify generating formatted data definitions and managing generated files.  
+    file Class Methods  
+
+        create()  
+        append()  
+        read()  
+        exists()  
+        remove()  
+        change_directory()  
+        make_directory()

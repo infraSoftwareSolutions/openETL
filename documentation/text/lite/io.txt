@@ -1,0 +1,47 @@
+﻿lite/io.hpp
+    This is the io namespace in C++.
+    Here's a high-level overview of its contents:
+    Function Declarations
+        The io namespace contains several function declarations that perform various I/O operations. These include:
+        print_char_str: prints characters to a string individually
+        separator: prints a separator line
+        separators: prints multiple separator lines with specified lengths and characters
+        print_category: prints a formatted category name with separators and indentation
+        print_if: executes a function based on the return value of another function or lambda expression
+        println_if: executes a function based on the return value of another function or lambda expression
+        print_char_str and println_if are part of the lite::io::print class
+    Member Functions
+        The io namespace also contains several member functions that provide additional functionality:
+        separator(int length, char ch): prints a separator line with specified length and character
+        Tabs(int n): prints a number of tab characters
+        lite::io::print(T data): evaluates the provided value using a given function pointer (or lambda expression)
+        lite::io::println(T data): evaluates the provided value using a given function pointer (or lambda expression)
+    Helper Functions
+        The io namespace also contains several helper functions that are used by other member functions:
+        print_category(const std::string &category_s, int tabs_num, int seplen, char sepch): prints a formatted category name with separators and indentation
+        println_if(bool result, const T& data): evaluates the provided value using a given function pointer (or lambda expression)
+    Example Usage
+        #include <iostream>
+        #include <vector>
+        struct Data {
+            std::string str;
+        };
+        int main() {
+            // Example usage of print_char_str
+            lite::io::print_char_str("Hello, World!", 4);
+            // Example usage of separator
+            lite::io::separator(20, '=');
+            // Example usage of separators
+            lite::io::separators(5, 10, '~');
+            // Example usage of print_category
+            std::cout << "Categories:" << std::endl;
+            lite::io::print_category("Category1", 2, 10, '-');
+            lite::io::print_category("Category2", 3, 15, '*');
+            // Example usage of println_if
+            bool result = true;
+            if (result) {
+                lite::io::println_if(result, "Hello");
+            }
+            return 0;
+        }
+    This example shows how you can use the io namespace to print individual characters, separate lines, format category names, and evaluate values using function pointers.

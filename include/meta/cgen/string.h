@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "cgen/micros/structure.h"
+#include "micros/structure.h"
 
 #ifndef METACORE___CGEN___STRING_H
 #define METACORE___CGEN___STRING_H

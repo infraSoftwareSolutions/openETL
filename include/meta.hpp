@@ -2,9 +2,9 @@
 #ifndef METACORE___META_HPP
 #define METACORE___META_HPP
 
-#include "cgen.h"
-#include "lite.hpp"
-#include "adva.hpp"
+#include "meta/cgen.h"
+#include "meta/lite.hpp"
+#include "meta/adva.hpp"
 
 namespace meta {
     namespace system70 {

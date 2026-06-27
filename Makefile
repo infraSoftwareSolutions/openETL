@@ -7,25 +7,27 @@ CSTD := -I/C/msys64/ucrt64/include
 CXXSTD := -I/C/msys64/ucrt64/include/c++/15.2.0
 
 # Output files
-CGEN_EXAMPLES_OUT := _output/examples/cgen
-LITE_EXAMPLES_OUT  := _output/examples/lite
-CGEN_TEST_OUT := _output/tests/cgen
-LITE_TEST_OUT  := _output/tests/lite
+CGEN_EXAMPLE_OUT := output/example/cgen
+LITE_EXAMPLE_OUT  := output/example/lite
+CGEN_TEST_OUT := output/test/cgen
+LITE_TEST_OUT  := output/test/lite
 
 # Source files
-CGEN_EXAMPLES_SRC := _examples/cgen/*.c
-CGEN_TEST_SRC := _tests/cgen/*.c
-LITE_EXAMPLES_SRC := _examples/lite/*.cpp
-LITE_TEST_SRC  := _tests/lite/*.cpp
+CGEN_EXAMPLE_SRC := example/cgen/*.c
+CGEN_TEST_SRC := test/cgen/*.c
+LITE_EXAMPLE_SRC := example/lite/*.cpp
+LITE_TEST_SRC  := test/lite/*.cpp
 
 # Static analysis targets
-BITUTILS_HEADERS := clite/bitUtilitys/*.h
-CGEN_HEADERS    := clite/*.h
-LITE_HEADERS     := lite/*.hpp
+BITUTILS_HEADERS := include/meta/cgen/bitUtilitys/*.h
+CGEN_HEADERS    := include/meta/cgen/*.h
+LITE_HEADERS     := include/meta/lite/*.hpp
+ADVA_HEADERS := include/meta/adva/*.hpp
+META_HEADERS := include
 
 .PHONY: help \
-        bitUtilitys-check clite-check lite-check static-check \
-        clite-examples lite-examples clite-tests lite-tests compile-tests run-tests
+        bitUtilitys-check cgen-check lite-check static-check \
+        cgen-examples lite-examples cgen-tests lite-tests compile-tests run-tests
 
 # --------------------------------------------------
 # Static analysis
@@ -49,7 +51,7 @@ static-check:
 # Tests
 # --------------------------------------------------
 
-clite-tests:
+cgen-tests:
 	$(CC) $(CFLAGS) $(CGEN_TEST_SRC) -o $(CGEN_TEST_OUT)
 	./$(CGEN_TEST_OUT)
 
@@ -57,29 +59,29 @@ lite-tests:
 	$(CXX) $(CXXFLAGS) $(LITE_TEST_SRC) -o $(LITE_TEST_OUT)
 	./$(LITE_TEST_OUT)
 
-clite-examples:
-	$(CC) $(CFLAGS) $(CGEN_EXAMPLES_SRC) -o $(CGEN_EXAMPLES_OUT)
-	./$(CGEN_EXAMPLES_OUT)
+cgen-examples:
+	$(CC) $(CFLAGS) $(CGEN_EXAMPLE_SRC) -o $(CGEN_EXAMPLE_OUT)
+	./$(CGEN_EXAMPLE_OUT)
 
 lite-examples:
-	$(CXX) $(CXXFLAGS) $(LITE_EXAMPLES_SRC) -o $(LITE_EXAMPLES_OUT)
-	./$(LITE_EXAMPLES_OUT)
+	$(CXX) $(CXXFLAGS) $(LITE_EXAMPLE_SRC) -o $(LITE_EXAMPLE_OUT)
+	./$(LITE_EXAMPLE_OUT)
 
 compile-tests:
 	$(CC) $(CFLAGS) $(CGEN_TEST_SRC) -o $(CGEN_TEST_OUT)
 	$(CXX) $(CXXFLAGS) $(LITE_TEST_SRC) -o $(LITE_TEST_OUT)
 
 compile-examples:
-	$(CC) $(CFLAGS) $(CGEN_EXAMPLES_SRC) -o $(CGEN_EXAMPLES_OUT)
-	$(CXX) $(CXXFLAGS) $(LITE_EXAMPLES_SRC) -o $(LITE_EXAMPLES_OUT)
+	$(CC) $(CFLAGS) $(CGEN_EXAMPLE_SRC) -o $(CGEN_EXAMPLE_OUT)
+	$(CXX) $(CXXFLAGS) $(LITE_EXAMPLE_SRC) -o $(LITE_EXAMPLE_OUT)
 
 run-tests:
 	./$(CGEN_TEST_OUT)
 	./$(LITE_TEST_OUT)
 
 run-examples:
-	./$(CGEN_EXAMPLES_OUT)
-	./$(LITE_EXAMPLES_OUT)
+	./$(CGEN_EXAMPLE_OUT)
+	./$(LITE_EXAMPLE_OUT)
 
 # --------------------------------------------------
 # Help

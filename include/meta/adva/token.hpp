@@ -2,6 +2,7 @@
 #include <string>
 #include <ctype.h>
 #include <iostream>
+#include <initializer_list>
 
 #pragma once
 #ifndef METACORE___ADVA___TOKEN_HPP
@@ -15,42 +16,49 @@ namespace meta {
 
         class hash_enum {
             private:
-            uint8_t enum_counter = 0;
-            std::unordered_map<std::string, uint8_t> enumMap;
+            uint8_t counter = 0;
+            std::unordered_map<std::string, uint8_t> objectMap;
 
             public:
             hash_enum() = default;
             ~hash_enum() = default;
 
-            hash_enum(const hash_enum& other) noexcept : enumMap(other.enumMap) {}
+            hash_enum(const std::initializer_list<std::string> &list) noexcept {
+                for(std::string element : list) {
+                    objectMap[element] = counter;
+                    counter++;
+                }
+            }
+
+            hash_enum(const hash_enum& other) noexcept : objectMap(other.objectMap) {}
 
             constexpr inline void add(const std::string& enum_val) noexcept {
-                if(enum_counter == UINT8_MAX) {
+                if(counter == UINT8_MAX) {
                     std::cerr << "out of limit issue: can't add to full enum hast map.\n";
                 }
-                enumMap[enum_val] = enum_counter;
-                enum_counter++;
+                objectMap[enum_val] = counter;
+                counter++;
             }
 
             constexpr inline size_t size() noexcept {
-                return enumMap.size();
+                return objectMap.size();
             }
 
             inline auto begin() noexcept {
-                return enumMap.begin();
+                return objectMap.begin();
             }
 
             inline auto end() noexcept {
-                return enumMap.end();
+                return objectMap.end();
             }
 
             constexpr inline void operator<<(const std::string& enum_val) noexcept { add(enum_val); }
         
-            constexpr inline uint8_t operator[](const std::string& enum_val) noexcept { return enumMap.at(enum_val); }
+            constexpr inline uint8_t operator[](const std::string& enum_val) noexcept { return objectMap.at(enum_val); }
 
             inline void operator=(const hash_enum& other) noexcept {
-                enum_counter = other.enum_counter;
-                enumMap = other.enumMap;
+                counter = other.counter;
+                objectMap = other.objectMap;
             }
         };
 
@@ -90,24 +98,23 @@ namespace meta {
         class tokenizer {
             private:
             hash_enum id_number;
-            key_map key_id;
             std::vector<token> result;
 
             public:
             tokenizer() noexcept = default;
             ~tokenizer() noexcept = default;
 
-            tokenizer(const hash_enum& idNum, const key_map& keyId) noexcept : id_number(idNum), key_id(keyId) {}
+            tokenizer(const hash_enum& idNum) noexcept : id_number(idNum) {}
 
             inline const std::vector<token>& get() noexcept { return result; }
 
             inline void operator<<(const std::string& token_name) noexcept {
-                result.push_back(token(token_name, id_number[key_id[token_name]]));
+                result.push_back(token(token_name, id_number[token_name]));
             }
 
             inline void operator<<(const std::vector<std::string>& tokens) noexcept {
                 for(std::string token_name : tokens) {
-                    result.push_back(token(token_name, id_number[key_id[token_name]]));
+                    result.push_back(token(token_name, id_number[token_name]));
                 }
             }
 

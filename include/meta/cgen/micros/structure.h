@@ -47,6 +47,7 @@
         #include <functional>
         #include <vector>
         #include <queue>
+        #include <unordered_map>
 
         using str = std::string;
 
@@ -58,6 +59,9 @@
 
         template<typename T>
         using que = std::queue<T>;
+
+        template<typename T, typename U>
+        using hash_map = std::unordered_map<T, U>;
 
     #endif // __cplusplus
 

@@ -13,7 +13,7 @@
  * @date 2024-06
  */
 
-#include "cgen/micros/structure.h"
+#include "micros/structure.h"
 
 object
 {

@@ -2,15 +2,15 @@
     "version": 4,
     "configurations": [
 
-        // ─── C (clite) ───────────────────────────────────────────
+        // ─── C (cgen) ───────────────────────────────────────────
         {
-            "name": "clite",
+            "name": "cgen",
             "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe",
             "cStandard": "c17",
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
-                "C:/Users/User/OneDrive/Documents/GitHub/metaCore",
+                "C:/Users/User/OneDrive/Documents/GitHub/metaCore/include",
                 "C:/msys64/ucrt64/include"
             ],
 
@@ -31,7 +31,7 @@
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
-                "C:/Users/User/OneDrive/Documents/GitHub/metaCore",
+                "C:/Users/User/OneDrive/Documents/GitHub/metaCore/include",
                 "C:/msys64/ucrt64/include",
                 "C:/msys64/ucrt64/include/c++/15.2.0"
             ],
