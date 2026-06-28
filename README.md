@@ -1,18 +1,17 @@
 # metaCore 🚀
 
-`metaCore` is a comprehensive, low-level ecosystem and framework written in **C / C++** and powered by automated tooling built with **PowerShell**.
+`metaCore` is a comprehensive, low-level ecosystem and framework written in **C / C++**.
 
 It is designed to serve as a robust foundational infrastructure that provides developers with advanced helper tools to streamline development, testing, and error management with minimal external runtime dependencies.
 
 ---
 
-![metaCore_Logo](_docs/MCLogo.png)
+![metaCore_Logo](documentation/MCLogo.png)
 
 ## 🎯 Core Objectives
 
 * **Streamline Software Engineering:** Provide a unified workspace for managing errors, warnings, and comprehensive unit testing.
 * **Optimize Performance:** Offer accurate benchmarking suites and high-efficiency stream-like objects for fast data pipelines.
-* **Smart Automation:** Integrate modern build utilities and codebase metrics powered by local AI for effortless documentation generation.
 * **Future-Proof Vision:** While the framework currently focuses entirely on **C** and **C++**, the ultimate roadmap aims to expand coverage to **Zig** and **Go**.
 
 ---
@@ -30,11 +29,6 @@ It is designed to serve as a robust foundational infrastructure that provides de
 * **Stream-like Objects:** Specialized abstractions providing stream-based interfaces for seamless data reading and writing.
 * **I/O Utilities:** Dedicated modules designed for high-performance file manipulation and data transfer.
 * **Bitwise Handling System:** A comprehensive suite of advanced bitwise operation helpers written purely in **C** for direct, efficient memory/bit manipulation.
-
-### 3. PowerShell Automation & AI Integration
-
-* **Build & Analytics Scripts:** PowerShell automation tools designed for compiling, counting source lines of code (SLOC), and generating structural project metrics.
-* **AI-Powered Smart Documentation:** Integrated modules that interface with local **Ollama** models to automatically document, explain, and update your codebase reference files.
 
 ---
 
@@ -63,8 +57,8 @@ The framework relies on a centralized ecosystem structure:
 To successfully run and compile the framework along with its automation suite, you will need:
 
 * A modern compiler supporting up-to-date C/C++ standards.
-* **PowerShell 7+** for executing build and analytics scripts.
-* A local instance of **Ollama** to power the AI-driven documentation modules.
+
+* the compiler have to support a least the c11 std and c++ 20 std.
 
 ---
 
