@@ -4,6 +4,8 @@
 
 .DESCRIPTION
     This script accepts a command and an optional path.
+    --author          : Display the name of author.
+    -- brief          : Display a brief text about the project.
     --version         : Display the script version.
     --license         : Display the content of the license file.
     --help            : Display general usage help.
@@ -16,6 +18,8 @@
     Optional library path for --help command
 
 .EXAMPLE
+    .\meta.ps1 --author
+    .\meta.ps1 --brief
     .\meta.ps1 --version
     .\meta.ps1 --license
     .\meta.ps1 --help
@@ -73,12 +77,16 @@ function Show-Help {
 ===========================================
 
 Usage:
+    .\meta.ps1 --author
+    .\meta.ps1 --brief
     .\meta.ps1 --version
     .\meta.ps1 --license
     .\meta.ps1 --help
     .\meta.ps1 --help <path>
 
 Options:
+    --author                : Show the name of the author.
+    --brief                 : Show a brief text.
     --version               : Show script version.
     --license               : Show license content (from documentation/lic.txt).
     --help                  : Show this help message.

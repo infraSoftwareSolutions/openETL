@@ -15,9 +15,9 @@
  * - print_error: Prints an error message without a newline to standard error.
  * - input: Prints a prompt message and takes user input of the same type.
  * - input (overload): Prints a prompt message and takes user input of a different type.
- * - input_vector: Prints a prompt message and takes user input for a vector of a different type.
- * - input_vector_2d: Prompts the user for input to fill a 2D vector.
- * - input_vector_3d: Prompts the user for input to fill a 3D vector.
+ * - inputinputtor: Prints a prompt message and takes user input for a vector of a different type.
+ * - inputinputtor_2d: Prompts the user for input to fill a 2D vector.
+ * - inputinputtor_3d: Prompts the user for input to fill a 3D vector.
  * - Tabs: Prints a specified number of tab characters.
  * - print_test: Prints a standardized test output with optional vector content.
  * - print (vector overload): Prints all elements in a vector with formatting.
@@ -27,7 +27,6 @@
  * - println (3D vector overload): Prints a 3D vector to the standard output in a formatted manner.
  * @note This library is designed for C++23 and is part of the metaCore library, specifically within the CXXLite module, and is intended for simplifying I/O operations in C++.
  */
-
 
 #include <iostream>
 #include <string>
@@ -147,7 +146,7 @@ namespace meta {
             inline T input(const std::string &output)
             {
                 T var;
-                std::cout << output << std::endl;
+                std::cout << output;
                 std::cin >> var;
                 return var;
             }
@@ -160,17 +159,19 @@ namespace meta {
              * @return std::vector<T> The user input vector.
              */
             template <typename T>
-            std::vector<T> input_vector(const std::string &output, size_t size)
+            std::vector<T>& input(const std::string &output, size_t size)
             {
-                std::vector<T> _vec;
+                std::vector<T> input;
                 T var;
-                std::cout << output << std::endl;
+                std::cout << output << " {";
                 for (size_t i = 0; i < size; i++)
                 {
                     std::cin >> var;
-                    _vec.push_back(var);
+                    input.push_back(var);
+                    if(i == size - 1) std::cout << "}\n";
+                    else std::cout << ", ";
                 }
-                return _vec;
+                return input;
             }
 
             /**
@@ -183,20 +184,24 @@ namespace meta {
              * @throws std::invalid_argument if rows or cols is less than or equal to zero
              */
             template <typename T>
-            std::vector<std::vector<T>> input_vector_2d(const std::string &output, size_t rows, size_t cols)
+            std::vector<std::vector<T>> input_2d(const std::string &output, size_t rows, size_t cols)
             {
                 std::vector<std::vector<T>> vec2d;
                 T var;
-                std::cout << output << std::endl;
+                std::cout << output << "{\n";
                 for (size_t i = 0; i < rows; i++)
                 {
                     std::vector<T> row;
                     for (size_t j = 0; j < cols; j++)
                     {
+                        if(j == 0) std::cout << "\t{";
                         std::cin >> var;
                         row.push_back(var);
+                        if(j == cols - 1) std::cout << "},\n"
+                        else std::cout ", ";
                     }
                     vec2d.push_back(row);
+                    if(i == rows - 1) std::cout << "}\n"
                 }
                 return vec2d;
             }
@@ -212,25 +217,31 @@ namespace meta {
              * @throws std::invalid_argument if any dimension is less than or equal to zero.
              */
             template <typename T>
-            std::vector<std::vector<std::vector<T>>> input_vector_3d(const std::string &output, size_t x, size_t y, size_t z)
+            std::vector<std::vector<std::vector<T>>> input_3d(const std::string &output, size_t x, size_t y, size_t z)
             {
                 std::vector<std::vector<std::vector<T>>> vec3d;
                 T var;
-                std::cout << output << std::endl;
+                std::cout << output << "{\n";
                 for (size_t i = 0; i < x; i++)
                 {
                     std::vector<std::vector<T>> layer;
                     for (size_t j = 0; j < y; j++)
                     {
+                        if(j == 0) std::cout << "\t{\n";
                         std::vector<T> row;
                         for (size_t k = 0; k < z; k++)
                         {
+                            if(k == 0) std::cout << "\t\t{";
                             std::cin >> var;
                             row.push_back(var);
+                            if(k == z - 1) std::cout << "},\n";
+                            else std::cout << ", ";
                         }
                         layer.push_back(row);
+                        if(j == y - 1) "\t},\n";
                     }
                     vec3d.push_back(layer);
+                    if(i == x - 1) std::cout << "}\n";
                 }
                 return vec3d;
             }
@@ -241,7 +252,7 @@ namespace meta {
              */
             inline void tabs(size_t num = 1) noexcept
             {
-                for (short i = 0; i < num; i++)
+                for (size_t i = 0; i < num; i++)
                     std::cout << '\t';
             }
 
@@ -294,26 +305,26 @@ namespace meta {
             /**
              * @brief Prints all elements in a vector with formatting.
              * @tparam T The type of vector elements.
-             * @param vec The vector to print.
+             * @param input The vector to print.
              */
             template <typename T>
-            void print(const std::vector<T> &_vec) noexcept
+            void print(const std::vector<T> &input) noexcept
             {
-                if (_vec.empty())
+                if (input.empty())
                     std::cout << "[]";
-                if (_vec.size() == 1)
+                if (input.size() == 1)
                 {
-                    std::cout << " [" << _vec[0] << "] ";
+                    std::cout << " [" << input[0] << "] ";
                     return;
                 }
-                for (size_t i = 0; i < _vec.size(); i++)
+                for (size_t i = 0; i < input.size(); i++)
                 {
                     if (i == 0)
-                        std::cout << " [" << _vec[i] << ", ";
-                    else if (i == _vec.size() - 1)
-                        std::cout << _vec[i] << "] ";
+                        std::cout << " [" << input[i] << ", ";
+                    else if (i == input.size() - 1)
+                        std::cout << input[i] << "] ";
                     else
-                        std::cout << _vec[i] << ", ";
+                        std::cout << input[i] << ", ";
                 }
             }
 
@@ -511,21 +522,21 @@ namespace meta {
              * @brief Combines Test() and PrintVec() to test and print vector content.
              * @tparam T The type of vector elements.
              * @param testNum Test number.
-             * @param vec The vector to test and print.
+             * @param input The vector to test and print.
              */
             template <typename T>
-            inline void print_test(long testNum,
-                const std::vector<T> &_vec) noexcept
+            inline void print_test(size_t testNum,
+                const std::vector<T> &input) noexcept
             {
                 print_test(testNum);
-                print<T>(_vec);
+                print<T>(input);
             }
 
             /**
              * @brief Combines Test() and PrintVec() to test and print 2D vector content.
              * @tparam T The type of vector elements.
              * @param testNum Test number.
-             * @param vec The 2D vector to test and print.
+             * @param input The 2D vector to test and print.
              * @note This function throws an exception if the input vector is empty.
              * @example
              * std::vector<std::vector<int>> vec2d = {
@@ -534,18 +545,18 @@ namespace meta {
              * };
              */
             template <typename T>
-            inline void print_test(long testNum,
-                const std::vector<std::vector<T>> &_vec) noexcept
+            inline void print_test(size_t testNum,
+                const std::vector<std::vector<T>> &input) noexcept
             {
                 print_test(testNum);
-                print<T>(_vec);
+                print<T>(input);
             }
 
             /**
              * @brief Combines Test() and PrintVec() to test and print 3D vector content.
              * @tparam T The type of vector elements.
              * @param testNum Test number.
-             * @param vec The 3D vector to test and print.
+             * @param input The 3D vector to test and print.
              * @note This function throws an exception if the input vector is empty.
              * @example
              * std::vector<std::vector<std::vector<int>>> vec3d = {
@@ -554,11 +565,11 @@ namespace meta {
              * };
              */
             template <typename T>
-            inline void print_test(long testNum,
-                const std::vector<std::vector<std::vector<T>>> &_vec) noexcept
+            inline void print_test(size_t testNum,
+                const std::vector<std::vector<std::vector<T>>> &input) noexcept
             {
                 print_test(testNum);
-                print<T>(_vec);
+                print<T>(input);
             }
 
             /**
@@ -617,7 +628,7 @@ namespace meta {
              */
             inline void print_category(
                 const std::string &category_s,
-                int tabs_num, int seplen,
+                size_t tabs_num, size_t seplen,
                 char sepch) noexcept
             {
                 separator(seplen, sepch);
@@ -654,12 +665,20 @@ namespace meta {
             inline void print_if(bool result, const T& data) noexcept { if(result) print(data); }
 
             template<typename T>
-            inline void println_if(bool result, const T& data) { if(result) print(data); }
+            inline void println_if(bool result, const T& data) noexcept { if(result) print(data); }
             
+            template<typename T, typename U>
+            inline void print_if(bool result, const T& ifData, const T& elseData) noexcept {
+                if(result) std::cout << ifData;
+                else std::cout << elseData;
+            }
+
+            template<typename T, typename U>
+            inline void println_if(bool result, const T& ifData, const T& elseData) noexcept {
+                if(result) std::cout << ifData << '\n';
+                else std::cout << elseData << '\n';
+            }
         }
-
     }
-
 }
-
 #endif // METACORE___LITE___IO_HPP

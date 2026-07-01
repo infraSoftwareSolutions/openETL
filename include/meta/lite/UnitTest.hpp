@@ -394,7 +394,7 @@ namespace meta {
              * @note Increments the basic test counter
              */
             template <typename T>
-            bool basic(const T& realvalue, const T& expvalue) noexcept
+            inline bool equal(const T& realvalue, const T& expvalue) noexcept
             {
                 index.basic++;
                 return realvalue == expvalue;
@@ -411,7 +411,7 @@ namespace meta {
              * @note Increments the basic test counter
              */
             template <typename T>
-            TEST basic(
+            TEST equal(
                 const T& realvalue,
                 const T& expvalue,
                 const std::string& name,

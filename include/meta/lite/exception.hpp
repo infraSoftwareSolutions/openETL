@@ -47,7 +47,7 @@ namespace meta {
         class exception : public std::exception
         {
         protected:
-            std::string message_;  ///< Error message describing the exception
+            std::string message;  ///< Error message describing the exception
 
         public:
             /**
@@ -55,7 +55,7 @@ namespace meta {
              * @param message The error message (default: empty string)
              */
             explicit exception(const std::string& message = "")
-                : message_(message) {}
+                : message(message) {}
 
             /**
              * @brief Virtual destructor for proper cleanup in derived classes.
@@ -68,7 +68,7 @@ namespace meta {
              */
             const char* what() const noexcept override
             {
-                return message_.empty() ? "lite exception" : message_.c_str();
+                return message.empty() ? "lite exception" : message.c_str();
             }
 
             /**
@@ -77,7 +77,7 @@ namespace meta {
              */
             const std::string& get_message() const noexcept
             {
-                return message_;
+                return message;
             }
         };
 
