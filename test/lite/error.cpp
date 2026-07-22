@@ -1,6 +1,6 @@
 #include "meta/lite/error.hpp"
-#include "cfront.h"
+#include "cfrost.h"
 
-CTEST_MAIN(meta_lite_error);
+TEST_MAIN(meta_lite_error);
 
-CTEST_EXIT(true)
+TEST_EXIT(true)

@@ -1,6 +1,6 @@
 # metaCore 🚀
 
-`metaCore` is a comprehensive, low-level ecosystem and framework written in **C / C++**.
+`metaCore` is a comprehensive, low-level ecosystem and framework written in **C++**.
 
 It is designed to serve as a robust foundational infrastructure that provides developers with advanced helper tools to streamline development, testing, and error management with minimal external runtime dependencies.
 
@@ -12,7 +12,7 @@ It is designed to serve as a robust foundational infrastructure that provides de
 
 * **Streamline Software Engineering:** Provide a unified workspace for managing errors, warnings, and comprehensive unit testing.
 * **Optimize Performance:** Offer accurate benchmarking suites and high-efficiency stream-like objects for fast data pipelines.
-* **Future-Proof Vision:** While the framework currently focuses entirely on **C** and **C++**, the ultimate roadmap aims to expand coverage to **Zig** and **Go**.
+* **Future-Proof Vision:** While the framework currently focuses entirely on and **C++**, the ultimate roadmap aims to expand coverage to **Zig** and **Go**.
 
 ---
 
@@ -37,7 +37,7 @@ It is designed to serve as a robust foundational infrastructure that provides de
 The framework relies on a centralized ecosystem structure:
 
 * **The Ecosystem Object:** The codebase incorporates a primary central object that manages and ties together the core functionalities and subsystems.
-* **Current Availability:** This main **Ecosystem** object is currently exclusive to **C++** to leverage object-oriented paradigms and advanced templates, while the underlying lower-level primitives remain accessible via **C**.
+* **Current Availability:** This main **Ecosystem** object is currently exclusive to **C++**.
 
 ---
 
@@ -45,7 +45,6 @@ The framework relies on a centralized ecosystem structure:
 
 | Language | Current Status | Available Features |
 | :--- | :---: | :--- |
-| **C** | 🔄 Partially Supported | Bitwise tools, core primitives, and underlying utilities |
 | **C++** | ✅ Fully Supported | Complete framework suite, Ecosystem Object, Streams |
 | **Zig** | ⏳ Planned | Comprehensive coverage for low-level system tooling |
 | **Go** | ⏳ Planned | Concurrency-safe data primitives and systems tools |
@@ -57,8 +56,6 @@ The framework relies on a centralized ecosystem structure:
 To successfully run and compile the framework along with its automation suite, you will need:
 
 * A modern compiler supporting up-to-date C/C++ standards.
-
-* the compiler have to support a least the c11 std and c++ 20 std.
 
 ---
 

@@ -1,6 +1,6 @@
 #include "meta/lite/warning.hpp"
-#include "cfront.h"
+#include "cfrost.h"
 
-CTEST_MAIN(meta_lite_warning);
+TEST_MAIN(meta_lite_warning);
 
-CTEST_EXIT(true)
+TEST_EXIT(true)

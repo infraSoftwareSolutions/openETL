@@ -1,6 +1,6 @@
 #include "meta/lite/UnitTest.hpp"
-#include "cfront.h"
+#include "cfrost.h"
 
-CTEST_MAIN(meta_lite_UnitTest);
+TEST_MAIN(meta_lite_UnitTest);
 
-CTEST_EXIT(true)
+TEST_EXIT(true)

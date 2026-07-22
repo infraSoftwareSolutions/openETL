@@ -1,6 +1,6 @@
 #include "meta/lite/file.hpp"
-#include "cfront.h"
+#include "cfrost.h"
 
-CTEST_MAIN(meta_lite_file);
+TEST_MAIN(meta_lite_file);
 
-CTEST_EXIT(true)
+TEST_EXIT(true)

@@ -1,7 +1,7 @@
 #include "meta/lite/type.hpp"
-#include "cfront.h"
+#include "cfrost.h"
 
-CTEST_MAIN(meta_lite_type);
+TEST_MAIN(meta_lite_type);
 
     bool val = true;
     CTEST_EQU(meta::lite::type(val), "bool");
@@ -47,4 +47,4 @@ CTEST_MAIN(meta_lite_type);
     CTEST_EQU(meta::lite::is_string(val8), true);
     CTEST_EQU(meta::lite::is_string(val3), false);
 
-CTEST_EXIT(true)
+TEST_EXIT(true)
