@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <iostream>
 #include <initializer_list>
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___ADVA___TOKEN_HPP
@@ -12,19 +13,19 @@ namespace meta {
 
     namespace adva {
         
-        using token = std::pair<std::string, uint8_t>;
+        using token = std::pair<ocf::str, uint8_t>;
 
         class hash_enum {
             private:
             uint8_t counter = 0;
-            std::unordered_map<std::string, uint8_t> objectMap;
+            std::unordered_map<ocf::str, uint8_t> objectMap;
 
             public:
             hash_enum() = default;
             ~hash_enum() = default;
 
-            hash_enum(const std::initializer_list<std::string> &list) noexcept {
-                for(std::string element : list) {
+            hash_enum(const std::initializer_list<ocf::str> &list) noexcept {
+                for(ocf::str element : list) {
                     objectMap[element] = counter;
                     counter++;
                 }
@@ -32,7 +33,7 @@ namespace meta {
 
             hash_enum(const hash_enum& other) noexcept : objectMap(other.objectMap) {}
 
-            constexpr inline void add(const std::string& enum_val) noexcept {
+            constexpr inline void add(const ocf::str& enum_val) noexcept {
                 if(counter == UINT8_MAX) {
                     std::cerr << "out of limit issue: can't add to full enum hast map.\n";
                 }
@@ -52,9 +53,9 @@ namespace meta {
                 return objectMap.end();
             }
 
-            constexpr inline void operator<<(const std::string& enum_val) noexcept { add(enum_val); }
+            constexpr inline void operator<<(const ocf::str& enum_val) noexcept { add(enum_val); }
         
-            constexpr inline uint8_t operator[](const std::string& enum_val) noexcept { return objectMap.at(enum_val); }
+            constexpr inline uint8_t operator[](const ocf::str& enum_val) noexcept { return objectMap.at(enum_val); }
 
             inline void operator=(const hash_enum& other) noexcept {
                 counter = other.counter;
@@ -64,30 +65,30 @@ namespace meta {
 
         class key_map {
             private:
-            std::string keyWord;
-            std::unordered_map<std::string, std::string> elements;
+            ocf::str keyWord;
+            std::unordered_map<ocf::str, ocf::str> elements;
             
             public:
             key_map() = default;
             
             ~key_map() = default;
             
-            key_map(const std::string& element) noexcept : 
+            key_map(const ocf::str& element) noexcept : 
             keyWord(element) {}
 
             key_map(const key_map& other) noexcept : 
             keyWord(other.keyWord), 
             elements(other.elements) {}
 
-            void set(const std::string& element) noexcept { keyWord = element; }
+            void set(const ocf::str& element) noexcept { keyWord = element; }
 
-            const std::string& get() noexcept { return keyWord; }
+            const ocf::str& get() noexcept { return keyWord; }
 
             size_t size() noexcept { return elements.size(); }
 
-            std::string operator[](const std::string& key) { return elements.at(key); }
+            ocf::str operator[](const ocf::str& key) { return elements.at(key); }
 
-            void operator<<(const std::string& element) noexcept { elements[element] = keyWord; }
+            void operator<<(const ocf::str& element) noexcept { elements[element] = keyWord; }
 
             void operator=(const key_map& other) {
                 keyWord = other.keyWord;
@@ -98,7 +99,7 @@ namespace meta {
         class tokenizer {
             private:
             hash_enum id_number;
-            std::vector<token> result;
+            ocf::vec<token> result;
 
             public:
             tokenizer() noexcept = default;
@@ -106,14 +107,14 @@ namespace meta {
 
             tokenizer(const hash_enum& idNum) noexcept : id_number(idNum) {}
 
-            inline const std::vector<token>& get() noexcept { return result; }
+            inline const ocf::vec<token>& get() noexcept { return result; }
 
-            inline void operator<<(const std::string& token_name) noexcept {
+            inline void operator<<(const ocf::str& token_name) noexcept {
                 result.push_back(token(token_name, id_number[token_name]));
             }
 
-            inline void operator<<(const std::vector<std::string>& tokens) noexcept {
-                for(std::string token_name : tokens) {
+            inline void operator<<(const ocf::vec<ocf::str>& tokens) noexcept {
+                for(ocf::str token_name : tokens) {
                     result.push_back(token(token_name, id_number[token_name]));
                 }
             }

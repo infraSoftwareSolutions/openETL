@@ -32,6 +32,7 @@
 #include "io.hpp"
 #include "benchmark.hpp"
 #include "UnitTest.hpp"
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___STREAM_HPP
@@ -51,7 +52,7 @@ namespace meta {
         class vstream
         {
         private:
-            std::queue<std::vector<T>> vs;
+            ocf::que<ocf::vec<T>> vs;
 
         public:
             /** Default constructor */
@@ -61,20 +62,20 @@ namespace meta {
              * @param vec The vector to initialize the stream with
              * @note This constructor copies the vector
              */
-            vstream(const std::queue<std::vector<T>> &_vec) noexcept : vs(_vec) {}
+            vstream(const ocf::que<ocf::vec<T>> &_vec) noexcept : vs(_vec) {}
             
             /** Constructor from rvalue vec
              * @param vec The vector to initialize the stream with
              * @note This constructor moves the vector
              */
-            vstream(std::queue<std::vector<T>> &&_vec) noexcept : vs(std::move(_vec)) {}
+            vstream(ocf::que<ocf::vec<T>> &&_vec) noexcept : vs(std::move(_vec)) {}
             
             /**
              * Constructor from initializer list
              * @param il The initializer list to initialize the stream with
              * @note This constructor copies the elements from the initializer list
              */
-            vstream(std::initializer_list<std::vector<T>> il) noexcept : vs(il) {}
+            vstream(std::initializer_list<ocf::vec<T>> il) noexcept : vs(il) {}
             
             /**
              * Copy constructor
@@ -159,7 +160,7 @@ namespace meta {
              * @param vec The vec<T> whose contents will be copied.
              * @note This operation is noexcept.
              */
-            void operator=(const std::queue<std::vector<T>> &vec) noexcept { vs = vec; }
+            void operator=(const ocf::que<ocf::vec<T>> &vec) noexcept { vs = vec; }
 
             /**
              * @brief Move assignment operator from a vec<T>.
@@ -170,7 +171,7 @@ namespace meta {
              * @param vec Rvalue reference to a vec<T> whose contents will be moved.
              * @note This operation is noexcept and leaves 'vec' in a valid but unspecified state.
              */
-            void operator=(std::queue<std::vector<T>> &&vec) noexcept { vs = std::move(vec); }
+            void operator=(ocf::que<ocf::vec<T>> &&vec) noexcept { vs = std::move(vec); }
 
             /**
              * @brief Assignment operator for assigning an initializer list to the container.
@@ -180,7 +181,7 @@ namespace meta {
              *
              * @param il The initializer list whose elements will be assigned to the container.
              */
-            void operator=(std::initializer_list<std::vector<T>> il) noexcept { vs = il; }
+            void operator=(std::initializer_list<ocf::vec<T>> il) noexcept { vs = il; }
 
             /**
              * @brief Inserts a value into the vector stream.
@@ -191,7 +192,7 @@ namespace meta {
              * @param value The vector to be inserted into the queue stream.
              * @note This operation does not support chaining as it returns void.
              */
-            void operator<<(const std::vector<T> &value) noexcept { vs.push(value); }
+            void operator<<(const ocf::vec<T> &value) noexcept { vs.push(value); }
 
             /**
              * @brief Inserts a value into the vector stream using move semantics.
@@ -202,7 +203,7 @@ namespace meta {
              * @param value The rvalue reference to the vector to be inserted.
              * @note This operation does not support chaining as it returns void.
              */
-            void operator<<(std::vector<T> &&value) noexcept { vs.push(std::move(value)); }
+            void operator<<(ocf::vec<T> &&value) noexcept { vs.push(std::move(value)); }
 
             /**
              * @brief Extracts the front element from the internal queue and assigns it to the provided value.
@@ -215,7 +216,7 @@ namespace meta {
              * @param value Reference to the variable where the extracted vector will be stored.
              * @throws std::out_of_range if the internal queue is empty.
              */
-            void operator>>(std::vector<T> &value)
+            void operator>>(ocf::vec<T> &value)
             {
                 if (!vs.empty())
                 {
@@ -233,23 +234,23 @@ namespace meta {
         class sstream {
             private:
             bool split;
-            std::string split_str;
-            std::queue<std::string> ss;
+            ocf::str split_str;
+            ocf::que<ocf::str> ss;
             public:
 
-            sstream() noexcept : split(false), split_str(""), ss(std::queue<std::string>()) {};
-            sstream(const std::queue<std::string> &strVal) noexcept : split(false), split_str(""), ss(strVal) {}
-            sstream(const std::string &ssplit) noexcept : split(true), split_str(ssplit), ss(std::queue<std::string>()) {}
-            sstream(bool isSplit) noexcept : split(isSplit), split_str(""), ss(std::queue<std::string>()) {}
+            sstream() noexcept : split(false), split_str(""), ss(ocf::que<ocf::str>()) {};
+            sstream(const ocf::que<ocf::str> &strVal) noexcept : split(false), split_str(""), ss(strVal) {}
+            sstream(const ocf::str &ssplit) noexcept : split(true), split_str(ssplit), ss(ocf::que<ocf::str>()) {}
+            sstream(bool isSplit) noexcept : split(isSplit), split_str(""), ss(ocf::que<ocf::str>()) {}
 
             void set_split(bool isSplit) noexcept { split = isSplit; }
-            void set_split_str(const std::string &ssplit) noexcept { split_str = ssplit; }
+            void set_split_str(const ocf::str &ssplit) noexcept { split_str = ssplit; }
             
-            void operator<<(const std::string &value) noexcept {
+            void operator<<(const ocf::str &value) noexcept {
                 if (split && !split_str.empty()) {
                     size_t start = 0;
                     size_t end = value.find(split_str);
-                    while (end != std::string::npos) {
+                    while (end != ocf::str::npos) {
                         ss.push(value.substr(start, end - start));
                         start = end + split_str.length();
                         end = value.find(split_str, start);
@@ -260,7 +261,7 @@ namespace meta {
                 }
             }
 
-            void operator>>(std::string &value) {
+            void operator>>(ocf::str &value) {
                 if (!ss.empty()) {
                     value = ss.front();
                     ss.pop();
@@ -283,10 +284,10 @@ namespace meta {
             {
             private:
                 size_t count = 1;
-                std::string s = "s";
+                ocf::str s = "s";
                 long long factor = 1;
-                std::vector<float> time_v;
-                std::vector<std::string> test_names;
+                ocf::vec<float> time_v;
+                ocf::vec<ocf::str> test_names;
                 float min_time = std::numeric_limits<float>::max();
                 float max_time = std::numeric_limits<float>::min();
 
@@ -326,7 +327,7 @@ namespace meta {
                  *          ns = 10^9  = 1,000,000,000
                  *          ps = 10^12 = 1,000,000,000,000
                  */
-                benchmark_stream(std::string TFactor)
+                benchmark_stream(ocf::str TFactor)
                 {
                     if (TFactor == "s")
                     {
@@ -397,7 +398,7 @@ namespace meta {
                  * - Results are printed with test number and scaled time (factor * measured_time)
                  * @throws noexcept This function does not throw exceptions
                  */
-                void operator<<(std::function<bool()> fx) noexcept
+                void operator<<(ocf::func<bool()> fx) noexcept
                 {
                     time_v.push_back(benchmark::execution_time<bool>(fx));
                     float current_time = factor * time_v[count - 1];
@@ -477,12 +478,12 @@ namespace meta {
             class test_stream
             {
             private:
-                std::vector<TEST> container;
+                ocf::vec<TEST> container;
                 bool result_ts = true;
                 size_t total_tests = 0;
                 size_t passed_tests = 0;
                 size_t failed_tests = 0;
-                std::vector<std::string> error_log;
+                ocf::vec<ocf::str> error_log;
 
             public:
                 test_stream() = default;
@@ -507,11 +508,11 @@ namespace meta {
                  *
                  * On any exception, result_ts is set to false and an error message is output to std::cerr
                  */
-                void operator<<(std::function<bool()> fx) noexcept
+                void operator<<(ocf::func<bool()> fx) noexcept
                 {
                     total_tests++;
                     bool test_result = false;
-                    if (std::is_nothrow_invocable_r_v<bool, std::function<bool()>, bool>)
+                    if (std::is_nothrow_invocable_r_v<bool, ocf::func<bool()>, bool>)
                     {
                         test_result = fx();
                         result_ts &= test_result;
@@ -525,7 +526,7 @@ namespace meta {
                         }
                         catch (const std::invalid_argument &e)
                         {
-                            std::string err_msg = "invalid argument: " + std::string(e.what());
+                            ocf::str err_msg = "invalid argument: " + ocf::str(e.what());
                             std::cerr << err_msg << std::endl;
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -533,7 +534,7 @@ namespace meta {
                         }
                         catch (const std::length_error &e)
                         {
-                            std::string err_msg = "length error: " + std::string(e.what());
+                            ocf::str err_msg = "length error: " + ocf::str(e.what());
                             std::cerr << err_msg << std::endl;
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -541,7 +542,7 @@ namespace meta {
                         }
                         catch (const std::exception &e)
                         {
-                            std::string err_msg = "Exception: " + std::string(e.what());
+                            ocf::str err_msg = "Exception: " + ocf::str(e.what());
                             std::cerr << err_msg << "\n";
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -549,7 +550,7 @@ namespace meta {
                         }
                         catch (const char *msg)
                         {
-                            std::string err_msg = "Error: " + std::string(msg);
+                            ocf::str err_msg = "Error: " + ocf::str(msg);
                             std::cerr << err_msg << "\n";
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -557,7 +558,7 @@ namespace meta {
                         }
                         catch (...)
                         {
-                            std::string err_msg = "Unknown error occurred";
+                            ocf::str err_msg = "Unknown error occurred";
                             std::cerr << err_msg << "\n";
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -571,11 +572,11 @@ namespace meta {
                     container.push_back(TEST{fx()});
                 }
 
-                void operator<<(std::function<TEST()> fx) noexcept
+                void operator<<(ocf::func<TEST()> fx) noexcept
                 {
                     total_tests++;
                     bool test_result = false;
-                    if (std::is_nothrow_invocable_r_v<bool, std::function<bool()>, bool>)
+                    if (std::is_nothrow_invocable_r_v<bool, ocf::func<bool()>, bool>)
                     {
                         test_result = fx().get();
                         result_ts &= test_result;
@@ -589,7 +590,7 @@ namespace meta {
                         }
                         catch (const std::invalid_argument &e)
                         {
-                            std::string err_msg = "invalid argument: " + std::string(e.what());
+                            ocf::str err_msg = "invalid argument: " + ocf::str(e.what());
                             std::cerr << err_msg << std::endl;
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -597,7 +598,7 @@ namespace meta {
                         }
                         catch (const std::length_error &e)
                         {
-                            std::string err_msg = "length error: " + std::string(e.what());
+                            ocf::str err_msg = "length error: " + ocf::str(e.what());
                             std::cerr << err_msg << std::endl;
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -605,7 +606,7 @@ namespace meta {
                         }
                         catch (const std::exception &e)
                         {
-                            std::string err_msg = "Exception: " + std::string(e.what());
+                            ocf::str err_msg = "Exception: " + ocf::str(e.what());
                             std::cerr << err_msg << "\n";
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -613,7 +614,7 @@ namespace meta {
                         }
                         catch (const char *msg)
                         {
-                            std::string err_msg = "Error: " + std::string(msg);
+                            ocf::str err_msg = "Error: " + ocf::str(msg);
                             std::cerr << err_msg << "\n";
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -621,7 +622,7 @@ namespace meta {
                         }
                         catch (...)
                         {
-                            std::string err_msg = "Unknown error occurred";
+                            ocf::str err_msg = "Unknown error occurred";
                             std::cerr << err_msg << "\n";
                             error_log.push_back(err_msg);
                             test_result = false;
@@ -704,7 +705,7 @@ namespace meta {
                  * @brief Retrieves the error log
                  * @return Vector containing all error messages
                  */
-                const std::vector<std::string> &get_error_log() const noexcept { return error_log; }
+                const ocf::vec<ocf::str> &get_error_log() const noexcept { return error_log; }
 
                 /**
                  * @brief Clears all test statistics and error log
@@ -719,8 +720,8 @@ namespace meta {
                     result_ts = true;
                 }
 
-                std::vector<size_t> findIndex(bool isFailed) noexcept {
-                    std::vector<size_t> result;
+                ocf::vec<size_t> findIndex(bool isFailed) noexcept {
+                    ocf::vec<size_t> result;
                     for(size_t i = 0; i < container.size(); i++) {
                         if(!isFailed && container[i].get()) {
                             result.push_back(i);
@@ -770,7 +771,7 @@ namespace meta {
              *        safe execution with built-in error handling.
              *
              * The stream_t class acts as a minimal stream-like container for
-             * function objects (std::function<T()>). It allows storing a function,
+             * function objects (ocf::func<T()>). It allows storing a function,
              * retrieving it, and executing it with exception handling.
              *
              * @tparam T The return type of the function object.
@@ -785,7 +786,7 @@ namespace meta {
                  * This holds the function object that will be executed when
                  * handler() or run_test() is called.
                  */
-                std::function<T()> f;
+                ocf::func<T()> f;
 
             protected:
                 /**
@@ -841,7 +842,7 @@ namespace meta {
                  *
                  * @param fx The function object to be stored.
                  */
-                void operator<<(std::function<T()> fx) noexcept
+                void operator<<(ocf::func<T()> fx) noexcept
                 {
                     f = fx;
                     if (immediate_run)
@@ -853,13 +854,13 @@ namespace meta {
                  *
                  * Example usage:
                  * @code
-                 * std::function<int()> func;
+                 * ocf::func<int()> func;
                  * s >> func; // func now holds the stored function
                  * @endcode
                  *
                  * @param fx Reference to a function object where the stored function will be copied.
                  */
-                void operator>>(std::function<T()> &fx) noexcept { fx = f; }
+                void operator>>(ocf::func<T()> &fx) noexcept { fx = f; }
                 
                 /**
                  * @brief Executes the stored function safely.
@@ -880,7 +881,7 @@ namespace meta {
              * @brief A template class that wraps a unary function (T -> T)
              *        and provides safe execution with built-in error handling.
              *
-             * The stream_tp class stores a function of type std::function<T(T)>,
+             * The stream_tp class stores a function of type ocf::func<T(T)>,
              * allowing input transformation and safe execution with exception handling.
              *
              * @tparam T The input and output type of the function object.
@@ -895,7 +896,7 @@ namespace meta {
                  * This holds the unary function (T -> T) that will be executed
                  * when handler() or run_test() is called.
                  */
-                std::function<T(T)> f;
+                ocf::func<T(T)> f;
 
             protected:
                 /**
@@ -950,20 +951,20 @@ namespace meta {
                  *
                  * @param fx The function object to be stored.
                  */
-                void operator<<(std::function<T(T)> fx) noexcept { f = fx; }
+                void operator<<(ocf::func<T(T)> fx) noexcept { f = fx; }
                 
                 /**
                  * @brief Extracts the stored function into another func.
                  *
                  * Example usage:
                  * @code
-                 * std::function<int(int)> func;
+                 * ocf::func<int(int)> func;
                  * s >> func; // func now holds the stored function
                  * @endcode
                  *
                  * @param fx Reference to a function object where the stored function will be copied.
                  */
-                void operator>>(std::function<T(T)> &fx) noexcept { fx = f; }
+                void operator>>(ocf::func<T(T)> &fx) noexcept { fx = f; }
                 
                 /**
                  * @brief Executes the stored function with an lvalue reference input.
@@ -995,7 +996,7 @@ namespace meta {
              * @brief A template class that wraps a unary transformation function (T2 -> T1)
              *        and provides safe execution with built-in error handling.
              *
-             * The stream__tp class stores a function of type std::function<T1(T2)>,
+             * The stream__tp class stores a function of type ocf::func<T1(T2)>,
              * allowing input of type T2 to be transformed into output of type T1.
              * It also provides exception handling for common errors.
              *
@@ -1012,7 +1013,7 @@ namespace meta {
                  * Holds the unary function (T2 -> T1) that will be executed
                  * when handler() or run_test() is called.
                  */
-                std::function<T1(T2)> f;
+                ocf::func<T1(T2)> f;
 
             protected:
                 /**
@@ -1070,20 +1071,20 @@ namespace meta {
                  *
                  * @param fx The function object to be stored.
                  */
-                void operator<<(std::function<T1(T2)> fx) noexcept { f = fx; }
+                void operator<<(ocf::func<T1(T2)> fx) noexcept { f = fx; }
             
                 /**
                  * @brief Extracts the stored function into another func.
                  *
                  * Example usage:
                  * @code
-                 * std::function<int(double)> func;
+                 * ocf::func<int(double)> func;
                  * s >> func; // func now holds the stored function
                  * @endcode
                  *
                  * @param fx Reference to a function object where the stored function will be copied.
                  */
-                void operator>>(std::function<T1(T2)> &fx) noexcept { fx = f; }
+                void operator>>(ocf::func<T1(T2)> &fx) noexcept { fx = f; }
                 
                 /**
                  * @brief Executes the stored function safely with a given input.
@@ -1105,7 +1106,7 @@ namespace meta {
              * @brief A template class that wraps a binary function (T2, T3 -> T1)
              *        and provides safe execution with built-in error handling.
              *
-             * The stream__t_p class stores a function of type std::function<T1(T2, T3)>,
+             * The stream__t_p class stores a function of type ocf::func<T1(T2, T3)>,
              * allowing transformation of two inputs (T2 and T3) into one output (T1).
              * It also provides exception handling for common errors.
              *
@@ -1123,7 +1124,7 @@ namespace meta {
                  * Holds the binary function (T2, T3 -> T1) that will be executed
                  * when handler() or run_test() is called.
                  */
-                std::function<T1(T2, T3)> f;
+                ocf::func<T1(T2, T3)> f;
 
             protected:
                 /**
@@ -1182,20 +1183,20 @@ namespace meta {
                  *
                  * @param fx The function object to be stored.
                  */
-                void operator<<(std::function<T1(T2, T3)> fx) noexcept { f = fx; }
+                void operator<<(ocf::func<T1(T2, T3)> fx) noexcept { f = fx; }
                 
                 /**
                  * @brief Extracts the stored function into another func.
                  *
                  * Example usage:
                  * @code
-                 * std::function<int(int,int)> func;
+                 * ocf::func<int(int,int)> func;
                  * s >> func; // func now holds the stored function
                  * @endcode
                  *
                  * @param fx Reference to a function object where the stored function will be copied.
                  */
-                void operator>>(std::function<T1(T2, T3)> &fx) noexcept { fx = f; }
+                void operator>>(ocf::func<T1(T2, T3)> &fx) noexcept { fx = f; }
                 
                 /**
                  * @brief Executes the stored function safely with two inputs.

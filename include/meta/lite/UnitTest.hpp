@@ -50,7 +50,7 @@
  * - No-throw guarantee (noexcept)
  * - Support for parameterized tests with names and descriptions
  * - Automatic test counting and categorization
- * - Works with STL containers (std::vector)
+ * - Works with STL containers (ocf::vec)
  * - Compile-time evaluation support (constexpr)
  * 
  * @usage_example
@@ -60,11 +60,11 @@
  * @note Requires C++23 or later for full compatibility.
  */
 
-
 #include <iostream>
 #include <vector>
 #include <string>
 #include <memory>
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___UNITTEST_HPP
@@ -82,8 +82,8 @@ namespace meta {
         class TEST
         {
         private:
-            std::string name;
-            std::string description;
+            ocf::str name;
+            ocf::str description;
             bool result;
         public:
             /**
@@ -106,7 +106,7 @@ namespace meta {
              * @brief Constructor with test name only.
              * @param name The name/identifier of the test
              */
-            TEST(const std::string& Name) noexcept : 
+            TEST(const ocf::str& Name) noexcept : 
             name(Name), 
             description("no description"), 
             result(false) {}
@@ -116,7 +116,7 @@ namespace meta {
              * @param name The name/identifier of the test
              * @param description The detailed description of the test
              */
-            TEST(const std::string& name, const std::string& description) noexcept {
+            TEST(const ocf::str& name, const ocf::str& description) noexcept {
                 this->name = name;
                 this->description = description;
                 result = false;
@@ -128,8 +128,8 @@ namespace meta {
              * @param description The detailed description of the test
              * @param result The boolean result of the test
              */
-            TEST(const std::string& Name,
-                const std::string& Description,
+            TEST(const ocf::str& Name,
+                const ocf::str& Description,
                 bool Result) noexcept : 
                 name(Name),
                 description(Description),
@@ -153,7 +153,7 @@ namespace meta {
              * @brief Set the test name.
              * @param name The new test name
              */
-            void set(const std::string& name) noexcept {
+            void set(const ocf::str& name) noexcept {
                 this->name = name;
             }
 
@@ -170,7 +170,7 @@ namespace meta {
              * @param isName If true, returns the name; if false, returns the description
              * @return The requested string property
              */
-            std::string get(bool isName) noexcept {
+            ocf::str get(bool isName) noexcept {
                 return isName ? name : description;
             }
 
@@ -343,7 +343,7 @@ namespace meta {
              * @param name The test name to look up
              * @return The test result if name matches, bool() otherwise with error message
              */
-            bool operator[](const std::string& name) noexcept {
+            bool operator[](const ocf::str& name) noexcept {
                 if(name == this->name) return result;
                 std::cerr << "Name Error: Unknown name." << std::endl;
                 return bool();
@@ -379,7 +379,7 @@ namespace meta {
              * @return const char* A string message representing the test result.
              * @note This function is noexcept and guarantees not to throw exceptions.
              */
-            const std::string test_message(bool test_result) noexcept
+            const ocf::str test_message(bool test_result) noexcept
             {
                 return test_result ? 
                 "Success" : "Failed";
@@ -414,8 +414,8 @@ namespace meta {
             TEST equal(
                 const T& realvalue,
                 const T& expvalue,
-                const std::string& name,
-                const std::string& description) noexcept
+                const ocf::str& name,
+                const ocf::str& description) noexcept
             {
                 index.basic++;
                 return !(name.empty()) && !(description.empty()) ?
@@ -430,7 +430,7 @@ namespace meta {
 
             template <typename T>
             TEST range(T realvalue, T uplimit, T downlimit,
-                const std::string& name, const std::string& description) noexcept {
+                const ocf::str& name, const ocf::str& description) noexcept {
                 return name.empty() && description.empty() ? 
                 TEST{range(realvalue, uplimit, downlimit)} : 
                 TEST{name, description, range(realvalue, uplimit, downlimit)};
@@ -445,7 +445,7 @@ namespace meta {
              * @note Increments the vector test counter
              */
             template <typename T>
-            bool vector(const std::vector<T>& real_v, const std::vector<T>& expected_v) noexcept
+            bool vector(const ocf::vec<T>& real_v, const ocf::vec<T>& expected_v) noexcept
             {
                 index.vector++;
                 if (real_v.size() != expected_v.size()) {
@@ -470,10 +470,10 @@ namespace meta {
              */
             template <typename T>
             TEST vector(
-                const std::vector<T>& real_v,
-                const std::vector<T>& expected_v,
-                const std::string& name,
-                const std::string& description) noexcept
+                const ocf::vec<T>& real_v,
+                const ocf::vec<T>& expected_v,
+                const ocf::str& name,
+                const ocf::str& description) noexcept
             {
                 index.vector++;
                 if (real_v.size() != expected_v.size()) {
@@ -499,8 +499,8 @@ namespace meta {
              * @note Increments the vector test counter
              */
             template <typename T>
-            bool vector_2d(const std::vector<std::vector<T>>& real_2dv,
-                        const std::vector<std::vector<T>>& expected_2dv) noexcept
+            bool vector_2d(const ocf::vec<ocf::vec<T>>& real_2dv,
+                        const ocf::vec<ocf::vec<T>>& expected_2dv) noexcept
             {
                 index.vector++;
                 if (real_2dv.size() != expected_2dv.size()) {
@@ -530,10 +530,10 @@ namespace meta {
              * @note Increments the vector test counter
              */
             template <typename T>
-            TEST vector_2d(const std::vector<std::vector<T>>& real_2dv,
-                        const std::vector<std::vector<T>>& expected_2dv,
-                        const std::string& name,
-                        const std::string& description) noexcept
+            TEST vector_2d(const ocf::vec<ocf::vec<T>>& real_2dv,
+                        const ocf::vec<ocf::vec<T>>& expected_2dv,
+                        const ocf::str& name,
+                        const ocf::str& description) noexcept
             {
                 index.vector++;
                 if (real_2dv.size() != expected_2dv.size()) {
@@ -565,8 +565,8 @@ namespace meta {
              * @note Increments the vector test counter
              */
             template <typename T>
-            bool vector_3d(const std::vector<std::vector<std::vector<T>>>& real_3dv,
-                        const std::vector<std::vector<std::vector<T>>>& expected_3dv) noexcept
+            bool vector_3d(const ocf::vec<ocf::vec<ocf::vec<T>>>& real_3dv,
+                        const ocf::vec<ocf::vec<ocf::vec<T>>>& expected_3dv) noexcept
             {
                 index.vector++;
                 if (real_3dv.size() != expected_3dv.size()) {
@@ -601,9 +601,9 @@ namespace meta {
              * @note Increments the vector test counter
              */
             template <typename T>
-            TEST vector_3d(const std::vector<std::vector<std::vector<T>>>& real_3dv,
-                        const std::vector<std::vector<std::vector<T>>>& expected_3dv,
-                        const std::string& name, const std::string& description) noexcept
+            TEST vector_3d(const ocf::vec<ocf::vec<ocf::vec<T>>>& real_3dv,
+                        const ocf::vec<ocf::vec<ocf::vec<T>>>& expected_3dv,
+                        const ocf::str& name, const ocf::str& description) noexcept
             {
                 if (real_3dv.size() != expected_3dv.size()) {
                     return !(name.empty()) && !(description.empty()) ? 
@@ -658,8 +658,8 @@ namespace meta {
              */
             template <typename T>
             TEST function(std::function<T()> fx, T expected,
-                        const std::string& name,
-                        const std::string& description) noexcept
+                        const ocf::str& name,
+                        const ocf::str& description) noexcept
             {
                 index.function++;
                 return !(name.empty()) && !(description.empty()) ? 
@@ -696,8 +696,8 @@ namespace meta {
              */
             template <typename T>
             TEST function(std::function<T(T)> fx, T value, T expected,
-                        const std::string& name,
-                        const std::string& description) noexcept
+                        const ocf::str& name,
+                        const ocf::str& description) noexcept
             {
                 index.function++;
                 return !(name.empty()) && !(description.empty()) ? 
@@ -736,7 +736,7 @@ namespace meta {
              */
             template <typename T1, typename T2>
             TEST function(std::function<T1(T2)> fx, T2 value, T1 expected,
-                        const std::string& name, const std::string& description) noexcept
+                        const ocf::str& name, const ocf::str& description) noexcept
             {
                 index.function++;
                 return !(name.empty()) && !(description.empty()) ? 
@@ -779,8 +779,8 @@ namespace meta {
              */
             template <typename T1, typename T2, typename T3>
             TEST function(std::function<T1(T2, T3)> fx, T1 expected,
-                        T2 value1, T3 value2, const std::string& name,
-                        const std::string& description) noexcept
+                        T2 value1, T3 value2, const ocf::str& name,
+                        const ocf::str& description) noexcept
             {
                 index.function++;
                 return !(name.empty()) && !(description.empty()) ? 

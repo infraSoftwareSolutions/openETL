@@ -18,6 +18,7 @@
 // local headers
 #include "io.hpp"
 #include "benchmark.hpp"
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___WARNING_HPP
@@ -32,8 +33,8 @@ namespace meta {
         class warning
         {
         private:
-            std::string name;
-            std::string description;
+            ocf::str name;
+            ocf::str description;
             std::source_location warningLocation;
             float event;
         public:
@@ -48,7 +49,7 @@ namespace meta {
             /// @brief Constructs a warning with the specified name and description.
             /// @param name The name of the warning.
             /// @param description The description of the warning.
-            warning(const std::string& name, const std::string& description) noexcept {
+            warning(const ocf::str& name, const ocf::str& description) noexcept {
                 this->name = name;
                 this->description = description;
                 warningLocation = std::source_location::current();
@@ -57,7 +58,7 @@ namespace meta {
 
             /// @brief Constructs a warning with the specified name.
             /// @param name The name of the warning.
-            warning(const std::string& name) noexcept {
+            warning(const ocf::str& name) noexcept {
                 this->name = name;
                 description = "";
                 warningLocation = std::source_location::current();
@@ -75,8 +76,8 @@ namespace meta {
 
             /// @brief Gets the string representation of the warning.
             /// @return The string representation of the warning.
-            std::string get() const noexcept {
-                std::string result;
+            ocf::str get() const noexcept {
+                ocf::str result;
                 if(description.empty()) {
                     result += "Warning[";
                     result += name;
@@ -93,7 +94,7 @@ namespace meta {
 
             /// @brief Gets the name of the warning.
             /// @return The name of the warning.
-            std::string get_name() const noexcept { return name; }
+            ocf::str get_name() const noexcept { return name; }
 
             /// @brief Gets the time associated with the warning.
             /// @return The time associated with the warning.
@@ -101,19 +102,19 @@ namespace meta {
 
             /// @brief Gets the description of the warning.
             /// @return The description of the warning.
-            std::string get_des() const noexcept { return description; }
+            ocf::str get_des() const noexcept { return description; }
 
             constexpr size_t get_line() const noexcept { return (size_t) warningLocation.line(); }
 
-            std::string get_file() const noexcept { return warningLocation.file_name(); }
+            ocf::str get_file() const noexcept { return warningLocation.file_name(); }
 
             constexpr size_t get_column() const noexcept { return (size_t) warningLocation.column(); }
 
             /// @brief Replaces the name and description of the warning.
             /// @param name The new name of the warning.
             /// @param description The new description of the warning.
-            void replace(const std::string &name, 
-                const std::string &description) noexcept {
+            void replace(const ocf::str &name, 
+                const ocf::str &description) noexcept {
                 this->name = name;
                 this->description = description;
             }
@@ -135,7 +136,7 @@ namespace meta {
              * @note Sets description to empty string and updates event time.
              * @note This operator is marked noexcept.
              */
-            void operator=(const std::string& name) noexcept {
+            void operator=(const ocf::str& name) noexcept {
                 this->name = name;
                 description = "";
                 warningLocation = std::source_location::current();
@@ -163,12 +164,12 @@ namespace meta {
              * @brief Generates a formatted string representation of the warning.
              * @return A formatted string containing the warning's name, description, and event time.
              */
-            std::string printingFormat() const noexcept {
-                std::string result = get();
-                result += std::string("File: " + get_file());
-                result += std::string("Line: " + std::to_string(get_line()));
-                result += std::string("Column: " + std::to_string(get_column()));
-                result += std::string("Time: " + std::to_string(get_time()) + " ms.\n");
+            ocf::str printingFormat() const noexcept {
+                ocf::str result = get();
+                result += ocf::str("File: " + get_file());
+                result += ocf::str("Line: " + std::to_string(get_line()));
+                result += ocf::str("Column: " + std::to_string(get_column()));
+                result += ocf::str("Time: " + std::to_string(get_time()) + " ms.\n");
                 return result;
             }
 
@@ -217,7 +218,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning wrong_indexing(const std::string &description) noexcept {
+            warning wrong_indexing(const ocf::str &description) noexcept {
                 return warning{"Wrong Indexing", description};
             }
 
@@ -240,7 +241,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning wrong_declaration(const std::string &description) noexcept {
+            warning wrong_declaration(const ocf::str &description) noexcept {
                 return warning{"Wrong declaration", description};
             }
 
@@ -263,7 +264,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning wrong_construction(const std::string &description) noexcept {
+            warning wrong_construction(const ocf::str &description) noexcept {
                 return warning{"Wrong Construction", description};
             }
 
@@ -286,7 +287,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning bad_input(const std::string &description) noexcept {
+            warning bad_input(const ocf::str &description) noexcept {
                 return warning{"Bad Input", description};
             }
 
@@ -309,7 +310,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning undefined_behavior(const std::string &description) noexcept {
+            warning undefined_behavior(const ocf::str &description) noexcept {
                 return warning{"Undefined Behavior", description};
             }
 
@@ -332,7 +333,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning invalid_argument(const std::string &description) noexcept {
+            warning invalid_argument(const ocf::str &description) noexcept {
                 return warning{"Invalid Argument", description};
             }
 
@@ -355,7 +356,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning OutOfRange(const std::string &description) noexcept {
+            warning OutOfRange(const ocf::str &description) noexcept {
                 return warning{"Out Of Range", description};
             }
 
@@ -378,7 +379,7 @@ namespace meta {
              * @note This overload creates a warning with a custom description.
              * @note This function is marked noexcept.
              */
-            warning internal_problem(const std::string &description) noexcept {
+            warning internal_problem(const ocf::str &description) noexcept {
                 return warning{"Internal Problem", description};
             }
         }

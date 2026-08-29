@@ -28,6 +28,7 @@
 
 #include <stdexcept>
 #include <string>
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___EXCEPTION_HPP
@@ -47,14 +48,14 @@ namespace meta {
         class exception : public std::exception
         {
         protected:
-            std::string message;  ///< Error message describing the exception
+            ocf::str message;  ///< Error message describing the exception
 
         public:
             /**
              * @brief Constructs a exception with an optional message.
              * @param message The error message (default: empty string)
              */
-            explicit exception(const std::string& message = "")
+            explicit exception(const ocf::str& message = "")
                 : message(message) {}
 
             /**
@@ -75,7 +76,7 @@ namespace meta {
              * @brief Gets the error message as a string object.
              * @return Reference to the error message string
              */
-            const std::string& get_message() const noexcept
+            const ocf::str& get_message() const noexcept
             {
                 return message;
             }
@@ -95,7 +96,7 @@ namespace meta {
              * @brief Constructs an internal_exception with an optional message.
              * @param message The error message (default: "Internal library error")
              */
-            explicit internal_exception(const std::string& message = "Internal library error")
+            explicit internal_exception(const ocf::str& message = "Internal library error")
                 : exception(message) {}
 
             /**
@@ -125,7 +126,7 @@ namespace meta {
              * @param index The problematic index (default: 0)
              * @param valid_size The maximum valid size (default: 0)
              */
-            explicit OutOfRange(const std::string& message = "Out of range",
+            explicit OutOfRange(const ocf::str& message = "Out of range",
                             size_t index = 0, size_t valid_size = 0)
                 : exception(message), index_(index), valid_size_(valid_size) {}
 
@@ -161,7 +162,7 @@ namespace meta {
              * @brief Constructs an undefined_behavior exception with an optional message.
              * @param message The error message (default: "Undefined behavior detected")
              */
-            explicit undefined_behavior(const std::string& message = "Undefined behavior detected")
+            explicit undefined_behavior(const ocf::str& message = "Undefined behavior detected")
                 : exception(message) {}
 
             /**
@@ -189,7 +190,7 @@ namespace meta {
              * @param message The error message (default: "Invalid index")
              * @param invalid_index The problematic index value (default: -1)
              */
-            explicit wrong_indexing(const std::string& message = "Invalid index",
+            explicit wrong_indexing(const ocf::str& message = "Invalid index",
                                 int invalid_index = -1)
                 : exception(message), invalid_index_(invalid_index) {}
 
@@ -219,7 +220,7 @@ namespace meta {
              * @brief Constructs a wrong_declaration exception with an optional message.
              * @param message The error message (default: "Incorrect declaration")
              */
-            explicit wrong_declaration(const std::string& message = "Incorrect declaration")
+            explicit wrong_declaration(const ocf::str& message = "Incorrect declaration")
                 : exception(message) {}
 
             /**
@@ -242,7 +243,7 @@ namespace meta {
              * @brief Constructs a wrong_construction exception with an optional message.
              * @param message The error message (default: "Invalid construction")
              */
-            explicit wrong_construction(const std::string& message = "Invalid construction")
+            explicit wrong_construction(const ocf::str& message = "Invalid construction")
                 : exception(message) {}
 
             /**
@@ -261,7 +262,7 @@ namespace meta {
         class wrong_input : public exception
         {
         private:
-            std::string input_value_; ///< The problematic input value
+            ocf::str input_value_; ///< The problematic input value
 
         public:
             /**
@@ -269,8 +270,8 @@ namespace meta {
              * @param message The error message (default: "Invalid input")
              * @param input_value The problematic input (default: empty string)
              */
-            explicit wrong_input(const std::string& message = "Invalid input",
-                                const std::string& input_value = "")
+            explicit wrong_input(const ocf::str& message = "Invalid input",
+                                const ocf::str& input_value = "")
                 : exception(message), input_value_(input_value) {}
 
             /**
@@ -282,7 +283,7 @@ namespace meta {
              * @brief Gets the invalid input value that caused the exception.
              * @return Reference to the problematic input string
              */
-            const std::string& get_input_value() const noexcept
+            const ocf::str& get_input_value() const noexcept
             {
                 return input_value_;
             }
@@ -344,7 +345,7 @@ namespace meta {
              * @param input The invalid input value
              * @return wrong_input exception object with formatted message
              */
-            inline wrong_input invalid_input(const std::string& input) noexcept
+            inline wrong_input invalid_input(const ocf::str& input) noexcept
             {
                 return wrong_input("Invalid input: " + input, input);
             }

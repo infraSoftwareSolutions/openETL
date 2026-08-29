@@ -37,6 +37,7 @@
 #include <type_traits>
 #include <climits>
 #include <stdexcept>
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___IO_HPP
@@ -143,7 +144,7 @@ namespace meta {
              * @return T The user input.
              */
             template <typename T>
-            inline T input(const std::string &output)
+            inline T input(const ocf::str &output)
             {
                 T var;
                 std::cout << output;
@@ -156,12 +157,12 @@ namespace meta {
              * @tparam T Type of the input variable.
              * @param output The prompt message to display.
              * @param size The number of elements in the vector.
-             * @return std::vector<T> The user input vector.
+             * @return ocf::vec<T> The user input vector.
              */
             template <typename T>
-            std::vector<T>& input(const std::string &output, size_t size)
+            ocf::vec<T>& input(const ocf::str &output, size_t size)
             {
-                std::vector<T> input;
+                ocf::vec<T> input;
                 T var;
                 std::cout << output << " {";
                 for (size_t i = 0; i < size; i++)
@@ -184,14 +185,14 @@ namespace meta {
              * @throws std::invalid_argument if rows or cols is less than or equal to zero
              */
             template <typename T>
-            std::vector<std::vector<T>> input_2d(const std::string &output, size_t rows, size_t cols)
+            ocf::vec<ocf::vec<T>> input_2d(const ocf::str &output, size_t rows, size_t cols)
             {
-                std::vector<std::vector<T>> vec2d;
+                ocf::vec<ocf::vec<T>> vec2d;
                 T var;
                 std::cout << output << "{\n";
                 for (size_t i = 0; i < rows; i++)
                 {
-                    std::vector<T> row;
+                    ocf::vec<T> row;
                     for (size_t j = 0; j < cols; j++)
                     {
                         if(j == 0) std::cout << "\t{";
@@ -217,18 +218,18 @@ namespace meta {
              * @throws std::invalid_argument if any dimension is less than or equal to zero.
              */
             template <typename T>
-            std::vector<std::vector<std::vector<T>>> input_3d(const std::string &output, size_t x, size_t y, size_t z)
+            ocf::vec<ocf::vec<ocf::vec<T>>> input_3d(const ocf::str &output, size_t x, size_t y, size_t z)
             {
-                std::vector<std::vector<std::vector<T>>> vec3d;
+                ocf::vec<ocf::vec<ocf::vec<T>>> vec3d;
                 T var;
                 std::cout << output << "{\n";
                 for (size_t i = 0; i < x; i++)
                 {
-                    std::vector<std::vector<T>> layer;
+                    ocf::vec<ocf::vec<T>> layer;
                     for (size_t j = 0; j < y; j++)
                     {
                         if(j == 0) std::cout << "\t{\n";
-                        std::vector<T> row;
+                        ocf::vec<T> row;
                         for (size_t k = 0; k < z; k++)
                         {
                             if(k == 0) std::cout << "\t\t{";
@@ -281,8 +282,8 @@ namespace meta {
                 << '\n';
             }
 
-            void print_test(const std::string& name,
-                const std::string& description,
+            void print_test(const ocf::str& name,
+                const ocf::str& description,
                 bool result, size_t testNum,
                 size_t whiteSpace = 2,
                 size_t seplen = 25,
@@ -308,7 +309,7 @@ namespace meta {
              * @param input The vector to print.
              */
             template <typename T>
-            void print(const std::vector<T> &input) noexcept
+            void print(const ocf::vec<T> &input) noexcept
             {
                 if (input.empty())
                     std::cout << "[]";
@@ -339,7 +340,7 @@ namespace meta {
              * @note The function is marked noexcept and does not throw exceptions.
              */
             template <typename T>
-            void println(const std::vector<T> &output) noexcept
+            void println(const ocf::vec<T> &output) noexcept
             {
                 if (output.empty())
                 {
@@ -367,7 +368,7 @@ namespace meta {
              * @param output The 2D vector to be printed.
              */
             template <typename T>
-            void print(const std::vector<std::vector<T>> &output) noexcept
+            void print(const ocf::vec<ocf::vec<T>> &output) noexcept
             {
                 if (output.empty())
                 {
@@ -402,7 +403,7 @@ namespace meta {
              * @param output The 2D vector to be printed.
              */
             template <typename T>
-            void println(const std::vector<std::vector<T>> &output) noexcept
+            void println(const ocf::vec<ocf::vec<T>> &output) noexcept
             {
                 if (output.empty())
                 {
@@ -435,13 +436,13 @@ namespace meta {
              * @tparam T The type of the elements stored in the innermost vectors.
              * @note The function is marked noexcept and does not throw exceptions.
              * @example
-             * std::vector<std::vector<std::vector<int>>> vec3d = {
+             * ocf::vec<ocf::vec<ocf::vec<int>>> vec3d = {
              *     {{1, 2}, {3, 4}},
              *     {{5, 6}, {7, 8}}
              * };
              */
             template <typename T>
-            void print(const std::vector<std::vector<std::vector<T>>> &output) noexcept
+            void print(const ocf::vec<ocf::vec<ocf::vec<T>>> &output) noexcept
             {
                 if (output.empty())
                 {
@@ -481,13 +482,13 @@ namespace meta {
              * @tparam T The type of the elements stored in the innermost vectors.
              * @note The function is marked noexcept and does not throw exceptions.
              * @example
-             * std::vector<std::vector<std::vector<int>>> vec3d = {
+             * ocf::vec<ocf::vec<ocf::vec<int>>> vec3d = {
              *     {{1, 2}, {3, 4}},
              *     {{5, 6}, {7, 8}}
              * };
              */
             template <typename T>
-            void println(const std::vector<std::vector<std::vector<T>>> &output) noexcept
+            void println(const ocf::vec<ocf::vec<ocf::vec<T>>> &output) noexcept
             {
                 if (output.empty())
                 {
@@ -526,7 +527,7 @@ namespace meta {
              */
             template <typename T>
             inline void print_test(size_t testNum,
-                const std::vector<T> &input) noexcept
+                const ocf::vec<T> &input) noexcept
             {
                 print_test(testNum);
                 print<T>(input);
@@ -539,14 +540,14 @@ namespace meta {
              * @param input The 2D vector to test and print.
              * @note This function throws an exception if the input vector is empty.
              * @example
-             * std::vector<std::vector<int>> vec2d = {
+             * ocf::vec<ocf::vec<int>> vec2d = {
              *    {1, 2},
              *    {3, 4}
              * };
              */
             template <typename T>
             inline void print_test(size_t testNum,
-                const std::vector<std::vector<T>> &input) noexcept
+                const ocf::vec<ocf::vec<T>> &input) noexcept
             {
                 print_test(testNum);
                 print<T>(input);
@@ -559,14 +560,14 @@ namespace meta {
              * @param input The 3D vector to test and print.
              * @note This function throws an exception if the input vector is empty.
              * @example
-             * std::vector<std::vector<std::vector<int>>> vec3d = {
+             * ocf::vec<ocf::vec<ocf::vec<int>>> vec3d = {
              *    {{1, 2}, {3, 4}},
              *    {{5, 6}, {7, 8}}
              * };
              */
             template <typename T>
             inline void print_test(size_t testNum,
-                const std::vector<std::vector<std::vector<T>>> &input) noexcept
+                const ocf::vec<ocf::vec<ocf::vec<T>>> &input) noexcept
             {
                 print_test(testNum);
                 print<T>(input);
@@ -575,10 +576,10 @@ namespace meta {
             /**
              * @brief Prints characters of a string individually starting from a given
              * index.
-             * @param std::string The string to print.
+             * @param ocf::str The string to print.
              * @param index Starting index (default = 0). If out of range, starts from 0.
              */
-            inline void print_char_str(const std::string &input, size_t index) noexcept
+            inline void print_char_str(const ocf::str &input, size_t index) noexcept
             {
                 if (index >= input.length())
                     index = 0;
@@ -591,7 +592,7 @@ namespace meta {
              * @brief Prints a decorated category title.
              * @param category The category title to print.
              */
-            inline void print_category(const std::string &category) noexcept
+            inline void print_category(const ocf::str &category) noexcept
             {
                 separator(2 * category.length());
                 tabs(category.length() / 10);
@@ -627,7 +628,7 @@ namespace meta {
              * ====================
              */
             inline void print_category(
-                const std::string &category_s,
+                const ocf::str &category_s,
                 size_t tabs_num, size_t seplen,
                 char sepch) noexcept
             {
@@ -646,7 +647,7 @@ namespace meta {
              */
             template<typename T>
             inline void print_if(
-                std::function<bool(T)> Fp, 
+                ocf::func<bool(T)> Fp, 
                 const T& data) noexcept { if(Fp(data)) print(data); }
 
             /**
@@ -658,7 +659,7 @@ namespace meta {
              */
             template<typename T>
             inline void println_if(
-                std::function<bool(T)> Fp,
+                ocf::func<bool(T)> Fp,
                 const T& data) noexcept { if(Fp(data)) println(data); }
 
             template<typename T>

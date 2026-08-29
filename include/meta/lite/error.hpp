@@ -38,6 +38,7 @@
 #include <source_location>
 
 #include "benchmark.hpp"
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___ERROR_HPP
@@ -56,8 +57,8 @@ namespace meta {
          */
         class error {
             private:
-            std::string name;
-            std::string description;
+            ocf::str name;
+            ocf::str description;
             std::source_location errLocation;
             float event;
 
@@ -75,7 +76,7 @@ namespace meta {
              * @brief Constructor that creates an error with a name.
              * @param name The name/type of the error.
              */
-            error(const std::string& Name) noexcept : name(Name), 
+            error(const ocf::str& Name) noexcept : name(Name), 
             errLocation(std::source_location::current()),
             event(errTimer.get_duration()) {}
 
@@ -84,7 +85,7 @@ namespace meta {
              * @param name The name/type of the error.
              * @param description A detailed description of the error.
              */
-            error(const std::string& Name, const std::string& Description) noexcept : 
+            error(const ocf::str& Name, const ocf::str& Description) noexcept : 
             name(Name), description(Description), 
             errLocation(std::source_location::current()), 
             event(errTimer.get_duration()) {}
@@ -113,7 +114,7 @@ namespace meta {
 
             constexpr float get_time() const noexcept { return event; }
 
-            std::string get_file() const noexcept { return errLocation.file_name(); }
+            ocf::str get_file() const noexcept { return errLocation.file_name(); }
 
             constexpr size_t get_line() noexcept { return (size_t) errLocation.line(); }
 
@@ -123,25 +124,25 @@ namespace meta {
              * @brief Generates a formatted string representation of the error.
              * @return A formatted string containing error name, description, and time.
              */
-            std::string printingFormat() noexcept {
-                std::string result;
+            ocf::str printingFormat() noexcept {
+                ocf::str result;
                 if(!name.empty()) { 
-                    result += std::string("error name: " + 
+                    result += ocf::str("error name: " + 
                         name + "\n");
                 }
                 else {
                     result += "error name: Unknown \n";
                 }
                 if(!description.empty()) {
-                    result += std::string("error description: " + 
+                    result += ocf::str("error description: " + 
                         description + "\n");
                 }
                 else {
                     result += "error description: nothing \n";
                 }
-                result += std::string("Error File: " + get_file());
-                result += std::string("Error Line: " + std::to_string(get_line()));
-                result += std::string("Error Time: " + std::to_string(event) + " ms.\n");
+                result += ocf::str("Error File: " + get_file());
+                result += ocf::str("Error Line: " + std::to_string(get_line()));
+                result += ocf::str("Error Time: " + std::to_string(event) + " ms.\n");
                 return result;
             }
 
@@ -171,18 +172,18 @@ namespace meta {
          */
         std::ostream& operator<<(std::ostream& os, const error& e) noexcept {
             if(!e.name.empty()) { 
-                os << std::string("error name: " + e.name + "\n");
+                os << ocf::str("error name: " + e.name + "\n");
             }
             else {
                 os << "error name: Unknown \n";
             }
             if(!e.description.empty()) {
-                os << std::string("error description: " + e.description + "\n");
+                os << ocf::str("error description: " + e.description + "\n");
             }
             else {
                 os << "error description: nothing \n";
             }
-            os << std::string("Error Time: " + std::to_string(e.event) + " ms.\n");
+            os << ocf::str("Error Time: " + std::to_string(e.event) + " ms.\n");
             return os;
         }
 
@@ -204,7 +205,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Wrong Indexing" and provided description.
              */
-            error wrong_indexing(const std::string &description) noexcept {
+            error wrong_indexing(const ocf::str &description) noexcept {
                 return error{"Wrong Indexing", description};
             }
 
@@ -221,7 +222,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Wrong declaration" and provided description.
              */
-            error wrong_declaration(const std::string &description) noexcept {
+            error wrong_declaration(const ocf::str &description) noexcept {
                 return error{"Wrong declaration", description};
             }
 
@@ -238,7 +239,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Wrong Construction" and provided description.
              */
-            error wrong_construction(const std::string &description) noexcept {
+            error wrong_construction(const ocf::str &description) noexcept {
                 return error{"Wrong Construction", description};
             }
 
@@ -255,7 +256,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Bad Input" and provided description.
              */
-            error bad_input(const std::string &description) noexcept {
+            error bad_input(const ocf::str &description) noexcept {
                 return error{"Bad Input", description};
             }
 
@@ -272,7 +273,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Undefined Behavior" and provided description.
              */
-            error undefined_behavior(const std::string &description) noexcept {
+            error undefined_behavior(const ocf::str &description) noexcept {
                 return error{"Undefined Behavior", description};
             }
             
@@ -289,7 +290,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Invalid Argument" and provided description.
              */
-            error invalid_argument(const std::string &description) noexcept {
+            error invalid_argument(const ocf::str &description) noexcept {
                 return error{"Invalid Argument", description};
             }
             
@@ -306,7 +307,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Out Of Range" and provided description.
              */
-            error OutOfRange(const std::string &description) noexcept {
+            error OutOfRange(const ocf::str &description) noexcept {
                 return error{"Out Of Range", description};
             }
 
@@ -323,7 +324,7 @@ namespace meta {
              * @param description The error description.
              * @return An error object with the type "Internal Problem" and provided description.
              */
-            error internal_problem(const std::string &description) noexcept {
+            error internal_problem(const ocf::str &description) noexcept {
                 return error{"Internal Problem", description};
             }
         }

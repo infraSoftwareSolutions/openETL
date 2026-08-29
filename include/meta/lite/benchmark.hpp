@@ -37,6 +37,7 @@
 #include <psapi.h>
 #include <memory>
 #include <algorithm>
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___BENCHMARK_HPP
@@ -147,7 +148,7 @@ namespace meta {
              * using @ref code_timer in manual mode.
              *
              * @tparam T Return type of the function.
-             * @param input_func A std::function<T()> representing the callable to measure.
+             * @param input_func A ocf::func<T()> representing the callable to measure.
              * @return Execution time in seconds as a floating-point value.
              *
              * @note The measured duration is in seconds. Multiply by 1000.0f if milliseconds
@@ -162,7 +163,7 @@ namespace meta {
              * @endcode
              */
             template <typename T>
-            float execution_time(std::function<T()> input_func)
+            float execution_time(ocf::func<T()> input_func)
             {
                 code_timer<false> timer;
                 timer.start_time();
@@ -179,7 +180,7 @@ namespace meta {
              * of its execution using @ref code_timer in manual mode.
              *
              * @tparam T The type of both the argument and return value of the function.
-             * @param input_func A std::function<T(T)> representing the callable to measure.
+             * @param input_func A ocf::func<T(T)> representing the callable to measure.
              * @param arg The argument to pass to the function.
              * @return Execution time in seconds as a floating-point value.
              *
@@ -196,7 +197,7 @@ namespace meta {
              * @endcode
              */
             template <typename T>
-            float execution_time(std::function<T(T)> input_func, T arg)
+            float execution_time(ocf::func<T(T)> input_func, T arg)
             {
                 code_timer<false> timer;
                 timer.start_time();
@@ -213,7 +214,7 @@ namespace meta {
              *
              * @tparam T1 Return type of the function.
              * @tparam T2 Argument type of the function (both arguments are the same type).
-             * @param input_func A std::function<T1(T2, T2)> representing the callable to measure.
+             * @param input_func A ocf::func<T1(T2, T2)> representing the callable to measure.
              * @param arg1 First argument to pass to the function.
              * @param arg2 Second argument to pass to the function.
              * @return Execution time in seconds as a floating-point value.
@@ -228,7 +229,7 @@ namespace meta {
              * @endcode
              */
             template <typename T1, typename T2>
-            float execution_time(std::function<T1(T2, T2)> input_func, T2 arg1, T2 arg2)
+            float execution_time(ocf::func<T1(T2, T2)> input_func, T2 arg1, T2 arg2)
             {
                 code_timer<false> timer;
                 timer.start_time();
@@ -245,7 +246,7 @@ namespace meta {
              *
              * @tparam T1 Return type of the function.
              * @tparam T2 Argument type of the function.
-             * @param input_func A std::function<T1(T2)> representing the callable to measure.
+             * @param input_func A ocf::func<T1(T2)> representing the callable to measure.
              * @param arg Argument to pass to the function.
              * @return Execution time in seconds as a floating-point value.
              *
@@ -259,7 +260,7 @@ namespace meta {
              * @endcode
              */
             template <typename T1, typename T2>
-            float execution__time(std::function<T1(T2)> input_func, T2 arg)
+            float execution__time(ocf::func<T1(T2)> input_func, T2 arg)
             {
                 code_timer<false> timer;
                 timer.start_time();
@@ -277,7 +278,7 @@ namespace meta {
              * @tparam T1 Return type of the function.
              * @tparam T2 Type of the first argument.
              * @tparam T3 Type of the second argument.
-             * @param input_func A std::function<T1(T2, T3)> representing the callable to measure.
+             * @param input_func A ocf::func<T1(T2, T3)> representing the callable to measure.
              * @param arg1 First argument to pass to the function.
              * @param arg2 Second argument to pass to the function.
              * @return Execution time in seconds as a floating-point value.
@@ -295,7 +296,7 @@ namespace meta {
              * @endcode
              */
             template <typename T1, typename T2, typename T3>
-            float execution__time(std::function<T1(T2, T3)> input_func, T2 arg1, T3 arg2)
+            float execution__time(ocf::func<T1(T2, T3)> input_func, T2 arg1, T3 arg2)
             {
                 code_timer<false> timer;
                 timer.start_time();
@@ -377,18 +378,18 @@ namespace meta {
              * @code
              * float t = 0.0023f;  // measured execution time
              * int n = 1000;       // input size
-             * std::string complexity = execution_type(t, n);
+             * ocf::str complexity = execution_type(t, n);
              * std::cout << "Estimated complexity: " << complexity << "\n";
              * @endcode
              */
-            std::string execution_type(float time, int num, int logbase = 10) noexcept
+            ocf::str execution_type(float time, int num, int logbase = 10) noexcept
             {
-                std::function<void()> O1 = big_O1;
-                std::function<void(size_t, int)> log_n = logn;
-                std::function<void(size_t)> On = big_On;
-                std::function<void(size_t, int)> log_n_n = logn_n;
-                std::function<void(size_t)> On2 = big_On2;
-                std::function<void(size_t)> On3 = big_On3;
+                ocf::func<void()> O1 = big_O1;
+                ocf::func<void(size_t, int)> log_n = logn;
+                ocf::func<void(size_t)> On = big_On;
+                ocf::func<void(size_t, int)> log_n_n = logn_n;
+                ocf::func<void(size_t)> On2 = big_On2;
+                ocf::func<void(size_t)> On3 = big_On3;
                 if (time < execution_time<void>(O1))
                     return "O(1)";
                 else if (time < execution__time<void, size_t, int>(log_n, static_cast<size_t>(num), logbase))
@@ -424,7 +425,7 @@ namespace meta {
             /**
              * @brief Returns the heap memory used by a vector.
              *
-             * Calculates the memory allocated on the heap for a std::vector
+             * Calculates the memory allocated on the heap for a ocf::vec
              * based on its capacity and element size.
              *
              * @tparam T Type of elements in the vector.
@@ -432,12 +433,12 @@ namespace meta {
              * @return Heap memory in bytes.
              */
             template <typename T>
-            constexpr size_t heap_data(const std::vector<T> &v) noexcept { return sizeof(T) * v.capacity(); }
+            constexpr size_t heap_data(const ocf::vec<T> &v) noexcept { return sizeof(T) * v.capacity(); }
 
             /**
              * @brief Returns the heap memory used by a 2D vector.
              *
-             * Calculates the memory allocated on the heap for a std::vector of std::vector
+             * Calculates the memory allocated on the heap for a ocf::vec of ocf::vec
              * based on its capacity and element size.
              *
              * @tparam T Type of elements in the inner vectors.
@@ -445,10 +446,10 @@ namespace meta {
              * @return Heap memory in bytes.
              */
             template <typename T>
-            constexpr size_t heap_data(const std::vector<std::vector<T>> &v2d) noexcept
+            constexpr size_t heap_data(const ocf::vec<ocf::vec<T>> &v2d) noexcept
             {
                 size_t result = 0;
-                for (const std::vector<T> &v : v2d)
+                for (const ocf::vec<T> &v : v2d)
                     result += heap_data(v);
                 return result;
             }
@@ -456,7 +457,7 @@ namespace meta {
             /**
              * @brief Returns the heap memory used by a 3D vector.
              *
-             * Calculates the memory allocated on the heap for a std::vector of std::vector of std::vector
+             * Calculates the memory allocated on the heap for a ocf::vec of ocf::vec of ocf::vec
              * based on its capacity and element size.
              *
              * @tparam T Type of elements in the innermost vectors.
@@ -464,11 +465,11 @@ namespace meta {
              * @return Heap memory in bytes.
              */
             template <typename T>
-            constexpr size_t heap_data(const std::vector<std::vector<std::vector<T>>> &v3d) noexcept
+            constexpr size_t heap_data(const ocf::vec<ocf::vec<ocf::vec<T>>> &v3d) noexcept
             {
                 size_t result = 0;
-                for (const std::vector<std::vector<T>> &v2d : v3d)
-                    for (const std::vector<T> &v : v2d)
+                for (const ocf::vec<ocf::vec<T>> &v2d : v3d)
+                    for (const ocf::vec<T> &v : v2d)
                         result += heap_data(v);
                 return result;
             }
@@ -481,7 +482,7 @@ namespace meta {
              * @param s Reference to the string.
              * @return Heap memory in bytes.
              */
-            size_t heap_data(const std::string &s) noexcept { return sizeof(char) * s.capacity(); }
+            size_t heap_data(const ocf::str &s) noexcept { return sizeof(char) * s.capacity(); }
 
             /**
              * @brief Measures additional memory usage caused by executing a parameterless function.
@@ -494,7 +495,7 @@ namespace meta {
              * @return Additional memory used in bytes (0 if no increase).
              */
             template <typename T>
-            size_t function_data(std::function<T()> f)
+            size_t function_data(ocf::func<T()> f)
             {
                 PROCESS_MEMORY_COUNTERS info1, info2;
                 GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));
@@ -518,7 +519,7 @@ namespace meta {
              * @return Additional memory used in bytes (0 if no increase).
              */
             template <typename T>
-            size_t function_data(std::function<T(T)> f, T input)
+            size_t function_data(ocf::func<T(T)> f, T input)
             {
                 PROCESS_MEMORY_COUNTERS info1, info2;
                 GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));
@@ -542,7 +543,7 @@ namespace meta {
              * @return Additional memory used in bytes (0 if no increase).
              */
             template <typename T1, typename T2>
-            size_t function__data(std::function<T1(T2)> f, T2 input)
+            size_t function__data(ocf::func<T1(T2)> f, T2 input)
             {
                 PROCESS_MEMORY_COUNTERS info1, info2;
                 GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));
@@ -569,7 +570,7 @@ namespace meta {
              * @return Additional memory used in bytes (0 if no increase).
              */
             template <typename T1, typename T2, typename T3>
-            size_t function__data(std::function<T1(T2, T3)> f, T2 input1, T3 input2)
+            size_t function__data(ocf::func<T1(T2, T3)> f, T2 input1, T3 input2)
             {
                 PROCESS_MEMORY_COUNTERS info1, info2;
                 GetProcessMemoryInfo(GetCurrentProcess(), &info1, sizeof(info1));

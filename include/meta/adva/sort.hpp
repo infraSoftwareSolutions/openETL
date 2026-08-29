@@ -8,19 +8,27 @@
 namespace meta {
     namespace adva {
         
-        bool is_sorted(const std::string& value) noexcept {
+        bool is_sorted(const std::string& value, bool increasing) noexcept {
             if(value.empty()) return true;
             for(size_t i = 1; i < value.length(); i++) {
-                if(value[i] < value[i - 1]) return false;
+                if(increasing) {
+                    if(value[i] < value[i - 1]) return false;
+                } else {
+                    if(value[i] > value[i - 1]) return false;
+                }
             }
             return true;
         }
 
         template<typename T>
-        bool is_sorted(const std::vector<T>& value) noexcept {
+        bool is_sorted(const std::vector<T>& value, bool increasing) noexcept {
             if(value.empty()) return true;
             for(size_t i = 1; i < value.size(); i++) {
-                if(value[i] < value[i - 1]) return false;
+                if(increasing) {
+                    if(value[i] < value[i - 1]) return false;
+                } else {
+                    if(value[i] > value[i - 1]) return false;
+                }
             }
             return true;
         }

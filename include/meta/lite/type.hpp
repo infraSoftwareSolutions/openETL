@@ -15,6 +15,7 @@
  */
 
 #include <string>
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___LITE___TYPE_HPP
@@ -28,118 +29,118 @@ namespace meta {
         /// @tparam T The type to get the name of.
         /// @return The name of the type as a string.
         template <typename T>
-        inline std::string type() noexcept { return "unkown"; }
+        inline ocf::str type() noexcept { return "unkown"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<bool>() noexcept { return "bool"; }
+        inline ocf::str type<bool>() noexcept { return "bool"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<char>() noexcept { return "char"; }
+        inline ocf::str type<char>() noexcept { return "char"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<short>() noexcept { return "short"; }
+        inline ocf::str type<short>() noexcept { return "short"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<int>() noexcept { return "int"; }
+        inline ocf::str type<int>() noexcept { return "int"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<long>() noexcept { return "long"; }
+        inline ocf::str type<long>() noexcept { return "long"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<long long>() noexcept { return "long long"; }
+        inline ocf::str type<long long>() noexcept { return "long long"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<float>() noexcept { return "float"; }
+        inline ocf::str type<float>() noexcept { return "float"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<double>() noexcept { return "double"; }
+        inline ocf::str type<double>() noexcept { return "double"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<long double>() noexcept { return "long double"; }
+        inline ocf::str type<long double>() noexcept { return "long double"; }
 
         /// @brief Specializations for common types.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<std::string>() noexcept { return "str"; }
+        inline ocf::str type<ocf::str>() noexcept { return "str"; }
 
         /// @brief function to get type name from variable.
         /// @tparam T the type of the input.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <typename T>
-        inline std::string type(const T &input) noexcept { return "unkown"; }
+        inline ocf::str type(const T &input) noexcept { return "unkown"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<bool>(const bool &input) noexcept { return "bool"; }
+        inline ocf::str type<bool>(const bool &input) noexcept { return "bool"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<char>(const char &input) noexcept { return "char"; }
+        inline ocf::str type<char>(const char &input) noexcept { return "char"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<short>(const short &input) noexcept { return "short"; }
+        inline ocf::str type<short>(const short &input) noexcept { return "short"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<int>(const int &input) noexcept { return "int"; }
+        inline ocf::str type<int>(const int &input) noexcept { return "int"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<long>(const long &input) noexcept { return "long"; }
+        inline ocf::str type<long>(const long &input) noexcept { return "long"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<float>(const float &input) noexcept { return "float"; }
+        inline ocf::str type<float>(const float &input) noexcept { return "float"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<double>(const double &input) noexcept { return "double"; }
+        inline ocf::str type<double>(const double &input) noexcept { return "double"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<long double>(const long double &input) noexcept { return "long double"; }
+        inline ocf::str type<long double>(const long double &input) noexcept { return "long double"; }
 
         /// @brief Specializations for common types.
         /// @param input The input variable.
         /// @return The name of the type as a string.
         template <>
-        inline std::string type<std::string>(const std::string &input) noexcept { return "std: string"; }
+        inline ocf::str type<ocf::str>(const ocf::str &input) noexcept { return "std: string"; }
 
         /// @brief Type checking functions.
         /// @tparam T the type to check.
@@ -290,10 +291,10 @@ namespace meta {
         template <typename T>
         constexpr bool is_string() noexcept { return false; }
 
-        /// @brief Specialization for inline std::string type.
+        /// @brief Specialization for inline ocf::str type.
         /// @return true since T is str.
         template <>
-        bool is_string<std::string>() noexcept { return true; }
+        bool is_string<ocf::str>() noexcept { return true; }
 
         /// @brief Type checking functions.
         /// @tparam T type of to check.
@@ -302,11 +303,11 @@ namespace meta {
         template <typename T>
         constexpr bool is_string(const T &input) noexcept { return false; }
 
-        /// @brief Specialization for inline std::string type.
+        /// @brief Specialization for inline ocf::str type.
         /// @param input The input variable.
         /// @return true since T is str.
         template <>
-        bool is_string<std::string>(const std::string &input) noexcept { return true; }
+        bool is_string<ocf::str>(const ocf::str &input) noexcept { return true; }
 
         /// @brief Type checking functions.
         /// @tparam T type of to check.
@@ -401,7 +402,7 @@ namespace meta {
         /// @brief Converts a boolean value to its string representation.
         /// @param value The boolean value to convert.
         /// @return The string representation of the boolean value.
-        inline std::string boolean_msg(bool value) noexcept { return value ? "true" : "false"; }
+        inline ocf::str boolean_msg(bool value) noexcept { return value ? "true" : "false"; }
 
     }
 

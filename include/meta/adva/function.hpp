@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <functional>
 #include <cinttypes>
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___ADVA___FUNCTION_HPP
@@ -26,10 +27,10 @@ namespace meta {
          * @return A new vector containing the elements in reverse order.
          */
         template <typename T>
-        std::vector<T>& reverse(const std::vector<T> &intput) noexcept
+        ocf::vec<T>& reverse(const ocf::vec<T> &intput) noexcept
         {
-            if(input.empty()) return std::vector<T>();
-            std::vector<T> result;
+            if(input.empty()) return ocf::vec<T>();
+            ocf::vec<T> result;
             for(size_t i = input.size() - 1; i >= 0; i--) {
                 result.push_back(input[i]);
             }
@@ -42,10 +43,10 @@ namespace meta {
          * @return A new 2D vector containing the elements in reverse order.
          */
         template <typename T>
-        std::vector<std::vector<T>>& reverse_2d(const std::vector<std::vector<T>> &input) noexcept
+        ocf::vec<ocf::vec<T>>& reverse_2d(const ocf::vec<ocf::vec<T>> &input) noexcept
         {
-            if(input.empty()) std::verstor<std::vector<T>>();
-            std::vector<std::vector<T>> result;
+            if(input.empty()) std::verstor<ocf::vec<T>>();
+            ocf::vec<ocf::vec<T>> result;
             for(size_t i = input.size() - 1; i >= 0; i--) {
                 result.push_back(reverse_v(input[i]));
             }
@@ -58,10 +59,10 @@ namespace meta {
          * @return A new 3D vector containing the elements in reverse order.
          */
         template <typename T>
-        std::vector<std::vector<std::vector<T>>>& reverse_3d(const std::vector<std::vector<std::vector<T>>> &input) noexcept
+        ocf::vec<ocf::vec<ocf::vec<T>>>& reverse_3d(const ocf::vec<ocf::vec<ocf::vec<T>>> &input) noexcept
         {
-            if(input.empty()) return std::vector<std::vector<std::vector<T>>>();
-            std::vector<std::vector<std::vector<T>>> result;
+            if(input.empty()) return ocf::vec<ocf::vec<ocf::vec<T>>>();
+            ocf::vec<ocf::vec<ocf::vec<T>>> result;
             for(size_t i = input.size() - 1; i >= 0; i--) {
                 result.push_back(reverse_v(input[i]));
             }
@@ -73,7 +74,7 @@ namespace meta {
          * @param terms The index n of the last Fibonacci number to include (inclusive).
          * @return A vector containing F(0) to F(n), with (terms + 1) elements.
          */
-        std::vector<size_t> FibonacciSequence(uint8_t terms) noexcept
+        ocf::vec<size_t> FibonacciSequence(uint8_t terms) noexcept
         {
             if(terms <= 0) {
                 return {};
@@ -84,7 +85,7 @@ namespace meta {
             if(terms == 2) {
                 return {0, 1};
             }
-            std::vector<size_t> Fibonacci = {0, 1};
+            ocf::vec<size_t> Fibonacci = {0, 1};
             for(uint8_t i = 2; i <= terms; i++)
             {
                 if(Fibonacci[i - 1] > LLONG_MAX - Fibonacci[i - 2]) {
@@ -101,7 +102,7 @@ namespace meta {
          * @return Index of the last element (vec.size() - 1), or -1 if the vector is empty.
          */
         template <typename T>
-        size_t end(const std::vector<T> &input) noexcept
+        size_t end(const ocf::vec<T> &input) noexcept
         {
             if(input.empty()) return 0;
             return input.size() - 1;
@@ -115,7 +116,7 @@ namespace meta {
          * @return true if the vectors have the same size and elements in the same order; false otherwise.
          */
         template <typename T>
-        bool isEqual(const std::vector<T> &in1, const std::vector<T> &in2) noexcept
+        bool isEqual(const ocf::vec<T> &in1, const ocf::vec<T> &in2) noexcept
         {
             if(in1.empty() && in2.empty()) return true;
             if(in1.size() != in2.size()) return false;
@@ -136,16 +137,16 @@ namespace meta {
          * @param input The input vector from which to extract the subvector.
          * @param start The starting index of the subvector (inclusive).
          * @param end The ending index of the subvector (inclusive).
-         * @return std::vector<T> The resulting subvector containing elements from `start` to `end`.
+         * @return ocf::vec<T> The resulting subvector containing elements from `start` to `end`.
          *
          * @note this function is noexcept.
          */
         template <typename T>
-        std::vector<T> sub(const std::vector<T> &input, size_t start, size_t end)
+        ocf::vec<T> sub(const ocf::vec<T> &input, size_t start, size_t end)
         {
-            if(v.empty()) return std::vector<T>();
+            if(v.empty()) return ocf::vec<T>();
             if(end >= input.size()) end = input.length();
-            std::vector<T> result;
+            ocf::vec<T> result;
             for(size_t i = start; i <= end; i++) {
                 result.push_back(input[i]);
             }
@@ -167,12 +168,12 @@ namespace meta {
          * @note this function is noexcept.
          */
         template <typename T>
-        std::vector<std::vector<T>> sub_2d(
-            const std::vector<std::vector<T>> &input, 
+        ocf::vec<ocf::vec<T>> sub_2d(
+            const ocf::vec<ocf::vec<T>> &input, 
             const std::unordered_map<size_t, size_t> indexs) noexcept
         {
-            if(v.empty()) return std::vector<std::vector<T>>();
-            std::vector<std::vector<T>> result;
+            if(v.empty()) return ocf::vec<ocf::vec<T>>();
+            ocf::vec<ocf::vec<T>> result;
             for(auto loop : indexs) {
                 result.push_back(sub(input, loop.first, loop.second))
             }
@@ -188,11 +189,11 @@ namespace meta {
          * @return A new 2D vector with the specified row removed.
          */
         template <typename T>
-        std::vector<std::vector<T>> erase_row(const std::vector<std::vector<T>> &input, int index)
+        ocf::vec<ocf::vec<T>> erase_row(const ocf::vec<ocf::vec<T>> &input, int index)
         {
             if(index > static_cast<int>(v.size()) || index < 0)
                 throw std::out_of_range("the vector erase index is begger than the vector size or is equal or less than zero");
-            std::vector<std::vector<T>> result;
+            ocf::vec<ocf::vec<T>> result;
             for(size_t i = 0; i < v.size(); i++)
             {
                 if(static_cast<int>(i) == index)
@@ -211,19 +212,19 @@ namespace meta {
          * @tparam T The type of the elements in the 2D vector.
          * @param input The input 2D vector from which a column will be removed.
          * @param index The zero-based index of the column to remove.
-         * @return std::vector<std::vector<T>> A new 2D vector with the specified column removed from each row.
+         * @return ocf::vec<ocf::vec<T>> A new 2D vector with the specified column removed from each row.
          *
          * @note If no columns are erased due to incorrect indexing, a message is printed to std::cout.
          */
         template <typename T>
-        std::vector<std::vector<T>> erase_column(const std::vector<std::vector<T>> &input, size_t index)
+        ocf::vec<ocf::vec<T>> erase_column(const ocf::vec<ocf::vec<T>> &input, size_t index)
         {
             if(input.empty()) return input;
             if(index > input.size()) {
                 std::cerr << "Out Of Range indexing" << '\n';
                 return input;
             }
-            std::vector<std::vector<T>> result;
+            ocf::vec<ocf::vec<T>> result;
             int erase_count = 0;
             for(size_t i = 0; i < v.size(); i++)
             {
@@ -257,8 +258,8 @@ namespace meta {
          * @note This function depends on the existence of `erase_row` and `erase_column` helper functions.
          */
         template <typename T>
-        std::vector<std::vector<T>> erase_row_column(
-            const std::vector<std::vector<T>> &input, 
+        ocf::vec<ocf::vec<T>> erase_row_column(
+            const ocf::vec<ocf::vec<T>> &input, 
             size_t i, size_t j) noexcept
         {
             if(input.empty()) return input;
@@ -266,7 +267,7 @@ namespace meta {
                 std::cerr << "Out of Range indexing" << '\n';
                 return input;
             }
-            std::vector<std::vector<T>> result_v = erase_row<T>(input, i);
+            ocf::vec<ocf::vec<T>> result_v = erase_row<T>(input, i);
             return erase_column<T>(result_v, j);
         }
 
@@ -278,17 +279,17 @@ namespace meta {
          * @tparam T1 The target type to which the elements will be cast.
          * @param T2 The source type of the elements in the input vector.
          * @note This function assumes that the static_cast from T2 to T1 is valid for all elements in the input vector. If the cast is not valid, it may result in undefined behavior.
-         * @see std::vector, static_cast
+         * @see ocf::vec, static_cast
          * @example
-         * std::vector<int> intVec = {1, 2, 3};
-         * std::vector<double> doubleVec = vector_cast<double>(intVec); // doubleVec will contain {1.0, 2.0, 3.0}
-         * std::vector<std::vector<int>> intVec2D = {{1, 2}, {3, 4}};
-         * std::vector<std::vector<double>> doubleVec2D = vector_cast<double>(intVec2D); // doubleVec2D will contain {{1.0, 2.0}, {3.0, 4.0}}
+         * ocf::vec<int> intVec = {1, 2, 3};
+         * ocf::vec<double> doubleVec = vector_cast<double>(intVec); // doubleVec will contain {1.0, 2.0, 3.0}
+         * ocf::vec<ocf::vec<int>> intVec2D = {{1, 2}, {3, 4}};
+         * ocf::vec<ocf::vec<double>> doubleVec2D = vector_cast<double>(intVec2D); // doubleVec2D will contain {{1.0, 2.0}, {3.0, 4.0}}
          */
         template <typename T1, typename T2>
-        std::vector<T1> vector_cast(const std::vector<T2> &input) noexcept
+        ocf::vec<T1> vector_cast(const ocf::vec<T2> &input) noexcept
         {
-            std::vector<T1> result;
+            ocf::vec<T1> result;
             for(size_t i = 0; i < input.size(); i++)
                 result.push_back(static_cast<T1>(input[i]));
             return result;
@@ -302,17 +303,17 @@ namespace meta {
          * @tparam T1 The target type to which the elements will be cast.
          * @param T2 The source type of the elements in the input 2D vector.
          * @note This function assumes that the static_cast from T2 to T1 is valid for all elements in the input 2D vector. If the cast is not valid, it may result in undefined behavior.
-         * @see std::vector, static_cast
+         * @see ocf::vec, static_cast
          * @example
-         * std::vector<std::vector<int>> intVec2D = {{1, 2}, {3, 4}};
-         * std::vector<std::vector<double>> doubleVec2D = vector_cast<double>(intVec2D); // doubleVec2D will contain {{1.0, 2.0}, {3.0, 4.0}}
-         * std::vector<std::vector<std::vector<int>>> intVec3D = {{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}};
-         * std::vector<std::vector<std::vector<double>>> doubleVec3D = vector_cast<double>(intVec3D); // doubleVec3D will contain {{{1.0, 2.0}, {3.0, 4.0}}, {{5.0, 6.0}, {7.0, 8.0}}}
+         * ocf::vec<ocf::vec<int>> intVec2D = {{1, 2}, {3, 4}};
+         * ocf::vec<ocf::vec<double>> doubleVec2D = vector_cast<double>(intVec2D); // doubleVec2D will contain {{1.0, 2.0}, {3.0, 4.0}}
+         * ocf::vec<ocf::vec<ocf::vec<int>>> intVec3D = {{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}};
+         * ocf::vec<ocf::vec<ocf::vec<double>>> doubleVec3D = vector_cast<double>(intVec3D); // doubleVec3D will contain {{{1.0, 2.0}, {3.0, 4.0}}, {{5.0, 6.0}, {7.0, 8.0}}}
          */
         template <typename T1, typename T2>
-        std::vector<std::vector<T1>> vector_cast(const std::vector<std::vector<T2>> &input) noexcept
+        ocf::vec<ocf::vec<T1>> vector_cast(const ocf::vec<ocf::vec<T2>> &input) noexcept
         {
-            std::vector<std::vector<T1>> result;
+            ocf::vec<ocf::vec<T1>> result;
             for(size_t i = 0; i < input.size(); i++)
                 result.push_back(vector_cast<T1, T2>(input[i]));
             return result;
@@ -326,16 +327,16 @@ namespace meta {
          * @tparam T1 The target type to which the elements will be cast.
          * @param T2 The source type of the elements in the input 3D vector.
          * @note This function assumes that the static_cast from T2 to T1 is valid for all elements in the input 3D vector. If the cast is not valid, it may result in undefined behavior.
-         * @see std::vector, static_cast
+         * @see ocf::vec, static_cast
          * @example
-         * std::vector<std::vector<std::vector<int>>> intVec3D = {{{
+         * ocf::vec<ocf::vec<ocf::vec<int>>> intVec3D = {{{
          * 1, 2}, {3, 4}}, {{5, 6}, {7, 8}}};
-         * std::vector<std::vector<std::vector<double>>> doubleVec3D = vector_cast<double>(intVec3D); // doubleVec3D will contain {{{1.0, 2.0}, {3.0, 4.0}}, {{5.0, 6.0}, {7.0, 8.0}}}
+         * ocf::vec<ocf::vec<ocf::vec<double>>> doubleVec3D = vector_cast<double>(intVec3D); // doubleVec3D will contain {{{1.0, 2.0}, {3.0, 4.0}}, {{5.0, 6.0}, {7.0, 8.0}}}
          */
         template <typename T1, typename T2>
-        std::vector<std::vector<std::vector<T1>>> vector_cast(const std::vector<std::vector<std::vector<T2>>> &input) noexcept
+        ocf::vec<ocf::vec<ocf::vec<T1>>> vector_cast(const ocf::vec<ocf::vec<ocf::vec<T2>>> &input) noexcept
         {
-            std::vector<std::vector<std::vector<T1>>> result;
+            ocf::vec<ocf::vec<ocf::vec<T1>>> result;
             for(size_t i = 0; i < input.size(); i++)
                 result.push_back(vector_cast<T1, T2>(input[i]));
             return result;
@@ -353,7 +354,7 @@ namespace meta {
          * @note If the vector is empty, the function will return size_t() immediately. The function does not perform bounds checking on the `start` and `end` parameters, so it is the caller's responsibility to ensure they are within valid ranges.
          */
         template <typename T>
-        size_t where(const std::vector<T> &input, const T &element,
+        size_t where(const ocf::vec<T> &input, const T &element,
                     size_t end = 0, size_t start = 0) noexcept
         {
             if(input.empty())
@@ -380,7 +381,7 @@ namespace meta {
          * @note If the vector is empty, the function will return false immediately. The function does not perform bounds checking on the `start` and `end` parameters, so it is the caller's responsibility to ensure they are within valid ranges.
          */
         template <typename T>
-        bool exist(const std::vector<T> &input, const T &element,
+        bool exist(const ocf::vec<T> &input, const T &element,
                 size_t end = 0, size_t start = 0) noexcept
         {
             if(end == 0)
@@ -417,7 +418,7 @@ namespace meta {
          *
          * @note The input matrix is modified and returned in its transformed state.
          */
-        std::vector<std::vector<double>> gauss_jordan(std::vector<std::vector<double>> input, size_t &status)
+        ocf::vec<ocf::vec<double>> gauss_jordan(ocf::vec<ocf::vec<double>> input, size_t &status)
         {
             if(input.empty()) {
                 status = 4;
@@ -466,12 +467,12 @@ namespace meta {
         /**
          * @brief Generates a string consisting of a specified number of newline characters.
          * @param input The number of newline characters to include in the resulting string. Defaults to 1 if not provided.
-         * @return A std::string object containing n newline characters ('\n'). If n is 0, an empty string is returned.
+         * @return A ocf::str object containing n newline characters ('\n'). If n is 0, an empty string is returned.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions
          */
-        const std::string& new_lines(size_t input = 1) noexcept
+        const ocf::str& new_lines(size_t input = 1) noexcept
         {
-            std::string result;
+            ocf::str result;
             for(size_t i = 0; i < input; i++)
                 result += '\n';
             return result;
@@ -480,12 +481,12 @@ namespace meta {
         /**
          * @brief Generates a string consisting of a specified number of tab characters.
          * @param input The number of tab characters to include in the resulting string. Defaults to 1 if not provided.
-         * @return A std::string object containing n tab characters ('\t'). If n is 0, an empty string is returned.
+         * @return A ocf::str object containing n tab characters ('\t'). If n is 0, an empty string is returned.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions
          */
-        const std::string& Tabs(size_t input = 1) noexcept
+        const ocf::str& Tabs(size_t input = 1) noexcept
         {
-            std::string result;
+            ocf::str result;
             for(size_t i = 0; i < input; i++)
                 result += '\t';
             return result;
@@ -505,7 +506,7 @@ namespace meta {
          * @return The index of the last character (which is input.size() - 1) if the string is not empty.
          *         Returns 0 (converted to the maximum size_t value) if the string is empty.
          */
-        size_t last_index(const std::string &input) noexcept
+        size_t last_index(const ocf::str &input) noexcept
         {
             return input.empty() ? 0 : 
             input.size() - 1;
@@ -525,7 +526,7 @@ namespace meta {
          * @return The last character of the string input.
          *         Returns the null character ('\\0') if the string is empty.
          */
-        char last_element(const std::string &input) noexcept
+        char last_element(const ocf::str &input) noexcept
         {
             return input.empty() ? '\0' : 
             input[last_index(input)];
@@ -541,17 +542,17 @@ namespace meta {
          *              Passed by constant reference for efficiency.
          * @param index The zero-based index of the character to be removed from the string.
          *
-         * @return A new std::string object containing all characters of input except the one at the specified index.
+         * @return A new ocf::str object containing all characters of input except the one at the specified index.
          * 
          * @note The function implements character removal by iterating over the input string and skipping the character at the specified index.
          */
-        std::string remove(const std::string &input, size_t index) noexcept
+        ocf::str remove(const ocf::str &input, size_t index) noexcept
         {
             if(index >= input.size()) {
                 std::cerr << "out of range indexing" << '\n';
                 return input;
             }
-            std::string result;
+            ocf::str result;
             for(size_t i = 0; i < input.size(); i++)
             {
                 if(i != index)
@@ -575,12 +576,12 @@ namespace meta {
          *              Passed by constant reference.
          * @param rmch  The character whose occurrences should be removed from the string.
          *
-         * @return A new std::string object that is a copy of s with all
+         * @return A new ocf::str object that is a copy of s with all
          *         instances of character c removed.
          */
-        std::string& remove(const std::string &input, char rmch) noexcept
+        ocf::str& remove(const ocf::str &input, char rmch) noexcept
         {
-            std::string result;
+            ocf::str result;
             for(char lc : input)
             {
                 if(lc != rmch)
@@ -605,15 +606,15 @@ namespace meta {
          *
          * @param input The input string to filter.
          *              Passed by constant reference.
-         * @param filter A std::function object (predicate) that takes a char and returns bool.
+         * @param filter A ocf::func object (predicate) that takes a char and returns bool.
          *               The character is removed if this function returns true.
          *
-         * @return A new std::string object containing only the characters from input
+         * @return A new ocf::str object containing only the characters from input
          *         that did not satisfy the predicate filter (i.e., for which filter(c) was false).
          */
-        std::string& remove(const std::string &input, std::function<bool(char)> filter) noexcept
+        ocf::str& remove(const ocf::str &input, ocf::func<bool(char)> filter) noexcept
         {
-            std::string result;
+            ocf::str result;
             for(char c : input)
             {
                 if(!filter(c))
@@ -634,17 +635,17 @@ namespace meta {
          * @param start The zero-based index of the first character to include in the substring (inclusive).
          * @param end   The zero-based index of the last character to include in the substring (inclusive).
          *
-         * @return A new std::string object representing the desired substring.
+         * @return A new ocf::str object representing the desired substring.
          *         Returns an empty string if start equals end.
          *
          * @note Unlike many standard library functions, this function treats the end as **inclusive**.
          */
-        std::string sub_str(const std::string &input, size_t start, size_t end)
+        ocf::str sub_str(const ocf::str &input, size_t start, size_t end)
         {
             if(start >= input.size() || end >= input.size()) return input;
             if(start > end) return input;
-            if(start == end) return std::string("");
-            std::string result;
+            if(start == end) return ocf::str("");
+            ocf::str result;
             for(size_t i = start; i <= end; i++)
                 result += input[i];
             return result;
@@ -662,28 +663,28 @@ namespace meta {
          *               Passed by constant reference.
          * @param input2 The substring to be located and removed. Passed by constant reference.
          *
-         * @return       A new std::string object:
+         * @return       A new ocf::str object:
          *               - If input2 is empty, it returns input1 unchanged.
          *               - If input2 is not found in input1, it returns input1 unchanged.
          *               - Otherwise, it returns input1 with the first occurrence of input2 removed.
          *
-         * @note         The implementation uses std::string::find() to locate the
-         *               substring and std::string::append() to efficiently construct
+         * @note         The implementation uses ocf::str::find() to locate the
+         *               substring and ocf::str::append() to efficiently construct
          *               the result without the removed segment.
          */
-        std::string remove(const std::string &input1, const std::string &input2) noexcept
+        ocf::str remove(const ocf::str &input1, const ocf::str &input2) noexcept
         {
             if(input2.empty())
                 return input1;
             if(input2.size() > input1.size())
                 return input2;
             size_t pos = input1.find(input2);
-            if(pos == std::string::npos)
+            if(pos == ocf::str::npos)
                 return input1;
-            std::string result;
+            ocf::str result;
             result.reserve(input1.size() - input2.size());
             result.append(input1, 0, pos);
-            result.append(input1, pos + input2.size(), std::string::npos);
+            result.append(input1, pos + input2.size(), ocf::str::npos);
             return result;
         }
 
@@ -702,13 +703,13 @@ namespace meta {
          * @param input The input string to be reversed. Passed by constant reference
          *             for efficiency.
          *
-         * @return     A new std::string object which is the reverse of the input string s.
+         * @return     A new ocf::str object which is the reverse of the input string s.
          */
-        std::string reverse(const std::string &input) noexcept
+        ocf::str reverse(const ocf::str &input) noexcept
         {
             if(input.empty())
                 return input;
-            std::string result;
+            ocf::str result;
             for(size_t i = last_index(input); i >= 0; i--)
                 result += input[i];
             return result;
@@ -733,13 +734,13 @@ namespace meta {
          *             This index must be a valid position within the current string
          *             (i.e., 0 <= index < s.size()).
          *
-         * @return     A new std::string object with the character value inserted.
+         * @return     A new ocf::str object with the character value inserted.
          */
-        std::string insert(const std::string &input, char value, size_t index)
+        ocf::str insert(const ocf::str &input, char value, size_t index)
         {
             if(index >= input.size())
                 return input;
-            std::string result;
+            ocf::str result;
             for(size_t i = 0; i < input.size(); i++)
             {
                 if(i == index)
@@ -767,7 +768,7 @@ namespace meta {
          * @param second The zero-based index of the second character to be involved
          *              in the swap operation.
          *
-         * @return       A new std::string object with the characters at first
+         * @return       A new ocf::str object with the characters at first
          *               and second indices swapped.
          *
          * @throws       std::out_of_range     If either first or second index is
@@ -776,13 +777,13 @@ namespace meta {
          * @throws       std::invalid_argument If the first and second indices are
          *                                     identical, as no swap is necessary.
          */
-        std::string swap(const std::string &s, size_t first, size_t second)
+        ocf::str swap(const ocf::str &s, size_t first, size_t second)
         {
             if(first < 0 || second < 0 || second >= s.size() || second >= s.size())
                 throw std::out_of_range("the first or secend is bigger or less than zero");
             if(first == second)
                 throw std::invalid_argument("can not swap in the same index for first and second");
-            std::string result;
+            ocf::str result;
             for(size_t i = 0; i < s.size(); i++)
             {
                 if(i == first)
@@ -811,14 +812,14 @@ namespace meta {
          * @param removed  The character to be found and replaced within the string.
          * @param inserted The new character that will substitute all instances of removed.
          *
-         * @return       A new std::string object with all occurrences of removed
+         * @return       A new ocf::str object with all occurrences of removed
          *               replaced by inserted. Returns s if removed and inserted are the same.
          */
-        std::string replace(const std::string &s, char removed, char inserted) noexcept
+        ocf::str replace(const ocf::str &s, char removed, char inserted) noexcept
         {
             if(removed == inserted)
                 return s;
-            std::string result;
+            ocf::str result;
             for(char c : s)
             {
                 if(c == removed)
@@ -847,15 +848,15 @@ namespace meta {
          *
          * @param s     The input string to be capitalized. Passed by constant reference.
          *
-         * @return     A new std::string object with its first character capitalized.
+         * @return     A new ocf::str object with its first character capitalized.
          *             Returns the original string if it is empty or if the first character
          *             is already uppercase or non-alphabetic.
          */
-        std::string capitalize(const std::string &s) noexcept
+        ocf::str capitalize(const ocf::str &s) noexcept
         {
             if(s.empty())
                 return s;
-            std::string result;
+            ocf::str result;
             if(std::islower(s[0]))
                 result += (s[0] - ' ');
             else
@@ -885,17 +886,17 @@ namespace meta {
          * @param to_lower If true, all uppercase letters are converted to lowercase.
          *                 If false, all lowercase letters are converted to uppercase.
          *
-         * @return       A new std::string object:
+         * @return       A new ocf::str object:
          *               - The converted string if all characters are alphabetic.
          *               - The original string if it is empty.
          *               - The string literal "convert error: wrong input form" if a
          *                 non-alphabetic character is encountered.
          */
-        std::string convert(const std::string &s, bool to_lower) noexcept
+        ocf::str convert(const ocf::str &s, bool to_lower) noexcept
         {
             if(s.empty())
                 return s;
-            std::string result;
+            ocf::str result;
             if(to_lower)
             {
                 for(char c : s)
@@ -943,13 +944,13 @@ namespace meta {
          *
          * @param s     The input string to be standardized. Passed by constant reference.
          *
-         * @return     A new std::string object formatted as a standard word (Title Case).
+         * @return     A new ocf::str object formatted as a standard word (Title Case).
          */
-        std::string standard_word(const std::string &s) noexcept
+        ocf::str standard_word(const ocf::str &s) noexcept
         {
             if(s.empty())
                 return s;
-            std::string result = convert(s, true);
+            ocf::str result = convert(s, true);
             return capitalize(result);
         }
 
@@ -974,15 +975,15 @@ namespace meta {
          *
          * @param s     The input string to be separated. Passed by constant reference.
          *
-         * @return     A std::vector<std::string> containing the separated substrings.
+         * @return     A ocf::vec<ocf::str> containing the separated substrings.
          *             Returns an empty vector if the input string is empty.
          */
-        std::vector<std::string> split(const std::string &s, char c = ' ') noexcept
+        ocf::vec<ocf::str> split(const ocf::str &s, char c = ' ') noexcept
         {
             if(s.empty())
                 return {};
-            std::vector<std::string> result;
-            std::string temp;
+            ocf::vec<ocf::str> result;
+            ocf::str temp;
             for(size_t i = 0; i < s.size(); i++)
             {
                 if(s[i] == c || i == s.size() - 1)
@@ -1005,7 +1006,7 @@ namespace meta {
          * @return Returns true if the character c is found within the specified range of the string s; otherwise, returns false. If end is 0, the search will include the entire string.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions. If end is 0, it will be set to the length of the string s, allowing the search to cover the entire string. The function iterates through the specified range of the string and checks for the presence of the character c.
          */
-        bool exist(const std::string &s, char c,
+        bool exist(const ocf::str &s, char c,
                 size_t end = 0, size_t start = 0) noexcept
         {
             if(end == 0)
@@ -1025,7 +1026,7 @@ namespace meta {
          * @return Returns true if the substring input2 is found within the string input1; otherwise, returns false. The function compares the characters of input1 and input2 to determine if input2 is a contiguous sequence within input1.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions. The implementation iterates through the characters of input1 and checks for a sequence that matches input2. If a matching sequence is found, the function returns true; if the end of input1 is reached without finding input2, it returns false.
          */
-        bool exist(const std::string &input1, const std::string &input2) noexcept
+        bool exist(const ocf::str &input1, const ocf::str &input2) noexcept
         {
             size_t ll = size_t(), il = size_t();
             // ll: loop length, il: if length
@@ -1069,7 +1070,7 @@ namespace meta {
          * @return A pair of indices (start, end) indicating the position of the substring input2 within input1. If input2 is not found, both indices will be 0.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions. The implementation iterates through the characters of input1 and checks for a sequence that matches input2. If a matching sequence is found, the function returns the indices; if the end of input1 is reached without finding input2, it returns a pair of zeros.
          */
-        std::pair<size_t, size_t> where(const std::string &input1, const std::string &input2)
+        std::pair<size_t, size_t> where(const ocf::str &input1, const ocf::str &input2)
         {
             size_t ll = size_t(), cl = size_t();
             if(input1.length() > input2.length())
@@ -1126,10 +1127,10 @@ namespace meta {
          * the string s. If end is 0, the search will include the entire string. If the character is not found, an empty vector is returned.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions
          */
-        std::vector<size_t> where(const std::string &s, char c,
+        ocf::vec<size_t> where(const ocf::str &s, char c,
                                 size_t end = 0, size_t start = 0)
         {
-            std::vector<size_t> result;
+            ocf::vec<size_t> result;
             if(end == 0)
                 end = s.length();
             for(size_t i = start; i < end; i++)
@@ -1149,7 +1150,7 @@ namespace meta {
          * @return The index of the first occurrence of the character c within the specified range of the string s. If end is 0, the search will include the entire string. If the character is not found, 0 is returned, and an error message is printed to std::cerr.
          * @note The function is marked as noexcept, indicating that it guarantees not to throw exceptions. The implementation iterates through the specified range of the string and checks for the presence of the character c. If found, it returns the index; if not found, it prints an error message and returns 0.
          */
-        size_t where_first(const std::string &s, char c,
+        size_t where_first(const ocf::str &s, char c,
                         size_t end = 0, size_t start = 0) noexcept
         {
             if(s.empty())
@@ -1188,14 +1189,14 @@ namespace meta {
          * @param s     The input string (sentence or phrase) to be formatted.
          *             Passed by constant reference.
          *
-         * @return     A new std::string object formatted in Title Case.
+         * @return     A new ocf::str object formatted in Title Case.
          */
-        std::string standard_form(const std::string &s) noexcept
+        ocf::str standard_form(const ocf::str &s) noexcept
         {
             if(s.empty())
                 return s;
-            std::vector<std::string> vs = split(s);
-            std::string result;
+            ocf::vec<ocf::str> vs = split(s);
+            ocf::str result;
             for(size_t i = 0; i < vs.size(); i++)
             {
                 result += standard_word(vs[i]);
@@ -1230,7 +1231,7 @@ namespace meta {
          * @return       A long long representing the sum of the initial start value
          *               and the character code values of all characters in s.
          */
-        size_t sum_chars(const std::string &s, size_t start = 0) noexcept
+        size_t sum_chars(const ocf::str &s, size_t start = 0) noexcept
         {
             if(s.empty())
                 return 0;
@@ -1268,7 +1269,7 @@ namespace meta {
          *               and the character code values of all characters in s. Returns 0
          *               if the string is empty.
          */
-        size_t mult_chars(const std::string &s, size_t start = 1) noexcept
+        size_t mult_chars(const ocf::str &s, size_t start = 1) noexcept
         {
             if(s.empty())
                 return 0;
@@ -1322,9 +1323,9 @@ namespace meta {
         /// @return A new string with each character shifted by the specified amount.
         /// @note This function does not throw exceptions (noexcept).
         /// @see shift_char
-        std::string& shift_string(const std::string &input, int shift) noexcept
+        ocf::str& shift_string(const ocf::str &input, int shift) noexcept
         {
-            std::string result;
+            ocf::str result;
             for(char c : input)
                 result += shift_char(c, shift);
             return result;
@@ -1346,9 +1347,9 @@ namespace meta {
          *
          * @see shift_char(char, int8_t)
          */
-        std::string& unshift_string(const std::string &input, int8_t shift) noexcept
+        ocf::str& unshift_string(const ocf::str &input, int8_t shift) noexcept
         {
-            std::string result;
+            ocf::str result;
             for(char c : input)
                 result += shift_char(c, -shift);
             return result;
@@ -1358,17 +1359,17 @@ namespace meta {
 
         inline char to_upper(char input) noexcept { return (char)std::toupper(input); }
 
-        inline std::string& to_lower(const std::string &s) noexcept
+        inline ocf::str& to_lower(const ocf::str &s) noexcept
         {
-            std::string result;
+            ocf::str result;
             for(char c : s) {
                 result += (char)std::tolower(c);
             }
             return result;
         }
 
-        inline std::string& to_upper(const std::string &s) noexcept {
-            std::string result;
+        inline ocf::str& to_upper(const ocf::str &s) noexcept {
+            ocf::str result;
             for(char c : s) {
                 result += (char)std::toupper(c);
             }
@@ -1396,7 +1397,7 @@ namespace meta {
             }
         }
 
-        inline bool is_valid_int(const std::string& input, char numSystem = 'd') {
+        inline bool is_valid_int(const ocf::str& input, char numSystem = 'd') {
             if(input.empty()) return false;
             for(char c : input) {
                 if(!is_digit(c, numSystem)) return false;
@@ -1404,7 +1405,7 @@ namespace meta {
             return true;
         }
 
-        inline bool is_valid_float(const std::string& input, char numSystem = 'd') noexcept {
+        inline bool is_valid_float(const ocf::str& input, char numSystem = 'd') noexcept {
             if(input.empty()) return false;
             if((input.length() == 1 && input[0] == '.') || 
                 input[0] == '.') return false;

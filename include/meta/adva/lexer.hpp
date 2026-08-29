@@ -1,5 +1,6 @@
 #include "token.hpp"
 #include "function.hpp"
+#include "cfrost/structure.h"
 
 #pragma once
 #ifndef METACORE___ADVA___LEXER_HPP
@@ -10,7 +11,7 @@ namespace meta {
         class lexer {
             private:
             tokenizer line_tok;
-            std::vector<std::string> split_line;
+            ocf::vec<ocf::str> split_line;
 
             public:
             lexer() noexcept = default;
