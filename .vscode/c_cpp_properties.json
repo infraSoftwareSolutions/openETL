@@ -10,8 +10,8 @@
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openETL/include",
                 "C:/Users/User/OneDrive/Documents/GitHub/ISS/openCF/include",
-                "C:/Users/User/OneDrive/Documents/GitHub/ISS/metaCore/include",
                 "C:/msys64/ucrt64/include"
             ],
 
@@ -32,7 +32,7 @@
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
-                "C:/Users/User/OneDrive/Documents/GitHub/ISS/metaCore/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openETL/include",
                 "C:/Users/User/OneDrive/Documents/GitHub/ISS/openCF/include",
                 "C:/msys64/ucrt64/include",
                 "C:/msys64/ucrt64/include/c++/15.2.0"
