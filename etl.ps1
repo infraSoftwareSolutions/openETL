@@ -23,8 +23,8 @@
     .\etl.ps1 --version
     .\etl.ps1 --license
     .\etl.ps1 --help
-    .\etl.ps1 --help cgen\micros.h
-    .\etl.ps1 --help cgen/UnitTest.h
+    .\etl.ps1 --help ./enum.hpp
+    .\etl.ps1 --help ./test.hpp
 #>
 
 param(
@@ -37,7 +37,7 @@ param(
 )
 
 # ===================== Global Settings =====================
-$script:Version = "beta 0.3.0"
+$script:Version = "beta 0.3.1"
 $script:LicenseFile = Join-Path -Path $PSScriptRoot -ChildPath "documentation/lic.txt"
 $script:HelpRoot = "help"
 $script:briefFile = "documentation/brief.txt"
@@ -96,8 +96,8 @@ Options:
                               documentation/text/<path_without_extension>.txt
 
 Examples:
-    .\etl.ps1 --help cgen/micros.hpp
-    .\etl.ps1 --help cgen/UnitTest.h
+    .\etl.ps1 --help ./enum.hpp
+    .\etl.ps1 --help ./test.hpp
 
 Note:
     - The documentation root folder is 'documentation/text' relative to the script location.

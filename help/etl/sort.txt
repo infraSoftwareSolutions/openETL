@@ -1,0 +1,140 @@
+## LIBRARY OVERVIEW
+
+This library provides various sorting algorithms for both strings and 
+vectors. The sorting algorithms include Bubble Sort, Selection Sort, Comb 
+Sort, Heap Sort, Insertion Sort, Merge Sort, and Quick Sort. Each 
+takes the appropriate data type as input (either a string or a vector) 
+returns the sorted form of the input data.
+
+## OBJECTS & DATA STRUCTURES
+
+### Object: etl::is_sorted(const std::string& value, bool increasing)
+------------------
+- **Value**: A const reference to a `std::string` representing an array 
+characters.
+- **Increasing**: A boolean indicating whether the sort should be in 
+ascending (true) or descending (false) order.
+
+### Function: is_sorted(const std::string& value, bool increasing)
+--------------------------------------------------------
+**Purpose**: Checks if the given string is sorted based on the specified 
+order (ascending or descending).
+
+**Parameters**:
+- **value** (std::string): The string to be checked.
+- **increasing** (bool): Whether the sort should be in ascending order.
+
+**Returns**: True if the string is sorted according to the specified 
+order, otherwise false.
+
+### Function: is_sorted(const std::vector<T>& value, bool increasing)
+--------------------------------------------------------
+**Purpose**: Checks if the given vector is sorted based on the specified 
+order (ascending or descending).
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be checked.
+- **increasing** (bool): Whether the sort should be in ascending order.
+
+**Returns**: True if the vector is sorted according to the specified 
+order, otherwise false.
+
+### Function: etl::bubble_sort(const std::string& value)
+------------------------------------------------
+**Purpose**: Sorts a given string using Bubble Sort algorithm.
+
+**Parameters**:
+- **value** (std::string): The string to be sorted.
+
+### Function: etl::bubble_sort(const std::vector<T>& value)
+------------------------------------------------------
+**Purpose**: Sorts a given vector using Bubble Sort algorithm.
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be sorted.
+
+### Function: etl::selection_sort(const std::string& value)
+------------------------------------------------------
+**Purpose**: Sorts a given string using Selection Sort algorithm.
+
+**Parameters**:
+- **value** (std::string): The string to be sorted.
+
+### Function: etl::selection_sort(const std::vector<T>& value)
+----------------------------------------------------------
+**Purpose**: Sorts a given vector using Selection Sort algorithm.
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be sorted.
+
+### Function: etl::comb_sort(const std::string& value)
+------------------------------------------------
+**Purpose**: Sorts a given string using Comb Sort algorithm.
+
+**Parameters**:
+- **value** (std::string): The string to be sorted.
+
+### Function: etl::comb_sort(const std::vector<T>& value)
+------------------------------------------------------
+**Purpose**: Sorts a given vector using Comb Sort algorithm.
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be sorted.
+
+### Function: etl::heap_sort(const std::string& value)
+------------------------------------------------
+**Purpose**: Sorts a given string using Heap Sort algorithm.
+
+**Parameters**:
+- **value** (std::string): The string to be sorted.
+
+### Function: etl::heap_sort(const std::vector<T>& value)
+------------------------------------------------------
+**Purpose**: Sorts a given vector using Heap Sort algorithm.
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be sorted.
+
+### Function: etl::insertion_sort(const std::string& value)
+-------------------------------------------------------
+**Purpose**: Sorts a given string using Insertion Sort algorithm.
+
+**Parameters**:
+- **value** (std::string): The string to be sorted.
+
+### Function: etl::insertion_sort(const std::vector<T>& value)
+-----------------------------------------------------------
+**Purpose**: Sorts a given vector using Insertion Sort algorithm.
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be sorted.
+
+### Function: etl::merge_sort(const std::string& value)
+----------------------------------------------------
+**Purpose**: Sorts a given string using Merge Sort algorithm.
+
+**Parameters**:
+- **value** (std::string): The string to be sorted.
+
+### Function: etl::merge_sort(const std::vector<T>& value)
+---------------------------------------------------------
+**Purpose**: Sorts a given vector using Merge Sort algorithm.
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be sorted.
+
+### Function: etl::quick_sort(const std::string& value)
+---------------------------------------------------
+**Purpose**: Sorts a given string using Quick Sort algorithm.
+
+**Parameters**:
+- **value** (std::string): The string to be sorted.
+
+### Function: etl::quick_sort(const std::vector<T>& value)
+---------------------------------------------------------
+**Purpose**: Sorts a given vector using Quick Sort algorithm.
+
+**Parameters**:
+- **value** (std::vector<T>): The vector of elements to be sorted.
+
+

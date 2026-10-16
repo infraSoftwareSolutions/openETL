@@ -1,0 +1,70 @@
+LIBRARY OVERVIEW
+================
+This library provides a `lexer` class that processes lines of input. It 
+uses a tokenizer and an ocf::vec container to split the input into 
+which are then managed by the lexer.
+
+OBJECTS & DATA STRUCTURES
+=========================
+
+Object: tokenizer
+------------------
+Description of what this object represents and its purpose:
+- Represents a mechanism for breaking up strings into substrings or 
+tokens.
+- Used by the `lexer` class to handle lines of text input.
+
+Members:
+  - line (std::string): The input string from which tokens are extracted.
+
+Object: lexer
+--------------
+Description of what this object represents and its purpose:
+- Manages a tokenizer for splitting an input string into tokenized lines.
+- Uses ocf::vec<ocf::str> to store the split-up lines as separate 
+facilitating easy manipulation of individual pieces of text within the 
+line.
+
+Members:
+  - line_tok (tokenizer): The tokenizer used by the lexer to break down 
+each line of input into tokens.
+  - split_line (ocf::vec<ocf::str>): A container for storing the 
+tokenized lines. Each element in the vector is a separate string 
+representing one or more contiguous characters from the original line 
+were identified as part of an individual token.
+
+FUNCTIONS
+=========
+
+Function: lexer()
+------------------
+Purpose: Construct a `lexer` object.
+Parameters:
+  - (tokenizer) tok (const tokenizer&): The tokenizer to use for 
+input lines into tokens. This function must be provided and passed in, as 
+the lexer requires this functionality to tokenize input text.
+
+Returns: A new `lexer` instance that uses the specified tokenizer to 
+process input.
+
+Notes: 
+- The `lexer` class is constructed with a given tokenizer.
+- Input processing begins immediately upon construction, allowing for 
+efficient utilization of the provided tokenizer object. 
+
+Function: ~lexer()
+------------------
+Purpose: Destructor for the lexer object, which releases any allocated 
+resources and cleans up after itself if necessary.
+
+Parameters:
+  - None
+
+Returns: 
+- Nothing (void)
+
+Notes:
+- The destructor is used to release any resources held by this class.
+- It ensures proper cleanup when a `lexer` instance goes out of scope.
+
+

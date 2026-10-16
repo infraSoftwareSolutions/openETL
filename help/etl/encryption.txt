@@ -1,0 +1,12 @@
+### LIBRARY OVERVIEW
+
+This library provides functionality for encryption and decryption 
+operations. It includes functions to encrypt plaintext data using a 
+specified encryption key, which can then be decrypted back into the 
+original plaintext.
+
+### OBJECTS & DATA STRUCTURES
+
+No objects or data structures are defined in this code snippet.
+
+

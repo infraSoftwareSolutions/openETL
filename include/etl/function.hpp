@@ -372,7 +372,7 @@ namespace etl {
         {
             if(input.empty())
                 return size_t();
-            if(end == 0)
+            if(end == 0 || end > input.length())
                 end = input.length();
             for(size_t i = start; i < end; i++)
             {
@@ -397,7 +397,7 @@ namespace etl {
         bool exist(const ocf::vec<T> &input, const T &element,
                 size_t end = 0, size_t start = 0) noexcept
         {
-            if(end == 0)
+            if(end == 0 || end > input.length())
                 end = input.length();
             for(size_t i = start; i < end; i++)
             {

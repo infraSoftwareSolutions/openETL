@@ -580,6 +580,204 @@ namespace etl {
                 else
                     return 0;
             }
+
+            /**
+             * @brief A template class for benchmarking function execution time.
+             *       The stream class allows users to measure the execution time
+             *      of functions and optionally print the results.
+             * @tparam print_result A boolean flag indicating whether to print
+             *      the execution time for each test case.
+             */
+            template <bool print_result>
+            class stream
+            {
+            private:
+                size_t count = 1;
+                ocf::str s = "s";
+                long long factor = 1;
+                ocf::vec<float> time_v;
+                ocf::vec<ocf::str> test_names;
+                float min_time = std::numeric_limits<float>::max();
+                float max_time = std::numeric_limits<float>::min();
+
+            protected:
+                /**
+                 * @brief Calculates the arithmetic mean of stored time values
+                 * @return Float value representing the average of all times in time_v
+                 *
+                 * Computes the average by summing all time values and dividing by the count of entries.
+                 * Returns 0.0f if the vector is empty.
+                 */
+                float average()
+                {
+                    float result = 0.0f;
+                    for (float time : time_v)
+                        result += time;
+                    return result / time_v.size();
+                }
+
+            public:
+                /**
+                 * @brief Constructor for benchmark_stream that sets time measurement units
+                 *
+                 * @param TFactor String representing the time unit to use. Valid values are:
+                 *                "s"  - seconds
+                 *                "ms" - milliseconds
+                 *                "us" - microseconds
+                 *                "ns" - nanoseconds
+                 *                "ps" - picoseconds
+                 *
+                 * @throws std::invalid_argument if TFactor is not one of the valid time units
+                 *
+                 * @details Sets the appropriate multiplication factor based on the time unit:
+                 *          s  = 10^0  = 1
+                 *          ms = 10^3  = 1,000
+                 *          us = 10^6  = 1,000,000
+                 *          ns = 10^9  = 1,000,000,000
+                 *          ps = 10^12 = 1,000,000,000,000
+                 */
+                stream(ocf::str TFactor)
+                {
+                    if (TFactor == "s")
+                    {
+                        factor = 1;
+                        s = "s";
+                    }
+                    else if (TFactor == "ms")
+                    {
+                        factor = std::pow(10, 3);
+                        s = TFactor;
+                    }
+                    else if (TFactor == "us")
+                    {
+                        factor = std::pow(10, 6);
+                        s = TFactor;
+                    }
+                    else if (TFactor == "ns")
+                    {
+                        factor = std::pow(10, 9);
+                        s = TFactor;
+                    }
+                    else if (TFactor == "ps")
+                    {
+                        factor = std::pow(10, 12);
+                        s = TFactor;
+                    }
+                    else
+                        throw std::invalid_argument("The size of the time is not defind");
+                }
+
+                /**
+                 * @brief Constructor for benchmark_stream that sets time unit scaling and suffix
+                 * @param n Power of 10 to scale time measurements (default = 3)
+                 *
+                 * Sets the scaling factor as 10^n and corresponding time unit suffix:
+                 * - n=1: seconds (s)
+                 * - n=3: milliseconds (ms)
+                 * - n=6: microseconds (us)
+                 * - n=9: nanoseconds (ns)
+                 * - n=12: picoseconds (ps)
+                 * - other: custom (xs)
+                 */
+                stream(short n = 3)
+                {
+                    factor = std::pow(10, n);
+                    if (n == 1)
+                        s = "s";
+                    else if (n == 3)
+                        s = "ms";
+                    else if (n == 6)
+                        s = "us";
+                    else if (n == 9)
+                        s = "ns";
+                    else if (n == 12)
+                        s = "ps";
+                    else
+                        s = "xs";
+                }
+
+                /**
+                 * @brief Overloaded stream operator to benchmark and record execution time of a function
+                 * @param fx Function to benchmark, must be callable and return bool
+                 * @details
+                 * - Executes the given function and records its execution time
+                 * - If print_result is enabled, prints the execution time for the test
+                 * - Increments internal test counter
+                 * - Time values are stored in time_v vector
+                 * - Results are printed with test number and scaled time (factor * measured_time)
+                 * @throws noexcept This function does not throw exceptions
+                 */
+                void operator<<(ocf::func<bool()> fx) noexcept
+                {
+                    time_v.push_back(benchmark::execution_time<bool>(fx));
+                    float current_time = factor * time_v[count - 1];
+                    min_time = std::min(min_time, current_time);
+                    max_time = std::max(max_time, current_time);
+                    if (print_result)
+                        io::println(
+                            "execution time for unit test " +
+                            std::to_string(count) + ": " +
+                            std::to_string(current_time) + s);
+                    count++;
+                }
+
+                /// @brief Overloaded stream operator to retrieve average execution time
+                /// @param value Reference to float variable to store average execution time
+                void operator>>(float &value) noexcept { value = factor * average(); }
+
+                /**
+                 * @brief Retrieves the minimum recorded execution time
+                 * @return Minimum time in the specified unit
+                 */
+                float get_min_time() const noexcept { return min_time; }
+
+                /**
+                 * @brief Retrieves the maximum recorded execution time
+                 * @return Maximum time in the specified unit
+                 */
+                float get_max_time() const noexcept { return max_time; }
+
+                /**
+                 * @brief Retrieves the average execution time
+                 * @return Average time in the specified unit
+                 */
+                float get_average_time() const noexcept { return factor * average(); }
+
+                /**
+                 * @brief Retrieves the total number of benchmarked tests
+                 * @return Number of test cases executed
+                 */
+                size_t get_test_count() const noexcept { return count - 1; }
+
+                /**
+                 * @brief Clears all benchmark records and resets statistics
+                 */
+                void clear_statistics() noexcept
+                {
+                    time_v.clear();
+                    test_names.clear();
+                    count = 1;
+                    min_time = std::numeric_limits<float>::max();
+                    max_time = std::numeric_limits<float>::min();
+                }
+
+                /**
+                 * @brief Prints a complete benchmark summary with statistics
+                 */
+                void print_summary() const noexcept
+                {
+                    if (time_v.empty())
+                    {
+                        io::println("No benchmark data available");
+                        return;
+                    }
+                    io::println("=== Benchmark Summary ===");
+                    io::println("Total tests: " + std::to_string(time_v.size()));
+                    io::println("Average time: " + std::to_string(get_average_time()) + s);
+                    io::println("Min time: " + std::to_string(min_time) + s);
+                    io::println("Max time: " + std::to_string(max_time) + s);
+                }
+            };
         }
 }
 #endif // ETL___BENCHMARK_HPP

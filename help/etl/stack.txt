@@ -1,0 +1,110 @@
+## LIBRARY OVERVIEW
+
+This library provides a stack implementation using a linked-list-based 
+node structure. The stack supports operations for pushing new items, 
+popping existing items, and inspecting the current top element.
+
+## OBJECTS & DATA STRUCTURES
+
+### Object: etl::stack<T>
+------------------
+Description: This class represents a stack data structure that stores 
+objects of type T.
+Members:
+  - top (node*): Pointer to the first node in the list
+  - cur (node*): Current pointer for traversing the linked list
+  - size (size_t): Size of the stack
+
+### Object: etl::stack<T>::node
+-----------------------------
+Description: A structure representing a single node within the linked 
+list.
+Members:
+  - item (T): Stores an object of type T
+  - next (node*): Pointer to the next node in the list
+
+## FUNCTIONS
+
+### Function: stack()
+---------------------------------------
+Purpose: Constructs an empty stack with no elements.
+
+Parameters: None
+
+Returns: void
+
+Notes: None
+
+### Function: push(T newItem)
+------------------------------
+Purpose: Pushes a new item onto the top of the stack. If memory 
+fails, prints error message.
+
+Parameters:
+  - T newItem (T): The value to be pushed onto the stack
+
+Returns: void
+
+Notes: None
+
+### Function: isEmpty()
+-----------------------
+Purpose: Checks if the stack is empty by verifying that top pointer 
+to nullptr.
+
+Parameters: None
+
+Returns: inline constexpr bool
+
+Notes: None
+
+### Function: pop()
+-----------------
+Purpose: Removes the top item from the stack. If the stack is empty, 
+prints an error message and does nothing.
+
+Parameters: None
+
+Returns: void
+
+Notes: None
+
+### Function: pop(T &stackTop)
+----------------------------
+Purpose: Removes the top item from the stack and stores it in the 
+reference (T). If the stack is empty, prints an error message and sets 
+referenced value to nullptr.
+
+Parameters:
+  - T &stackTop (T): Reference to store the removed item
+
+Returns: void
+
+Notes: None
+
+### Function: getTop(T &stackTop)
+------------------------------
+Purpose: Retrieves the top element of the stack. The element is copied 
+into the provided reference (T). If the stack is empty, prints an error 
+message and sets the referenced value to nullptr.
+
+Parameters:
+  - T &stackTop (T): Reference to store the removed item
+
+Returns: void
+
+Notes: None
+
+### Function: display()
+----------------------
+Purpose: Prints all elements of the stack to the standard output stream. 
+Iterates through the linked list starting from top, printing each node's 
+item value.
+
+Parameters: None
+
+Returns: void
+
+Notes: None
+
+

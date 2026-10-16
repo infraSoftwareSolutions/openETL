@@ -1,37 +1,197 @@
-﻿lite/stream.hpp
-    The code you've provided is a C++ header file that appears to define several template classes for handling binary and unary functions.
-    The code includes several custom function objects (CFFOs) that can be used as arguments in std::function templates, which represent functions with fixed return types.
-    Here are some observations about the code:
-        1. Custom Function Objects: Each template class defines a custom function object (std::function<T>) that takes two arguments and returns an unspecified type (e.g., int, double). These objects can be used as arguments in std::function templates.
-        2. Template Classes: The code includes several template classes, including stream__t_p, stream__tp, and stream__t_t.
-        Each of these classes represents a binary function with two input arguments and one output argument (in the case of stream__t_p) or no return type (stream__t_t).
-        3. Function Template Parameters: The code defines several function template parameters, including T1, T2, and T3.
-        These parameters represent the types of the input arguments for the custom function objects.
-        4. Custom Function Object Usage: In various places throughout the code, you can use custom function objects as arguments in std::function templates.
-            For example:
-                s << [](double x) { return static_cast<int>(x * 2); };
-                func >> s;
-        5. Return Value: The code does not explicitly specify a return type for the custom function objects or the binary functions defined in the template classes.
-    Example Usage
-        Here's an example of how to use the custom function object as an argument in a std::function template:
-        #include "your_header_file.hpp"
-        int main() {
-            // Define a binary function with two input arguments and one output argument
-            auto add = [](double x, double y) { return x + y; };
+### LIBRARY OVERVIEW
 
-            // Use the custom function object as an argument in a std::function template
-            auto result = s << add;
+This header file defines several utility classes and functions for 
+managing vectors in C++. The library provides a flexible stream-like 
+interface (`vstream`) to manage a vector of type `T`, including 
+extraction, and various utility functions. Additionally, it includes 
+benchmarking functionality with the `benchmark_stream` class and 
+aggregation capability with boolean test results using exception handling 
+through the `test_stream` class.
 
-            // Print the result of the operation
-            std::cout << "Result: " << *result << std::endl;
-            return 0;
-        }
-        In this example, we define a binary function add with two input arguments x and y.
-        We then use the custom function object s as an argument in a std::function template.
-        Finally, we print the result of the operation using dereferencing the result variable.
-    Notes
+### OBJECTS & DATA STRUCTURES
 
-        The code assumes that the custom function objects (std::function) have been defined elsewhere in your program.
-        The code uses C-style syntax for defining custom function objects and binary functions.
-        You can modify the template classes, custom function objects, and their usage to suit your specific requirements.
-    Overall, the code provides a good foundation for working with custom function objects and binary functions in C++.
+#### Object: vstream
+------------------
+
+**Description:** 
+A vector-like interface for managing a vector of type `T`. It supports 
+insertion, extraction, and utility functions to manage the underlying 
+vector. The `vstream` class is designed as a stream interface that allows 
+easy manipulation and management of vectors.
+
+**Members:**
+- `vs`: A queue of vectors (`ocf::que<ocf::vec<T>>`) representing the 
+internal container for managing elements.
+  - **size()**: Returns the current number of elements in the vector (no 
+exceptions).
+  - **empty()**: Checks if the vector is empty (no exceptions).
+  - **clear()**: Removes all elements from the vector (no exceptions).
+
+#### Object: sstream
+-----------------
+
+**Description:** 
+A stream-like interface for managing strings (`ocf::str`) and supporting 
+split functionality. The `sstream` class allows users to insert values, 
+extract values, and manage internal splitting.
+
+**Members:**
+- `split`: A boolean flag indicating whether the string should be split.
+- `split_str`: A string used for splitting if `split` is true.
+- `ss`: An internal queue of strings (`ocf::que<ocf::str>`) representing 
+the stream elements.
+
+#### Object: sstream
+-----------------
+
+**Description:** 
+A stream-like interface for managing a single string and supporting split 
+functionality. The `sstream` class allows users to insert values, extract 
+values, and manage internal splitting directly from the constructor or by 
+setting specific flags.
+
+- **set_split(bool isSplit)**: Sets whether the string should be split.
+- **set_split_str(const ocf::str &ssplit)**: Sets a custom string used 
+splitting if `split` is true.
+- **operator<<(const ocf::str &value)**: Inserts a value into the stream. 
+If split, it handles splitting and insertion of substrings.
+
+### FUNCTIONS
+
+#### Function: vstream
+-------------------------------
+
+**Purpose:** 
+A vector-like interface for managing vectors (`ocf::que<ocf::vec<T>>`). 
+This function supports insertion, extraction, and various utility 
+operations on the underlying vector.
+
+**Parameters:**
+- `vs`: A queue of vectors representing the internal container (no 
+parameters).
+
+**Returns:**
+- None
+
+**Notes:** 
+The functions are designed to be noexcept where applicable. All 
+thrown by these methods will not propagate further; instead, they are 
+reported through `std::cerr`.
+
+#### Function: sstream
+-----------------
+
+**Purpose:** 
+A stream-like interface for managing strings (`ocf::str`). This function 
+supports splitting and inserting/extracting strings.
+
+**Parameters:**
+- `ss`: A queue of strings representing the internal stream (no 
+parameters).
+
+**Returns:**
+- None
+
+**Notes:** 
+The functions are designed to be noexcept where applicable. All 
+thrown by these methods will not propagate further; instead, they are 
+reported through `std::cerr`.
+
+#### Function: sstream
+-----------------
+
+**Purpose:** 
+A stream-like interface for managing a single string and supporting 
+splitting directly from the constructor or setting specific flags.
+
+**Parameters:**
+- `split`: A boolean flag indicating whether to split (no parameters).
+- `ssplit`: A custom string used for splitting if `split` is true (no 
+parameters).
+
+**Returns:**
+- None
+
+**Notes:** 
+The functions are designed to be noexcept where applicable. All 
+thrown by these methods will not propagate further; instead, they are 
+reported through `std::cerr`.
+
+#### Function: stream_t
+-----------------
+
+**Purpose:** 
+A template class that wraps a function object and provides safe execution 
+with built-in error handling.
+
+**Parameters:**
+- `T`: The return type of the function object.
+- `immediate_run`: A boolean indicating whether to run the function 
+immediately (no parameters).
+
+**Returns:**
+- None
+
+**Notes:** 
+The methods are designed to be noexcept where applicable. All exceptions 
+thrown by these methods will not propagate further; instead, they are 
+reported through `std::cerr`.
+
+#### Function: stream_tp
+--------------------
+
+**Purpose:** 
+A template class that wraps a unary function (T -> T) and provides safe 
+execution with built-in error handling.
+
+**Parameters:**
+- `T`: The input and output type of the function object.
+
+**Returns:**
+- None
+
+**Notes:** 
+The methods are designed to be noexcept where applicable. All exceptions 
+thrown by these methods will not propagate further; instead, they are 
+reported through `std::cerr`.
+
+#### Function: stream__tp
+----------------------
+
+**Purpose:** 
+A template class that wraps a unary transformation function (T2 -> T1) 
+provides safe execution with built-in error handling.
+
+**Parameters:**
+- `T1`: The return type of the stored function.
+- `T2`: The input type of the stored function.
+
+**Returns:**
+- None
+
+**Notes:** 
+The methods are designed to be noexcept where applicable. All exceptions 
+thrown by these methods will not propagate further; instead, they are 
+reported through `std::cerr`.
+
+#### Function: stream__t_p
+-----------------------
+
+**Purpose:** 
+A template class that wraps a binary function (T2, T3 -> T1) and provides 
+safe execution with built-in error handling.
+
+**Parameters:**
+- `T1`: The return type of the stored function.
+- `T2`: The first input type of the stored function.
+- `T3`: The second input type of the stored function.
+
+**Returns:**
+- None
+
+**Notes:** 
+The methods are designed to be noexcept where applicable. All exceptions 
+thrown by these methods will not propagate further; instead, they are 
+reported through `std::cerr`.
+
+

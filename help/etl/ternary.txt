@@ -1,0 +1,371 @@
+### LIBRARY OVERVIEW
+
+A header file defining the Ternary class for representing ternary logic 
+values. The Ternary class provides methods for setting, getting, and 
+manipulating ternary logic values, which can be true, false, or unknown. 
+The class includes constructors, assignment operators, logical operators, 
+and comparison operators to facilitate the use of ternary logic in C++ 
+programs.
+
+### OBJECTS & DATA STRUCTURES
+
+**Object: Ternary**
+------------------
+
+- value (enum): Internal representation of the ternary logic value: 
+TRUE, or UNKNOWN
+
+### FUNCTIONS
+
+**Function: ternary()
+------------------**
+
+Purpose: Default constructor initializes the value to UNKNOWN. 
+the value based on a boolean input.
+
+Parameters:
+  - None
+
+Returns: None
+
+Notes: This is the default constructor for Ternary class.
+
+---
+
+**Function: ternary(const bool&)
+-------------------------------------**
+
+Purpose: Constructor that initializes the value based on a boolean input. 
+Initializes the value based on another Ternary object.
+
+Parameters:
+  - b (bool): Boolean value to initialize the ternary logic value
+
+Returns: None
+
+Notes: This is a constructor for Ternary class, initializing it with 
+boolean input.
+
+---
+
+**Function: ternary(int)
+-------------------------------------**
+
+Purpose: Constructor that initializes the value based on an integer 
+Initializes the value based on another Ternary object and returns unknown 
+if neither TRUE nor FALSE.
+
+Parameters:
+  - v (int): Integer value to initialize the ternary logic value
+
+Returns: None
+
+Notes: This is a constructor for Ternary class, initializing it with 
+integer input.
+
+---
+
+**Function: ternary(const ternary&)
+-------------------------------------**
+
+Purpose: Constructor that initializes the value based on another Ternary 
+object. Initializes the value based on another Ternary object.
+
+Parameters:
+  - other (ternary): Another Ternary object to initialize the value
+
+Returns: None
+
+Notes: This is a constructor for Ternary class, initializing it with 
+another Ternary object.
+
+---
+
+**Function: reset()
+------------------**
+
+Purpose: Resets the value to UNKNOWN. Sets the value to unknown state.
+
+Parameters: None
+
+Returns: None
+
+Notes: This function resets the value of ternary object to UNKNOWN.
+
+---
+
+**Function: set(const bool&)
+-------------------------------------**
+
+Purpose: Sets the value based on a boolean input. 
+
+Parameters:
+  - b (bool): Boolean value to set the ternary logic value
+
+Returns: None
+
+Notes: Sets the value of Ternary class, true if passed parameter is TRUE 
+else FALSE.
+
+---
+
+**Function: set(ternary&)
+-------------------------------------**
+
+Purpose: Sets the value based on another Ternary object. 
+
+Parameters:
+  - other (ternary): Another ternary object to set the value
+
+Returns: Reference to the assigned ternary object
+
+Notes: This function sets the ternary value with another ternary, using 
+logical OR assignment.
+
+---
+
+**Function: set(int)
+-------------------------------------**
+
+Purpose: Sets the value based on an integer input. 
+
+Parameters:
+  - v (int): Integer value to set the ternary logic value
+
+Returns: None
+
+Notes: Sets the value of Ternary class, sets as FALSE if equal to 0, TRUE 
+if equal to 1 else UNKNOWN.
+
+---
+
+**Function: get()
+------------------**
+
+Purpose: Gets the boolean representation of the ternary logic value. 
+
+Parameters: None
+
+Returns: True if value is TRUE, false otherwise
+
+Notes: The function returns a boolean indicating whether the Ternary 
+object's internal state represents true or not.
+
+---
+
+**Function: operator=(const bool&)
+-------------------------------------**
+
+Purpose: Assignment operator to set the value based on a boolean input. 
+
+Parameters:
+  - b (bool): Boolean value to assign to ternary logic value
+
+Returns: None
+
+Notes: This function assigns the ternary object's internal state with 
+given boolean.
+
+---
+
+**Function: operator=(const ternary&)
+-------------------------------------**
+
+Purpose: Assignment operator to set the value based on another Ternary 
+object. 
+
+Parameters:
+  - other (ternary): Another ternary object to assign to ternary logic 
+value
+
+Returns: Reference to the assigned ternary object
+
+Notes: This function assigns the ternary value with another Ternary, 
+logical AND assignment.
+
+---
+
+**Function: operator==(const bool&)
+-------------------------------------**
+
+Purpose: Equality operator to compare with a boolean value. 
+
+Parameters:
+  - v (bool): Boolean value to compare with ternary logic value
+
+Returns: True if values are equal, false otherwise
+
+Notes: This function checks whether the Ternary object's internal state 
+equivalent to given boolean.
+
+---
+
+**Function: operator==(const ternary&)
+-------------------------------------**
+
+Purpose: Equality operator to compare with another Ternary object. 
+
+Parameters:
+  - other (ternary): Another ternary object to compare with ternary logic 
+value
+
+Returns: True if values are equal, false otherwise
+
+Notes: This function checks whether the current Ternary object is 
+equivalent to given Ternary.
+
+---
+
+**Function: operator!=(const bool&)
+-------------------------------------**
+
+Purpose: Inequality operator to compare with a boolean value. 
+
+Parameters:
+  - v (bool): Boolean value to compare with ternary logic value
+
+Returns: True if values are not equal, false otherwise
+
+Notes: This function checks whether the Ternary object's internal state 
+not equivalent to given boolean.
+
+---
+
+**Function: operator!=(const ternary&)
+-------------------------------------**
+
+Purpose: Inequality operator to compare with another Ternary object. 
+
+Parameters:
+  - other (ternary): Another ternary object to compare with ternary logic 
+value
+
+Returns: True if values are not equal, false otherwise
+
+Notes: This function checks whether the current Ternary object is not 
+equivalent to given Ternary.
+
+---
+
+**Function: operator!()
+-------------------------------------**
+
+Purpose: Logical NOT operator. 
+
+Parameters: None
+
+Returns: The negation of the current ternary logic value
+
+Notes: The function returns a new Ternary with logical NOT of current 
+state, FALSE if true else TRUE and vice versa for UNKNOWN.
+
+---
+
+**Function: operator&&(const ternary&)
+-------------------------------------**
+
+Purpose: Logical AND operator. 
+
+Parameters:
+  - other (ternary): Another ternary object to perform the AND operation 
+with
+
+Returns: The result of the logical AND operation
+
+Notes: This function returns ternary logic value resulting from AND 
+operation, TRUE if both are true, UNKNOWN otherwise.
+
+---
+
+**Function: operator||(const ternary&)
+-------------------------------------**
+
+Purpose: Logical OR operator. 
+
+Parameters:
+  - other (ternary): Another ternary object to perform the OR operation 
+with
+
+Returns: The result of the logical OR operation
+
+Notes: This function returns ternary logic value resulting from OR 
+operation, TRUE if either or both are true, UNKNOWN otherwise.
+
+---
+
+**Function: operator^(const ternary&)
+-------------------------------------**
+
+Purpose: Logical XOR operator. 
+
+Parameters:
+  - other (ternary): Another ternary object to perform the XOR operation 
+with
+
+Returns: The result of the logical XOR operation
+
+Notes: This function returns ternary logic value resulting from XOR 
+operation, FALSE if both are equal and UNKNOWN otherwise.
+
+---
+
+**Function: operator|=(const ternary&)
+-------------------------------------**
+
+Purpose: Assignment operator for logical OR operation. 
+
+Parameters:
+  - other (ternary): Another Ternary object to assign with the logical OR 
+operation
+
+Returns: None
+
+Notes: This function performs a logical OR assignment, updates value 
+on the result.
+
+---
+
+**Function: operator&=(const ternary&)
+-------------------------------------**
+
+Purpose: Assignment operator for logical AND operation. 
+
+Parameters:
+  - other (ternary): Another Ternary object to assign with the logical 
+operation
+
+Returns: Reference to the assigned Ternary object
+
+Notes: This function performs a logical AND assignment, updates value 
+based on the result.
+
+---
+
+**Function: operator^=(const ternary&)
+-------------------------------------**
+
+Purpose: Assignment operator for logical XOR operation. 
+
+Parameters:
+  - other (ternary): Another Ternary object to assign with the logical 
+operation
+
+Returns: None
+
+Notes: This function performs a logical XOR assignment, updates value 
+based on the result.
+
+---
+
+**Function: ~ternary()
+------------------**
+
+Purpose: Destructor. 
+
+Parameters: None
+
+Returns: None
+
+Notes: Default destructor for ternary class.
+
+

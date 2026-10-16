@@ -1,0 +1,124 @@
+# LIBRARY OVERVIEW
+================
+
+This library provides two data structures, `enum_decimal` and 
+`enum_ascii`, designed to manage character and digit counts. 
+The `enum_decimal` is specifically tailored for digits from 
+'0' to '9', while the `enum_ascii` manages characters from 
+space (' ') to tilde ('~').
+
+# OBJECTS & DATA STRUCTURES
+=============================
+
+## Object: enum_decimal
+-----------------------
+
+**Description**: Represents a container for counting digit 
+occurrences, focusing on numbers ranging from 0 to 9.
+It includes methods for incrementing counts of digits and 
+checking if any character in the given string is within its 
+supported range.
+
+**Members**:
+- `hash_numbers (ocf::vec<size_t>)`: 
+Stores count information for each digit ('0' to '9').
+
+## Object: enum_ascii
+----------------------
+
+**Description**: 
+Represents a container for counting characters 
+ranging from space (' ') to tilde ('~'). 
+It includes methods for incrementing counts of 
+characters and checking if any character is within its range.
+
+**Members**:
+- `count (ocf::vec<size_t>)`: 
+Stores count information for each character in the alphabet, 
+with indices corresponding to ASCII values.
+
+# FUNCTIONS
+============
+
+## Function: operator<<(const char &c)
+------------------------------------
+
+**Purpose**: 
+Increments the count of a given digit ('0'-'9').
+
+**Parameters**:
+- `c (char)`: 
+The digit or character to be counted. 
+This function only accepts digits from '0' to '9'.
+
+**Returns**: 
+No value is returned, but it modifies internal 
+storage based on whether the input character is valid and 
+within its range.
+
+## Function: operator<<(const ocf::str &s)
+---------------------------------------
+
+**Purpose**: 
+Increments counts for each character in a string.
+Only applies to digits ('0'-'9').
+
+**Parameters**:
+- `s (ocf::str)`: 
+A string containing characters whose digit or 
+character occurrences will be incremented.
+
+**Returns**: No value is returned, but the function modifies 
+its internal storage based on the characters present within 
+the input string.
+
+## Function: operator[](const char &c)
+------------------------------------
+
+**Purpose**: Returns the count of a given character (' ' to '~').
+
+**Parameters**:
+- `c (char)`: The character for which the count is requested.
+This can be any valid character from space (' ') to tilde ('~').
+
+**Returns**: The count of occurrences of the specified character, 
+or 0 if it's not within the supported range.
+
+## Function: contains(const char &c)
+----------------------------------
+
+**Purpose**: 
+Checks whether a given character (' ' to '~') 
+is present in the counts. 
+
+**Parameters**:
+- `c (char)`: 
+The character to check for presence in the counts.
+
+**Returns**: 
+A boolean value indicating whether the specified 
+character counted within its supported range.
+
+## Function: operator==(const enum_ascii &other)
+------------------------------------------------
+
+**Purpose**: 
+Compares two `enum_ascii` objects by comparing 
+their count vectors.
+
+**Parameters**:
+- `other (enum_ascii)`: The object to compare against.
+
+**Returns**: 
+A boolean indicating whether the counts in 
+both objects are identical.
+
+Notes:
+
+- For `enum_decimal`, it only supports digits from '0' to '9'.
+- For `enum_ascii`, it includes all printable ASCII characters.
+- Invalid or non-supported inputs (like alphabetic letters) 
+  will cause errors and should be handled appropriately.
+- The library assumes that the input strings do not contain 
+  invalid characters outside its scope.
+

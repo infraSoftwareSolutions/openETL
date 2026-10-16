@@ -1,0 +1,294 @@
+### LIBRARY OVERVIEW
+
+This library provides a dynamic list container (class `list`) that 
+supports indexed access, insertion, removal, searching, and updating of 
+elements using a contiguous storage model. The class can be constructed 
+with a predefined capacity or size based on the input data.
+
+### OBJECTS & DATA STRUCTURES
+
+#### Object: etl::list<T>
+------------------
+**Description:** Represents a dynamic array-style list container that 
+supports operations like adding, removing, searching, and updating 
+elements in a contiguous storage model. 
+
+**Members:**
+  - `arr`: Pointer to an internal array of type T.
+  - `size_set`: A boolean flag indicating whether the list has been fully 
+initialized with its size.
+  - `max_size`: The maximum number of elements that can be stored 
+(defaults to `-1` for a dynamically allocated list).
+  - `length`: The current number of stored elements.
+
+### FUNCTIONS
+
+#### Function: etl::list<T>::list()
+-------------------------------------
+**Purpose:** Constructs an empty dynamic list with no fixed capacity.
+
+**Parameters:** None
+
+**Returns:** None
+
+**Notes:** Initializes the list as empty and sets both max_size and 
+to 0. The `size_set` flag is set to false, indicating that the size has 
+not been fully initialized.
+
+#### Function: etl::list<T>::list(size_t s)
+-----------------------------------------
+**Purpose:** Constructs a list with a predefined capacity.
+
+**Parameters:**
+  - `s`: A non-negative integer representing the initial capacity of the 
+list. If less than or equal to zero, an error message is printed and then 
+`-1` is used as the new value for s.
+
+**Returns:** None
+
+**Notes:** Initializes the list with the specified size by allocating 
+memory for max_size elements. The `size_set` flag is set to false, 
+indicating that the size has not been fully initialized. If a negative 
+number was provided, it is converted to its absolute value before 
+allocation.
+
+#### Function: etl::list<T>::list(int s)
+---------------------------------------
+**Purpose:** Constructs a list with a predefined capacity based on an 
+integer value (converted to `size_t`).
+
+**Parameters:**
+  - `s`: A non-negative integer representing the initial capacity of the 
+list. If less than or equal to zero, an error message is printed and then 
+`-1` is used as the new value for s.
+
+**Returns:** None
+
+**Notes:** Initializes the list with the specified size by allocating 
+memory for max_size elements (converted from int to `size_t`). The 
+`size_set` flag is set to false, indicating that the size has not been 
+fully initialized. If a negative number was provided, it is converted to 
+its absolute value before allocation.
+
+#### Function: etl::list<T>::list(const std::vector<T> &v)
+---------------------------------------------------------
+**Purpose:** Constructs an instance of `etl::list` from another vector.
+
+**Parameters:**
+  - `v`: A non-empty vector of type T that the list will be initialized 
+with.
+
+**Returns:** None
+
+**Notes:** Initializes the list to contain elements copied from v. The 
+list's size is set to the number of elements in v, and max_size is 
+adjusted accordingly (if needed). The `size_set` flag is set to false, 
+indicating that the size has not been fully initialized.
+
+#### Function: etl::list<T>::list(std::initializer_list<T> &&list)
+-----------------------------------------------------------------
+**Purpose:** Constructs an instance of `etl::list` from a 
+expression.
+
+**Parameters:**
+  - `list`: A non-empty initializer list containing elements that the 
+will be initialized with.
+
+**Returns:** None
+
+**Notes:** Initializes the list to contain elements copied from the list. 
+The list's size is set to the number of elements in list, and max_size is 
+adjusted accordingly (if needed). The `size_set` flag is set to false, 
+indicating that the size has not been fully initialized.
+
+#### Function: etl::list<T>::set(const std::vector<T> &v)
+---------------------------------------------------------
+**Purpose:** Sets the contents of a dynamic list from another vector 
+without changing its capacity.
+
+**Parameters:**
+  - `v`: A non-empty vector containing elements to be copied into the 
+list. The original vector is not modified.
+
+**Returns:** None
+
+**Notes:** Initializes the list's content to contain elements from v, but 
+does not change max_size (the maximum number of elements). The list's 
+is set to the number of elements in v, and `size_set` is set to false, 
+indicating that the size has not been fully initialized.
+
+#### Function: etl::list<T>::set(size_t s)
+--------------------------------------------------
+**Purpose:** Sets the contents of a dynamic list from another vector 
+setting its capacity. The new capacity may be less than or greater than 
+the current one (but must still be non-negative).
+
+**Parameters:**
+  - `s`: A non-negative integer representing the new capacity for the 
+list.
+
+**Returns:** None
+
+**Notes:** Initializes the list's content to contain elements from a 
+vector with the specified size, adjusting max_size accordingly. If s is 
+less than or equal to zero, an error message will be printed and then 
+used as the new value for s. The `size_set` flag is set to false, 
+indicating that the size has not been fully initialized.
+
+#### Function: etl::list<T>::set(int s)
+-------------------------------------------------
+**Purpose:** Sets the contents of a dynamic list from another vector 
+setting its capacity. The new capacity may be less than or greater than 
+the current one (but must still be non-negative).
+
+**Parameters:**
+  - `s`: A non-negative integer representing the new capacity for the 
+list.
+
+**Returns:** None
+
+**Notes:** Initializes the list's content to contain elements from a 
+vector with the specified size, adjusting max_size accordingly. If s is 
+less than or equal to zero, an error message will be printed and then 
+used as the new value for s. The `size_set` flag is set to false, 
+indicating that the size has not been fully initialized.
+
+#### Function: etl::list<T>::empty() const
+-------------------------------------------
+**Purpose:** Checks whether the list is empty (no elements stored).
+
+**Parameters:** None
+
+**Returns:** A boolean indicating whether the list contains no elements. 
+Returns `true` if length is 0, otherwise returns `false`.
+
+#### Function: etl::list<T>::full() const
+-------------------------------------------
+**Purpose:** Checks whether the list has reached its capacity.
+
+**Parameters:** None
+
+**Returns:** A boolean indicating whether the current list size equals 
+max_size (the maximum number of elements it can contain). If max_size is 
+`-1` (indicating a dynamically allocated list), an error message will be 
+printed, and then `true` will be returned.
+
+#### Function: etl::list<T>::size() const
+-------------------------------------------
+**Purpose:** Returns the current number of stored elements in the list.
+
+**Parameters:** None
+
+**Returns:** The length of arr (number of stored elements).
+
+#### Function: etl::list<T>::capacity() const
+-------------------------------------------
+**Purpose:** Returns the maximum number of elements that can be stored in 
+the list.
+
+**Parameters:** None
+
+**Returns:** max_size, representing the current capacity of the list.
+
+#### Function: etl::list<T>::insert(int pos, T element)
+-------------------------------------------------------
+**Purpose:** Inserts an element at a specified position.
+
+**Parameters:**
+  - `pos`: A non-negative integer index where to insert the new element.
+  - `element`: The value to be inserted into the list.
+
+**Returns:** None
+
+**Notes:** Throws std::length_error if pos is larger than length, or 
+throws std::out_of_range if pos is negative. Adjusts arr and adjusts 
+length accordingly.
+
+#### Function: etl::list<T>::remove(int pos)
+-------------------------------------------
+**Purpose:** Removes an element at a specified position from the list.
+
+**Parameters:**
+  - `pos`: A non-negative integer index of the element to be removed.
+
+**Returns:** None
+
+**Notes:** Throws std::invalid_argument if pos is negative, or throws 
+std::out_of_range if pos is larger than length. Adjusts arr and adjusts 
+length accordingly by shifting elements from higher indexes down one 
+position each.
+
+#### Function: etl::list<T>::search(T element) const
+-----------------------------------------------------
+**Purpose:** Searches for the first occurrence of an element in the list.
+
+**Parameters:**
+  - `element`: The value to locate within the list.
+
+**Returns:** The index of the found element, or `-1` if it was not found. 
+Returns 0-based index.
+
+#### Function: etl::list<T>::push_back(T element)
+-------------------------------------------------
+**Purpose:** Appends an element to the end of the list.
+
+**Parameters:**
+  - `element`: The value to append to the end of the list.
+
+**Returns:** None
+
+**Notes:** Throws std::invalid_argument if the list is full. Adjusts arr 
+and adjusts length accordingly by allocating space for a new element.
+
+#### Function: etl::list<T>::inseratNoDuplicate(int pos, T element)
+-----------------------------------------------------------------
+**Purpose:** Inserts an element at specified position without duplicating 
+already existing elements.
+
+**Parameters:**
+  - `pos`: A non-negative integer index where to insert the new element.
+  - `element`: The value to be inserted into the list.
+
+**Returns:** None
+
+**Notes:** Throws std::out_of_range if pos is negative, and inserts only 
+if the element does not already exist at that position (determined by 
+search).
+
+#### Function: etl::list<T>::update(int pos, T element)
+-------------------------------------------------------
+**Purpose:** Updates the value stored at a specified position in the list.
+
+**Parameters:**
+  - `pos`: A non-negative integer index of the element to be updated.
+  - `element`: The replacement value for the current element at that 
+position.
+
+**Returns:** None
+
+**Notes:** Throws std::out_of_range if pos is negative or out of bounds 
+(greater than length). Updates arr and adjusts length accordingly.
+
+#### Function: etl::list<T>::get(int pos) const
+-------------------------------------------------
+**Purpose:** Retrieves the value stored at a specified position in the 
+list.
+
+**Parameters:**
+  - `pos`: A non-negative integer index to retrieve the element from.
+
+**Returns:** The value (element type T) stored at that position. Throws 
+std::out_of_range if pos is negative or out of bounds.
+
+#### Function: etl::list<T>::clear()
+---------------------------------------
+**Purpose:** Clears all stored elements from the list.
+
+**Parameters:** None
+
+**Returns:** None
+
+**Notes:** Sets length to 0, effectively clearing all stored elements 
+without deallocating memory. Does not change max_size (current capacity).
+
+

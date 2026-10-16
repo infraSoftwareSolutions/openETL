@@ -1,0 +1,275 @@
+### LIBRARY OVERVIEW
+
+The `etl::que` library provides a queue implementation based on a singly 
+linked list. It supports basic operations such as enqueuing (inserting 
+elements at the rear), dequeuing (removing front elements), checking if 
+the queue is empty, and retrieving the front or rear items.
+
+### OBJECTS & DATA STRUCTURES
+
+#### Object: que<T>
+------------------
+Description of what this object represents and its purpose:
+- Represents a singly linked list-based queue.
+Members:
+  - `front_ptr`: Pointer to the first node in the queue (type: `node*`)
+  - `rear_ptr`: Pointer to the last node in the queue (type: `node*`)
+  - `length`: Number of elements currently in the queue (type: `size_t`)
+
+#### Object: node
+--------------
+Description of what this object represents and its purpose:
+- Represents a single element in the queue.
+Members:
+  - `item`: The value stored in the node (type: `T`)
+  - `next`: Pointer to the next node (type: `node*`)
+
+### FUNCTIONS
+
+#### Function: que()
+-------------------------------------
+Purpose: Constructs an empty queue. Initializes pointers and length to 
+default values.
+
+##### Parameters:
+- None
+##### Returns:
+- void
+##### Notes:
+- No return value, constructs a new empty queue object.
+- Sets all pointers (`front_ptr`, `rear_ptr`) to null, and initializes 
+length to zero.
+
+#### Function: que(T element)
+-------------------------------------
+Purpose: Constructs an empty queue with one element at the rear. 
+Initializes the first node and its next pointer to point to nullptr.
+
+##### Parameters:
+- `element`: The value to enqueue (type: `T`)
+##### Returns:
+- void
+##### Notes:
+- No return value, constructs a new queue object containing only the 
+element.
+- Sets `front_ptr` and `rear_ptr` to point to this node.
+
+#### Function: que(std::initializer_list<T> list)
+--------------------------------------
+Purpose: Constructs a queue from an initializer list. Iterates through 
+list and enqueues each element in turn.
+
+##### Parameters:
+- `list`: An initializer list of elements (type: 
+`std::initializer_list<T>`)
+##### Returns:
+- void
+##### Notes:
+- No return value, constructs a new queue object with all elements 
+dequeued from the provided list.
+- Iterates through each element and calls `enque` for that element.
+
+#### Function: is_empty()
+-------------------------------------
+Purpose: Checks whether the queue is empty by checking if the rear 
+points to nullptr. Returns true only if there are no nodes in the queue, 
+otherwise false.
+
+##### Parameters:
+- None
+##### Returns:
+- `bool`: True if the queue is empty, False otherwise.
+##### Notes:
+- This function simply returns the result of comparing `rear_ptr` with 
+null.
+- It does not return a value or alter state; it only checks emptiness and 
+returns a boolean indicating whether the queue contains no elements.
+
+#### Function: enque(T element)
+-------------------------------------
+Purpose: Adds an element to the rear of the queue. Allocates a new node, 
+sets its item to `element`, links it into the list maintained by 
+and rear_ptr, and increments the length.
+
+##### Parameters:
+- `element`: The value to enqueue (type: `T`)
+##### Returns:
+- void
+##### Notes:
+- No return value, adds the given element at the end of the queue.
+- Allocates a new node, sets its item to `element`, links it with 
+rear_ptr's next and updates rear_ptr to point to this newly allocated 
+node.
+
+#### Function: deque()
+-------------------------------------
+Purpose: Removes an element from the front of the queue. Throws an 
+exception if the queue is empty or removes all nodes if no elements are 
+present.
+
+##### Parameters:
+- None
+##### Returns:
+- void
+##### Notes:
+- This function first checks if the queue is empty.
+- If it's not, it updates `front_ptr` to point to its next node and 
+deletes the current front_ptr node. Decrements length by one.
+- If the queue becomes empty after dequeuing, both pointers (`front_ptr`, 
+`rear_ptr`) are set to null.
+
+#### Function: get_front()
+-------------------------------------
+Purpose: Retrieves the value stored at the front of the queue without 
+removing it. Throws an exception if the queue is empty.
+
+##### Parameters:
+- None
+##### Returns:
+- `T`: The value at the front of the queue.
+##### Notes:
+- This function checks for emptiness before returning a front item, to 
+avoid runtime errors.
+- It simply returns the item stored in the node pointed by `front_ptr`.
+
+#### Function: get_rear()
+-------------------------------------
+Purpose: Retrieves the value stored at the rear of the queue without 
+removing it. Throws an exception if the queue is empty.
+
+##### Parameters:
+- None
+##### Returns:
+- `T`: The value at the rear of the queue.
+##### Notes:
+- Similar to `get_front()`, this function checks for emptiness and 
+the item in `rear_ptr`.
+
+#### Function: clear()
+-------------------------------------
+Purpose: Removes all elements from the queue. Deletes each node and sets 
+both front_ptr and rear_ptr to null.
+
+##### Parameters:
+- None
+##### Returns:
+- void
+##### Notes:
+- This function iterates through the linked list, deleting each node as 
+goes.
+- It resets pointers `front_ptr` and `rear_ptr` to null after all nodes 
+have been freed, setting the queue state ready for new elements to be 
+added.
+
+#### Function: operator=()
+-------------------------------------
+Purpose: Assigns a vector or string to the queue. Converts the input 
+iterable (vector or string) into an equivalent sequence of enque calls.
+
+##### Parameters:
+- `elements`: A std::vector<T> or std::string object containing elements.
+##### Returns:
+- void
+##### Notes:
+- This function first clears the existing contents of the queue.
+- It then processes all elements in the vector or string and calls 
+for each element, effectively re-populating the queue with new data.
+
+#### Function: operator<<(std::vector<T> &elements)
+-------------------------------------
+Purpose: Prepends an element from a std::vector to the front of the 
+Equivalent to enque(elements[elements.size() - 1]), where elements is 
+popped off at the end after being added.
+
+##### Parameters:
+- `elements`: A vector containing elements (type: `std::vector<T>`)
+##### Returns:
+- void
+##### Notes:
+- This function dequeues from the provided vector and enqueues its last 
+element.
+- It maintains the state of both objects, only clearing the queue when 
+assignment is done.
+
+#### Function: operator<<(std::string &s)
+-------------------------------------
+Purpose: Prepends an element from a string to the front of the queue. 
+Equivalent to enque(s[s.size() - 1]), where s is popped off at the end 
+after being added.
+
+##### Parameters:
+- `s`: A string containing elements (type: `std::string`)
+##### Returns:
+- void
+##### Notes:
+- Similar to operator<< for std::vector<T>, this function dequeues and 
+enqueues from a given string.
+- It ensures all operations are performed correctly with respect to the 
+types of data being manipulated.
+
+#### Function: operator>>(T &element)
+-------------------------------------
+Purpose: Pops an element off the front of the queue into `element`. 
+Equivalent to deque() followed by dereferencing of front_ptr, then 
+assigning it back to T's value.
+
+##### Parameters:
+- `element`: A reference to a variable that will hold the dequeued 
+(type: `T`)
+##### Returns:
+- void
+##### Notes:
+- This function removes and assigns the item at the front (`front_ptr`) 
+the given parameter.
+- It ensures that after removing an element, it is reassigned properly 
+into the provided T.
+
+#### Function: operator>>(std::vector<T> &elements)
+-------------------------------------
+Purpose: Pops multiple elements from the front of the queue into 
+`elements`. Equivalent to deque() followed by popping off each node's 
+and pushing them onto the given vector.
+
+##### Parameters:
+- `elements`: A vector containing elements (type: `std::vector<T>`)
+##### Returns:
+- void
+##### Notes:
+- This function repeatedly calls `deque()` until there are no more 
+elements in the queue.
+- It then pushes all dequeued items into the provided vector, ensuring 
+that the contents of the queue are correctly populated.
+
+#### Function: operator>>(std::string &s)
+-------------------------------------
+Purpose: Pops a character from the front of the queue and appends it to 
+`s`. Equivalent to popping off each node's item and appending characters 
+in order until all nodes are dequeued.
+
+##### Parameters:
+- `s`: A string containing elements (type: `std::string`)
+##### Returns:
+- void
+##### Notes:
+- This function repeatedly calls `deque()` and appends the popped 
+character to a given string.
+- It ensures that after each removal, the remaining characters in the 
+queue are concatenated into the provided string.
+
+#### Function: ~que()
+-------------------------------------
+Purpose: Destructor. Clears all nodes from the queue by iterating through 
+them and deleting each node individually, resetting pointers `front_ptr` 
+and `rear_ptr` to null.
+
+##### Parameters:
+- None
+##### Returns:
+- void
+##### Notes:
+- This destructor calls clear() which iterates over and deallocates all 
+nodes in the queue.
+- It then resets both pointers (`front_ptr`, `rear_ptr`) to nullptr, 
+effectively cleaning up any state left by the queue.
+
+

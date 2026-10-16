@@ -1,0 +1,392 @@
+### LIBRARY OVERVIEW
+
+This library/file contains a collection of various functions and 
+related to strings, vectors, matrices, mathematical operations, and 
+manipulations. It is designed for use in C++ applications where these 
+functionalities are required.
+
+### OBJECTS & DATA STRUCTURES
+
+#### ocf::str (Object)
+- **Description:** Represents a sequence of characters, similar to a 
+string.
+- **Members:**
+  - `std::vector<char>` content: Stores the actual character data in the 
+object.
+
+#### ocf::vec<T> (Object)
+- **Description:** A templated vector that can hold elements of any type 
+T.
+- **Members:**
+  - `std::vector<T>` container: Holds the elements as a vector for 
+memory management and indexing.
+
+### FUNCTIONS
+
+#### to_hash (Function)
+- **Purpose:** Converts an input string into a hash value using a 
+algorithm.
+- **Parameters:**
+  - `const std::string& s`: Input string to be hashed.
+
+**Returns:** The resulting integer hash value of the input string.
+- **Notes:** None
+
+```cpp
+size_t to_hash(const std::string& s) {
+    // Implementation details omitted for brevity
+}
+```
+
+#### reverse (Function)
+- **Purpose:** Reverses a vector containing elements of type T.
+- **Parameters:**
+  - `const ocf::vec<T>& input`: Input vector.
+
+**Returns:** A new vector with the elements in reverse order, maintaining 
+the same size and content as the input vector. 
+
+```cpp
+template <typename T>
+ocf::vec<T> reverse(const ocf::vec<T>& input) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### reverse_2d (Function)
+- **Purpose:** Reverses a 2D vector, i.e., a vector of vectors.
+- **Parameters:**
+  - `const ocf::vec<ocf::vec<T>>& input`: Input 2D vector.
+
+**Returns:** A new 2D vector with the elements in reverse order. 
+
+```cpp
+template <typename T>
+ocf::vec<ocf::vec<T>>& reverse_2d(const ocf::vec<ocf::vec<T>>& input) 
+noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### FibonacciSequence (Function)
+- **Purpose:** Generates the Fibonacci sequence up to a specified number 
+of terms.
+- **Parameters:**
+  - `uint8_t terms`: Number of terms in the sequence.
+
+**Returns:** A vector containing the Fibonacci numbers from F(0) to F(n), 
+with (terms + 1) elements.
+
+```cpp
+template <typename T>
+ocf::vec<size_t> FibonacciSequence(uint8_t terms) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### end (Function)
+- **Purpose:** Returns the index of the last element in a vector.
+- **Parameters:**
+  - `const ocf::vec<T>& input`: Input vector.
+
+**Returns:** Index of the last element (size - 1) or 0 if the vector is 
+empty.
+
+```cpp
+template <typename T>
+size_t end(const ocf::vec<T>& input) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### isEqual (Function)
+- **Purpose:** Compares two vectors to check if they are identical.
+- **Parameters:**
+  - `const ocf::vec<T>& in1`: First vector.
+  - `const ocf::vec<T>& in2`: Second vector.
+
+**Returns:** True if both vectors have the same size and elements; false 
+otherwise.
+
+```cpp
+template <typename T>
+bool isEqual(const ocf::vec<T>& in1, const ocf::vec<T>& in2) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### sub (Function)
+- **Purpose:** Creates a new vector containing only the elements from 
+start to end indices of the input vector.
+- **Parameters:**
+  - `const ocf::vec<T>& input`: Input vector.
+  - `size_t start`: Start index.
+  - `size_t end`: End index.
+
+**Returns:** A new vector with elements from start to end, inclusive.
+
+```cpp
+template <typename T>
+ocf::vec<T> sub(const ocf::vec<T>& input, size_t start, size_t end) 
+noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### sub_2d (Function)
+- **Purpose:** Extracts a submatrix from a 2D vector based on specified 
+index ranges.
+- **Parameters:**
+  - `const ocf::vec<ocf::vec<T>>& input`: Input 2D vector.
+  - const std::unordered_map<size_t, size_t>& indexs: Map specifying 
+and end indices for each dimension.
+
+**Returns:** A new 2D vector containing the elements from specified 
+ranges.
+
+```cpp
+template <typename T>
+ocf::vec<ocf::vec<T>> sub_2d(const ocf::vec<ocf::vec<T>>& input, const 
+std::unordered_map<size_t, size_t>& indexs) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### erase_row (Function)
+- **Purpose:** Removes a row from the 2D vector.
+- **Parameters:**
+  - `const ocf::vec<ocf::vec<T>>& input`: Input 2D vector.
+  - `size_t index`: Index of the row to remove.
+
+**Returns:** A new 2D vector with the specified row removed.
+
+```cpp
+template <typename T>
+ocf::vec<ocf::vec<T>> erase_row(const ocf::vec<ocf::vec<T>>& input, 
+index) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### erase_column (Function)
+- **Purpose:** Removes a specified column from the 2D vector.
+- **Parameters:**
+  - `const ocf::vec<ocf::vec<T>>& input`: Input 2D vector.
+  - `size_t index`: Index of the column to remove.
+
+**Returns:** A new 2D vector with the specified column removed from each 
+row. 
+
+```cpp
+template <typename T>
+ocf::vec<ocf::vec<T>> erase_column(const ocf::vec<ocf::vec<T>>& input, 
+size_t index) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### reverse_3d (Function)
+- **Purpose:** Reverses a 3D vector.
+- **Parameters:**
+  - `const ocf::vec<ocf::vec<ocf::vec<T>>>& input`: Input 3D vector.
+
+**Returns:** A new 3D vector with the elements in reverse order. 
+
+```cpp
+template <typename T>
+ocf::vec<ocf::vec<ocf::vec<T>>>& reverse_3d(const 
+ocf::vec<ocf::vec<ocf::vec<T>>>& input) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### vector_cast (Function)
+- **Purpose:** Casts a vector of one type to another type.
+- **Parameters:**
+  - `const ocf::vec<T2>& input`: Input vector of type T2.
+
+**Returns:** A new vector of type T1 containing the elements cast from T2.
+
+```cpp
+template <typename T1, typename T2>
+ocf::vec<T1> vector_cast(const ocf::vec<T2>& input) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### remove (Function)
+- **Purpose:** Removes a character or specified substring from the string.
+- **Parameters:**
+  - `const ocf::str& input`: Input string.
+  - char rmch: Character to be removed.
+  
+**Returns:** A new string with all instances of the specified character 
+removed.
+
+```cpp
+ocf::str remove(const ocf::str& input, char rmch) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### standard_word (Function)
+- **Purpose:** Converts a given string to Title Case.
+- **Parameters:**
+  - `const ocf::str& s`: Input string.
+
+**Returns:** A new ocf::str object with the input string formatted in 
+Title Case. 
+
+```cpp
+ocf::str standard_word(const ocf::str& s) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### where (Function)
+- **Purpose:** Finds all indices of a specific character within a string.
+- **Parameters:**
+  - `const ocf::str& input`: Input string.
+  - char c: Character to search for.
+
+**Returns:** A vector containing the indices where the specified 
+is found, or an empty vector if the character is not found. 
+
+```cpp
+ocf::vec<size_t> where(const ocf::str& input, const char c) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### ascii_table (Function)
+- **Purpose:** Prints a partial ASCII table to the standard output.
+  
+**Returns:** Void.
+
+```cpp
+inline void ascii_table() noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### sum_chars (Function)
+- **Purpose:** Calculates the sum of ASCII/Character Code values within a 
+string.
+- **Parameters:**
+  - `const ocf::str& s`: Input string.
+
+**Returns:** The total sum of ASCII/Character Code values in the input 
+string. 
+
+```cpp
+size_t sum_chars(const ocf::str& s, size_t start = 0) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### mult_chars (Function)
+- **Purpose:** Calculates the product of ASCII/Character Code values 
+within a string.
+- **Parameters:**
+  - `const ocf::str& s`: Input string.
+
+**Returns:** The total product of ASCII/Character Code values in the 
+string. 
+
+```cpp
+size_t mult_chars(const ocf::str& s, size_t start = 1) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### shift_char (Function)
+- **Purpose:** Shifts each character within a string by a specified 
+amount.
+- **Parameters:**
+  - `char c`: Input character.
+  - int8_t shift: Number of positions to shift the input character.
+
+**Returns:** A new string with all characters shifted by the specified 
+amount. 
+
+```cpp
+char shift_char(char c, int8_t shift) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### shift_string (Function)
+- **Purpose:** Shifts each character within a string by a specified 
+amount.
+- **Parameters:**
+  - `const ocf::str& input`: Input string.
+
+**Returns:** A new string with all characters shifted by the specified 
+amount. 
+
+```cpp
+ocf::str& shift_string(const ocf::str& input, int shift) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### unshift_string (Function)
+- **Purpose:** Unshifts each character within a string by a specified 
+amount.
+- **Parameters:**
+  - `const ocf::str& input`: Input string.
+
+**Returns:** A new string with all characters unshifted by the specified 
+amount. 
+
+```cpp
+ocf::str& unshift_string(const ocf::str& input, int8_t shift) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### to_lower (Function)
+- **Purpose:** Converts each character within a string to lowercase.
+- **Parameters:**
+  - `const ocf::str& s`: Input string.
+
+**Returns:** A new ocf::str object with all characters in the input 
+converted to lowercase. 
+
+```cpp
+ocf::str& to_lower(const ocf::str& s) noexcept {
+    // Implementation details omitted for brevity
+}
+```
+
+#### is_valid_int (Function)
+- **Purpose:** Checks if a string represents a valid integer within a 
+specific numbering system.
+- **Parameters:**
+  - `const ocf::str& input`: Input string.
+
+**Returns:** True if the input string is a valid integer; false 
+
+
+```cpp
+bool is_valid_int(const ocf::str& input, char numSystem = 'd') {
+    // Implementation details omitted for brevity
+}
+```
+
+#### is_valid_float (Function)
+- **Purpose:** Checks if a string represents a valid floating-point 
+within a specific numbering system.
+- **Parameters:**
+  - `const ocf::str& input`: Input string.
+
+**Returns:** True if the input string is a valid float; false otherwise. 
+
+```cpp
+bool is_valid_float(const ocf::str& input, char numSystem = 'd') noexcept 
+{
+    // Implementation details omitted for brevity
+}
+```
+
+

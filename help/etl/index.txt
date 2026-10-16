@@ -1,0 +1,607 @@
+### LIBRARY OVERVIEW
+
+This library contains a class named `index` which is designed to 
+an index with an explicit validity state. The primary purpose of this 
+library is to provide a robust and safe way to handle indices, ensuring 
+they remain valid before use, thus avoiding the pitfalls associated with 
+uninitialized or invalid values.
+
+### OBJECTS & DATA STRUCTURES
+
+#### Object: index
+**Description:** This object represents a size-based index that can be 
+marked as valid or invalid. It also provides methods for setting the 
+index's value and checking its validity in various contexts.
+
+##### Members:
+
+- **ind (size_t):** Stores the numeric value of the index.
+- **is_valid (bool):** Indicates whether the index is currently usable.
+
+### FUNCTIONS
+
+#### Function: index()
+**Purpose:** Constructs an index object using default values. 
+
+- **Parameters:** None
+- **Returns:** Nothing
+- **Notes:** The constructor initializes both `ind` and `is_valid` to 
+their respective default states.
+- **Usage:** Initialize a new index object without setting any specific 
+value or validity.
+
+#### Function: ~index()
+**Purpose:** Destroys an existing index object. 
+
+- **Parameters:** None
+- **Returns:** Nothing
+- **Notes:** The destructor ensures proper cleanup when the `index` 
+is no longer needed.
+- **Usage:** Destructor will automatically be called by the compiler for 
+objects that do not have a custom destructor.
+
+#### Function: index(size_t)
+**Purpose:** Constructs an index from a raw size value. 
+
+- **Parameters:** 
+  - **size_t index (type):** The initial numeric value to store.
+- **Returns:** Nothing
+- **Notes:** This constructor assigns the provided `index` value and sets 
+`is_valid` to true, indicating it is usable.
+- **Usage:** Initialize an index with a specific numeric value.
+
+#### Function: make_valid(size_t)
+**Purpose:** Marks the index as valid by assigning a new numeric value. 
+
+- **Parameters:** 
+  - **size_t index (type):** The new value to store in `ind`.
+- **Returns:** Nothing
+- **Notes:** This function sets both `is_valid` and `ind` ensuring any 
+existing invalid state is resolved.
+- **Usage:** Update the stored index value after it has been marked as 
+valid.
+
+#### Function: unvalidate()
+**Purpose:** Marks the index as invalid by clearing its stored value. 
+
+- **Parameters:** None
+- **Returns:** Nothing
+- **Notes:** Sets `is_valid` to false and clears any previously assigned 
+`ind`, effectively making the index unusable.
+- **Usage:** Used when an index is no longer usable or needs reset.
+
+#### Function: is_valid() const
+**Purpose:** Checks whether the index is currently valid. 
+
+- **Parameters:** None
+- **Returns:** Returns a boolean indicating if the index can be used 
+(true) or not (false).
+- **Notes:** This function checks the `is_valid` flag to determine the 
+state of the index.
+- **Usage:** Verify if the current index value can be safely used.
+
+#### Function: set(size_t)
+**Purpose:** Assigns a new value to the index. 
+
+- **Parameters:** 
+  - **size_t index (type):** The new numeric value to store in `ind`.
+- **Returns:** Nothing
+- **Notes:** Throws an exception if the index is invalid, ensuring usage 
+safety.
+- **Usage:** Update the stored index value safely.
+
+#### Function: get() const
+**Purpose:** Returns the stored numeric value. 
+
+- **Parameters:** None
+- **Returns:** The stored `ind` value.
+- **Notes:** This function returns the currently assigned index value but 
+will throw an exception if the index is invalid, ensuring safe usage.
+- **Usage:** Retrieve and use the current index value.
+
+#### Function: validFor(const std::string &context)
+**Purpose:** Checks whether the current index is valid for a string 
+context. 
+
+- **Parameters:** 
+  - **const std::string &context (type):** The string being checked for 
+bounds.
+- **Returns:** Returns true if `ind` does not exceed the length of 
+`context`.
+- **Notes:** This function checks if the position referenced by `ind` is 
+within the bounds defined by a string. Throws an exception if invalid.
+- **Usage:** Validate index in string contexts.
+
+#### Function: validFor(const std::vector<Y> &context)
+**Purpose:** Checks whether the current index is valid for a container 
+context. 
+
+- **Parameters:** 
+  - **const std::vector<Y> &context (type):** The container being checked 
+for bounds.
+- **Returns:** Returns true if `ind` does not exceed the size of 
+`context`.
+- **Notes:** This function checks if the position referenced by 
+`ind` is within the bounds defined by a container. Throws an exception if 
+invalid.
+- **Usage:** Validate index in container contexts.
+
+#### Function: operator=(size_t)
+**Purpose:** Assigns a raw size value to this index. 
+
+- **Parameters:** 
+  - **size_t index (type):** The new numeric value to store.
+- **Returns:** Nothing
+- **Notes:** Throws an exception if the index is invalid, ensuring safe 
+usage.
+- **Usage:** Update the stored index value safely.
+
+#### Function: operator==(size_t)
+**Purpose:** Compares this index with a raw size value. 
+
+- **Parameters:** 
+  - **size_t index (type):** The other value to compare against.
+- **Returns:** Returns true if unequal, false otherwise; throws an 
+exception if either index is invalid.
+- **Notes:** This function performs equality comparison ensuring both 
+indices are valid before returning a result.
+- **Usage:** Compare two indices for equality.
+
+#### Function: operator!=(size_t)
+**Purpose:** Compares this index with a raw size value. 
+
+- **Parameters:** 
+  - **size_t index (type):** The other value to compare against.
+- **Returns:** Returns true if equal, false otherwise; throws an 
+if either index is invalid.
+- **Notes:** This function performs inequality comparison ensuring both 
+indices are valid before returning a result.
+- **Usage:** Compare two indices for inequality.
+
+#### Function: operator!=(const index &)
+**Purpose:** Compares this index with another index object. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to compare against.
+- **Returns:** Returns true if unequal, false otherwise; throws an 
+exception if either index is invalid.
+- **Notes:** This function ensures both indices are valid before 
+performing comparison and returning a result.
+- **Usage:** Compare two indices for inequality.
+
+#### Function: operator==(const index &)
+**Purpose:** Compares this index with another index object. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to compare against.
+- **Returns:** Returns true if equal, false otherwise; throws an 
+if either index is invalid.
+- **Notes:** This function ensures both indices are valid before 
+performing comparison and returning a result.
+- **Usage:** Compare two indices for equality.
+
+#### Function: operator++(int)
+**Purpose:** Increments the index using the postfix form. 
+
+- **Parameters:** 
+  - **int unused (type):** Unused placeholder for postfix semantics.
+- **Returns:** Nothing
+- **Notes:** Throws an exception if the index is invalid, ensuring safety.
+- **Usage:** Postfix increment safely.
+
+#### Function: operator--(int)
+**Purpose:** Decrements the index using the postfix form. 
+
+- **Parameters:** 
+  - **int unused (type):** Unused placeholder for postfix semantics.
+- **Returns:** Nothing
+- **Notes:** Throws an exception if the index is invalid, ensuring safety.
+- **Usage:** Postfix decrement safely.
+
+#### Function: operator++()
+**Purpose:** Increments the index using the prefix form. 
+
+- **Parameters:** None
+- **Returns:** Nothing
+- **Notes:** Throws an exception if the index is invalid, ensuring safety.
+- **Usage:** Prefix increment safely.
+
+#### Function: operator--()
+**Purpose:** Decrements the index using the prefix form. 
+
+- **Parameters:** None
+- **Returns:** Nothing
+- **Notes:** Throws an exception if the index is invalid, ensuring safety.
+- **Usage:** Prefix decrement safely.
+
+#### Function: operator+(size_t)
+**Purpose:** Adds an offset to the current index in place. 
+
+- **Parameters:** 
+  - **size_t offset (type):** The value to add to `ind`.
+- **Returns:** The result of adding the offset, throws exception if 
+invalid.
+- **Notes:** Modifies the index directly, ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Update index by an offset safely.
+
+#### Function: operator+(const index &)
+**Purpose:** Adds another index value to this index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to add.
+- **Returns:** A new `index` containing the sum, throws exception if 
+either index is invalid.
+- **Notes:** Ensures both indices are valid before performing addition 
+returns a new object.
+- **Usage:** Add one index value to another safely.
+
+#### Function: operator-(size_t)
+**Purpose:** Subtracts an offset from the current index in place. 
+
+- **Parameters:** 
+  - **size_t offset (type):** The value to subtract from `ind`.
+- **Returns:** The result of subtracting the offset, throws exception if 
+invalid.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Update index by a negative offset safely.
+
+#### Function: operator-(const index &)
+**Purpose:** Subtracts another index value from this index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to subtract.
+- **Returns:** A new `index` containing the difference, throws exception 
+if either index is invalid.
+- **Notes:** Ensures both indices are valid before performing subtraction 
+and returns a new object.
+- **Usage:** Subtract one index value from another safely.
+
+#### Function: operator*(size_t)
+**Purpose:** Multiplies the current index by a scalar factor in place. 
+
+- **Parameters:** 
+  - **size_t factor (type):** The multiplication factor.
+- **Returns:** The result of multiplying, throws exception if invalid.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Multiply index by a scalar value safely.
+
+#### Function: operator*(const index &)
+**Purpose:** Multiplies this index by another index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to multiply with.
+- **Returns:** A new `index` containing the product, throws exception if 
+either index is invalid.
+- **Notes:** Ensures both indices are valid before performing 
+multiplication and returns a new object.
+- **Usage:** Multiply one index by another safely.
+
+#### Function: operator/(size_t)
+**Purpose:** Divides the current index by a scalar divisor in place. 
+
+- **Parameters:** 
+  - **size_t divisor (type):** The value to divide `ind` by.
+- **Returns:** The result of division, throws exception if invalid or 
+divisor is zero.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Divide index safely.
+
+#### Function: operator/(const index &)
+**Purpose:** Divides this index by another index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to divide by.
+- **Returns:** A new `index` containing the quotient, throws exception if 
+either index is invalid or divisor is zero.
+- **Notes:** Ensures both indices are valid before performing division 
+returns a new object.
+- **Usage:** Divide one index by another safely.
+
+#### Function: operator+=(size_t)
+**Purpose:** Adds an offset to this index in place. 
+
+- **Parameters:** 
+  - **size_t offset (type):** The value to add to `ind`.
+- **Returns:** Nothing
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Add a constant offset to the current index safely.
+
+#### Function: operator+=(const index &)
+**Purpose:** Adds another index value to this index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to add.
+- **Returns:** Nothing
+- **Notes:** Ensures both indices are valid before performing addition 
+modifies the current index directly.
+- **Usage:** Add one index value to another safely.
+
+#### Function: operator-=(size_t)
+**Purpose:** Subtracts an offset from this index in place. 
+
+- **Parameters:** 
+  - **size_t offset (type):** The value to subtract from `ind`.
+- **Returns:** Nothing
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Subtract a constant offset from the current index safely.
+
+#### Function: operator-=(const index &)
+**Purpose:** Subtracts another index value from this index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to subtract.
+- **Returns:** Nothing
+- **Notes:** Ensures both indices are valid before performing subtraction 
+and modifies the current index directly.
+- **Usage:** Subtract one index value from another safely.
+
+#### Function: operator*=(size_t)
+**Purpose:** Multiplies this index by a scalar factor in place. 
+
+- **Parameters:** 
+  - **size_t factor (type):** The multiplication factor.
+- **Returns:** Nothing
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Multiply index by a scalar value safely.
+
+#### Function: operator*=(const index &)
+**Purpose:** Multiplies this index by another index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to multiply with.
+- **Returns:** Nothing
+- **Notes:** Ensures both indices are valid before performing 
+multiplication and modifies the current index directly.
+- **Usage:** Multiply one index by another safely.
+
+#### Function: operator/=(size_t)
+**Purpose:** Divides this index by a scalar divisor in place. 
+
+- **Parameters:** 
+  - **size_t divisor (type):** The value to divide `ind` by.
+- **Returns:** Nothing
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Divide index safely.
+
+#### Function: operator/=(const index &)
+**Purpose:** Divides this index by another index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to divide by.
+- **Returns:** Nothing
+- **Notes:** Ensures both indices are valid before performing division 
+modifies the current index directly.
+- **Usage:** Divide one index by another safely.
+
+#### Function: operator%(size_t)
+**Purpose:** Computes the modulo of the current index by a scalar 
+
+
+- **Parameters:** 
+  - **size_t divisor (type):** The value to divide `ind` by for modulo 
+operation.
+- **Returns:** The result of the modulo, throws exception if invalid or 
+divisor is zero.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a modulo operation safely.
+
+#### Function: operator%(const index &)
+**Purpose:** Computes the modulo of this index by another index. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to use as the divisor.
+- **Returns:** A new `index` containing the result, throws exception if 
+either index is invalid or divisor is zero.
+- **Notes:** Ensures both indices are valid before performing division 
+returns a new object representing the quotient.
+- **Usage:** Perform modulo operation safely.
+
+#### Function: operator&&(size_t)
+**Purpose:** Applies a logical AND operation with a scalar mask. 
+
+- **Parameters:** 
+  - **size_t mask (type):** The value to combine `ind` with using bitwise 
+AND operation.
+- **Returns:** The result of the operation, throws exception if invalid.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a logical AND operation safely.
+
+#### Function: operator&&(const index &)
+**Purpose:** Applies a logical AND operation with another index. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to combine with using 
+bitwise AND operation.
+- **Returns:** A new `index` containing the result, throws exception if 
+either index is invalid.
+- **Notes:** Ensures both indices are valid before performing the 
+operation and returns a new object representing the result.
+- **Usage:** Perform a logical AND operation safely.
+
+#### Function: operator||(size_t)
+**Purpose:** Applies a logical OR operation with a scalar mask. 
+
+- **Parameters:** 
+  - **size_t mask (type):** The value to combine `ind` with using bitwise 
+OR operation.
+- **Returns:** The result of the operation, throws exception if invalid.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a logical OR operation safely.
+
+#### Function: operator||(const index &)
+**Purpose:** Applies a logical OR operation with another index. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to combine with using 
+bitwise OR operation.
+- **Returns:** A new `index` containing the result, throws exception if 
+either index is invalid.
+- **Notes:** Ensures both indices are valid before performing the 
+operation and returns a new object representing the result.
+- **Usage:** Perform a logical OR operation safely.
+
+#### Function: operator^(size_t)
+**Purpose:** Applies a bitwise XOR operation with a scalar mask. 
+
+- **Parameters:** 
+  - **size_t mask (type):** The value to combine `ind` with using bitwise 
+XOR operation.
+- **Returns:** The result of the operation, throws exception if invalid.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a bitwise XOR operation safely.
+
+#### Function: operator^(const index &)
+**Purpose:** Applies a bitwise XOR operation with another index. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to combine with using 
+bitwise XOR operation.
+- **Returns:** A new `index` containing the result, throws exception if 
+either index is invalid.
+- **Notes:** Ensures both indices are valid before performing the 
+operation and returns a new object representing the result.
+- **Usage:** Perform a bitwise XOR operation safely.
+
+#### Function: operator&=(size_t)
+**Purpose:** Applies a bitwise AND update with a scalar mask. 
+
+- **Parameters:** 
+  - **size_t mask (type):** The value to combine `ind` with using bitwise 
+AND operation.
+- **Returns:** Nothing
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a bitwise AND update safely.
+
+#### Function: operator&=(const index &)
+**Purpose:** Applies a bitwise AND update with another index. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to combine with using 
+bitwise AND operation.
+- **Returns:** Nothing
+- **Notes:** Ensures both indices are valid before performing the 
+operation and modifies the current index directly ensuring no need for 
+additional allocations or assignments.
+- **Usage:** Perform a bitwise AND update safely.
+
+#### Function: operator|=(size_t)
+**Purpose:** Applies a bitwise OR update with a scalar mask. 
+
+- **Parameters:** 
+  - **size_t mask (type):** The value to combine `ind` with using bitwise 
+OR operation.
+- **Returns:** Nothing
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a bitwise OR update safely.
+
+#### Function: operator|=(const index &)
+**Purpose:** Applies a bitwise OR update with another index. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to combine with using 
+bitwise OR operation.
+- **Returns:** Nothing
+- **Notes:** Ensures both indices are valid before performing the 
+operation and modifies the current index directly ensuring no need for 
+additional allocations or assignments.
+- **Usage:** Perform a bitwise OR update safely.
+
+#### Function: operator^=(size_t)
+**Purpose:** Applies a bitwise XOR update with a scalar mask. 
+
+- **Parameters:** 
+  - **size_t mask (type):** The value to combine `ind` with using bitwise 
+XOR operation.
+- **Returns:** Nothing
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a bitwise XOR update safely.
+
+#### Function: operator^=(const index &)
+**Purpose:** Applies a bitwise XOR update with another index. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to combine with using 
+bitwise XOR operation.
+- **Returns:** Nothing
+- **Notes:** Ensures both indices are valid before performing the 
+operation and modifies the current index directly ensuring no need for 
+additional allocations or assignments.
+- **Usage:** Perform a bitwise XOR update safely.
+
+#### Function: operator<<(size_t)
+**Purpose:** Shifts the current index left by a scalar amount in place. 
+
+- **Parameters:** 
+  - **size_t shift (type):** The number of bit positions to shift.
+- **Returns:** The result of shifting, throws exception if invalid.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a left shift safely.
+
+#### Function: operator<<(const index &)
+**Purpose:** Shifts this index left by another index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to use as the shift 
+amount.
+- **Returns:** A new `index` containing the result, throws exception if 
+either index is invalid.
+- **Notes:** Ensures both indices are valid before performing the 
+operation and returns a new object representing the result.
+- **Usage:** Perform a left shift safely.
+
+#### Function: operator>>(size_t)
+**Purpose:** Shifts the current index right by a scalar amount in place. 
+
+- **Parameters:** 
+  - **size_t shift (type):** The number of bit positions to shift.
+- **Returns:** The result of shifting, throws exception if invalid.
+- **Notes:** Modifies the index directly ensuring no need for additional 
+allocations or assignments.
+- **Usage:** Perform a right shift safely.
+
+#### Function: operator>>(const index &)
+**Purpose:** Shifts this index right by another index in place. 
+
+- **Parameters:** 
+  - **const index &other (type):** The other index to use as the shift 
+amount.
+- **Returns:** A new `index` containing the result, throws exception if 
+either index is invalid.
+- **Notes:** Ensures both indices are valid before performing the 
+operation and returns a new object representing the result.
+- **Usage:** Perform a right shift safely.
+
+#### Function: operator~()
+**Purpose:** Toggles the validity state of this index. 
+
+- **Parameters:** None
+- **Returns:** Nothing
+- **Notes:** Sets `is_valid` to its opposite value, effectively toggling 
+it between valid and invalid states.
+- **Usage:** Switch the validity status safely.
+
+#### Function: operator() const
+**Purpose:** Converts the index into a raw size_t value. 
+
+- **Parameters:** None
+- **Returns:** The stored numeric value of `ind`.
+- **Notes:** Throws an exception if the index is invalid, ensuring safety.
+- **Usage:** Convert to a numerical value safely.
+
+

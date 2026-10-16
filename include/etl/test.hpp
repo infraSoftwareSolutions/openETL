@@ -1,5 +1,5 @@
 /**
- * @file UnitTest.hpp
+ * @file test.hpp
  * @brief Lightweight C++ Unit Testing Framework
  * @author Ali Lafi
  * @date 2025 / 9 / 25
@@ -64,11 +64,13 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "io.hpp"
 #include "cfrost/structure.h"
+#include "cfrost/types.h"
 
 #pragma once
-#ifndef ETL___UNITTEST_HPP
-#define ETL___UNITTEST_HPP
+#ifndef ETL___TEST_HPP
+#define ETL___TEST_HPP
 namespace etl {
             /**
          * @class TEST
@@ -815,6 +817,297 @@ namespace etl {
                 reset_vector_count();
                 reset_function_count();
             }
+
+            /**
+             * @brief A class that aggregates boolean test results with exception handling.
+             */
+            class stream
+            {
+            private:
+                ocf::vec<TEST> container;
+                bool result_ts = true;
+                size_t total_tests = 0;
+                size_t passed_tests = 0;
+                size_t failed_tests = 0;
+                ocf::vec<ocf::str> error_log;
+
+            public:
+                stream() = default;
+
+                /**
+                 * @brief Overloaded operator<< to handle boolean function execution with exception handling
+                 *
+                 * This operator takes a function object that returns a boolean value and executes it.
+                 * The result is combined with the existing result_ts using logical AND operation.
+                 * If the function is not marked noexcept, it wraps the execution in a try-catch block
+                 * to handle various types of exceptions.
+                 *
+                 * @param fx A func object that returns bool and takes no parameters
+                 * @noexcept This operator itself is marked noexcept, though the contained function may throw
+                 *
+                 * Exception handling includes:
+                 * - std::invalid_argument
+                 * - std::length_error
+                 * - std::exception
+                 * - const char* messages
+                 * - Any other unhandled exceptions
+                 *
+                 * On any exception, result_ts is set to false and an error message is output to std::cerr
+                 */
+                void operator<<(ocf::func<bool()> fx) noexcept
+                {
+                    total_tests++;
+                    bool test_result = false;
+                    if (std::is_nothrow_invocable_r_v<bool, ocf::func<bool()>, bool>)
+                    {
+                        test_result = fx();
+                        result_ts &= test_result;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            test_result = fx();
+                            result_ts &= test_result;
+                        }
+                        catch (const std::invalid_argument &e)
+                        {
+                            ocf::str err_msg = "invalid argument: " + ocf::str(e.what());
+                            std::cerr << err_msg << std::endl;
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (const std::length_error &e)
+                        {
+                            ocf::str err_msg = "length error: " + ocf::str(e.what());
+                            std::cerr << err_msg << std::endl;
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (const std::exception &e)
+                        {
+                            ocf::str err_msg = "Exception: " + ocf::str(e.what());
+                            std::cerr << err_msg << "\n";
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (const char *msg)
+                        {
+                            ocf::str err_msg = "Error: " + ocf::str(msg);
+                            std::cerr << err_msg << "\n";
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (...)
+                        {
+                            ocf::str err_msg = "Unknown error occurred";
+                            std::cerr << err_msg << "\n";
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                    }
+                    if (test_result)
+                        passed_tests++;
+                    else
+                        failed_tests++;
+                    container.push_back(TEST{fx()});
+                }
+
+                void operator<<(ocf::func<TEST()> fx) noexcept
+                {
+                    total_tests++;
+                    bool test_result = false;
+                    if (std::is_nothrow_invocable_r_v<bool, ocf::func<bool()>, bool>)
+                    {
+                        test_result = fx().get();
+                        result_ts &= test_result;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            test_result = fx().get();
+                            result_ts &= test_result;
+                        }
+                        catch (const std::invalid_argument &e)
+                        {
+                            ocf::str err_msg = "invalid argument: " + ocf::str(e.what());
+                            std::cerr << err_msg << std::endl;
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (const std::length_error &e)
+                        {
+                            ocf::str err_msg = "length error: " + ocf::str(e.what());
+                            std::cerr << err_msg << std::endl;
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (const std::exception &e)
+                        {
+                            ocf::str err_msg = "Exception: " + ocf::str(e.what());
+                            std::cerr << err_msg << "\n";
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (const char *msg)
+                        {
+                            ocf::str err_msg = "Error: " + ocf::str(msg);
+                            std::cerr << err_msg << "\n";
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                        catch (...)
+                        {
+                            ocf::str err_msg = "Unknown error occurred";
+                            std::cerr << err_msg << "\n";
+                            error_log.push_back(err_msg);
+                            test_result = false;
+                            result_ts = false;
+                        }
+                    }
+                    if (test_result)
+                        passed_tests++;
+                    else
+                        failed_tests++;
+                    container.push_back(fx());
+                }
+
+                void operator<<(bool testResult) noexcept {
+                    total_tests++;
+                    if(testResult) {
+                        passed_tests++;
+                    } else {
+                        failed_tests++;
+                    }
+                    result_ts &= testResult;
+                    container.push_back(TEST{testResult});
+                }
+
+                void operator<<(TEST& testResult) noexcept {
+                    total_tests++;
+                    if(testResult.get()) {
+                        passed_tests++;
+                    } else {
+                        failed_tests++;
+                    }
+                    result_ts &= testResult.get();
+                    container.push_back(testResult);
+                }
+
+                /// @brief Overloaded operator>> to retrieve the aggregated test result
+                /// @param value Reference to a boolean variable to store the aggregated result
+                void operator>>(bool &value) noexcept { value = result_ts; }
+
+                void operator>>(TEST& value) noexcept {
+                    value = TEST{"stream",
+                            "the result of all tests in test stream",
+                            result_ts};
+                }
+
+                TEST operator[](size_t index) noexcept {
+                    return container[index];
+                }
+
+                /**
+                 * @brief Retrieves the total number of tests executed
+                 * @return Total count of tests
+                 */
+                size_t get_total_tests() const noexcept { return total_tests; }
+
+                /**
+                 * @brief Retrieves the number of passed tests
+                 * @return Count of tests that passed
+                 */
+                size_t get_passed_tests() const noexcept { return passed_tests; }
+
+                /**
+                 * @brief Retrieves the number of failed tests
+                 * @return Count of tests that failed
+                 */
+                size_t get_failed_tests() const noexcept { return failed_tests; }
+
+                /**
+                 * @brief Retrieves the success rate percentage
+                 * @return Success rate (0.0 to 100.0)
+                 */
+                float get_success_rate() const noexcept
+                {
+                    if (total_tests == 0)
+                        return 0.0f;
+                    return (passed_tests * 100.0f) / total_tests;
+                }
+
+                /**
+                 * @brief Retrieves the error log
+                 * @return Vector containing all error messages
+                 */
+                const ocf::vec<ocf::str> &get_error_log() const noexcept { return error_log; }
+
+                /**
+                 * @brief Clears all test statistics and error log
+                 */
+                void reset_statistics() noexcept
+                {
+                    total_tests = 0;
+                    passed_tests = 0;
+                    failed_tests = 0;
+                    error_log.clear();
+                    container.clear();
+                    result_ts = true;
+                }
+
+                ocf::vec<size_t> findIndex(bool isFailed) noexcept {
+                    ocf::vec<size_t> result;
+                    for(size_t i = 0; i < container.size(); i++) {
+                        if(!isFailed && container[i].get()) {
+                            result.push_back(i);
+                        } else if(isFailed && !container[i].get()) {
+                            result.push_back(i);
+                        }
+                        return result;
+                    }
+                }
+
+                void find(bool isFailed) noexcept {
+                    for(size_t i = 0; i < container.size(); i++) {
+                        if(!isFailed && container[i].get()) {
+                            io::print_test(container[i].get(true), 
+                            container[i].get(false), i, container[i].get());
+                        } else if(isFailed && !container[i].get()) {
+                            io::print_test(container[i].get(true),
+                            container[i].get(false), i, container[i].get());
+                        }
+                    }
+                }
+
+                /**
+                 * @brief Prints a complete test summary with statistics
+                 */
+                void print_summary() const noexcept
+                {
+                    io::println("=== Test Summary ===");
+                    io::println("Total tests: " + std::to_string(total_tests));
+                    io::println("Passed: " + std::to_string(passed_tests));
+                    io::println("Failed: " + std::to_string(failed_tests));
+                    io::println("Success rate: " + std::to_string(get_success_rate()) + "%");
+                    if (!error_log.empty())
+                    {
+                        io::println("=== Error Log ===");
+                        for (size_t i = 0; i < error_log.size(); ++i)
+                            io::println("[" + std::to_string(i + 1) + "] " + error_log[i]);
+                    }
+                }
+            };
         }
 }
-#endif // ETL___UNITTEST_HPP
+#endif // ETL___TEST_HPP

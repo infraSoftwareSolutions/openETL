@@ -1,0 +1,271 @@
+## LIBRARY OVERVIEW
+================
+
+This library provides a `linkedList` class template that implements a 
+doubly linked list container. It supports insertion, removal, lookup, and 
+replacement operations on elements stored in the list while maintaining 
+underlying node-based implementation.
+
+## OBJECTS & DATA STRUCTURES
+=========================
+
+### Object: nodeList (struct)
+------------------
+
+**Description:** Represents a node in the doubly linked list.
+
+**Members:**
+  - `next` (`node*`): Pointer to the next node.
+  - `prev` (`node*`): Pointer to the previous node.
+  - `item` (`T`): The value stored at this node.
+
+### Object: linkedList
+--------------------
+
+**Description:** Implements a doubly linked list container. It provides 
+methods for managing and accessing elements in the list, such as 
+insertion, removal, replacement, and querying.
+
+## FUNCTIONS
+=========
+
+### Function: linkedList::linkedList()
+-----------------------------------
+**Purpose:** Constructs an empty `linkedList` object.
+  
+**Parameters:** None
+  
+**Returns:** None
+  
+**Notes:** This function initializes a new `linkedList`.
+
+### Function: linkedList::linkedList(std::initializer_list<T>)
+---------------------------------------------------------
+**Purpose:** Constructs a `linkedList` from an initializer list.
+
+**Parameters:**
+  - `list` (`std::initializer_list<T>`): The values to insert into the 
+list in order.
+
+**Returns:** None
+  
+**Notes:** This function constructs a new `linkedList` by copying 
+from the given `std::initializer_list`.
+
+### Function: linkedList::linkedList(const std::vector<T>&)
+---------------------------------------------------------
+**Purpose:** Constructs a `linkedList` from a vector of values.
+
+**Parameters:**
+  - `v` (`const std::vector<T>&`): The vector containing the values to 
+insert into the list in order.
+
+**Returns:** None
+  
+**Notes:** This function constructs a new `linkedList` by copying 
+from the given `std::vector`.
+
+### Function: linkedList::~linkedList()
+-----------------------------------
+**Purpose:** Destructor for `linkedList`. Frees all dynamically allocated 
+memory used by nodes.
+  
+**Parameters:** None
+  
+**Returns:** None
+  
+**Notes:** The destructor automatically cleans up the list, deallocating 
+memory used by each node. It handles various cases such as empty lists 
+those with a small number of elements.
+
+### Function: linkedList::insert_first(const T&)
+--------------------------------------------
+**Purpose:** Inserts an element at the front of the list.
+  
+**Parameters:**
+  - `element` (`const T&`) The value to insert into the first position.
+
+**Returns:** None
+  
+**Notes:** This function inserts a new node containing the given value at 
+the front of the list. If the list is empty, it will set both `first` and 
+`last` pointers to point to this new node.
+
+### Function: linkedList::insert_last(const T&)
+---------------------------------------------------
+**Purpose:** Inserts an element at the end of the list.
+  
+**Parameters:**
+  - `element` (`const T&`) The value to insert into the last position.
+
+**Returns:** None
+  
+**Notes:** This function inserts a new node containing the given value at 
+the end of the list. If the list is empty, it will set both `first` and 
+`last` pointers to point to this new node.
+
+### Function: linkedList::insert_before(T&, T&)
+---------------------------------------------------
+**Purpose:** Inserts an element before another specified element in the 
+list.
+  
+**Parameters:**
+  - `element` (`T`) The value of the node to be inserted.
+  - `befEle` (`T`) The value of the existing node before which the new 
+node will be inserted.
+
+**Returns:** None
+  
+**Notes:** This function inserts a new node with the specified value 
+between two given nodes. It handles edge cases such as when the element 
+being replaced is at either end or middle of list, ensuring that all 
+pointers are correctly updated and memory is freed if necessary.
+
+### Function: linkedList::insert_after(T&, T&)
+---------------------------------------------------
+**Purpose:** Inserts an element after another specified element in the 
+list.
+  
+**Parameters:**
+  - `element` (`T`) The value of the node to be inserted.
+  - `aftEle` (`T`) The value of the existing node after which the new 
+will be inserted.
+
+**Returns:** None
+  
+**Notes:** This function inserts a new node with the specified value 
+between two given nodes. It handles edge cases such as when the element 
+being replaced is at either end or middle of list, ensuring that all 
+pointers are correctly updated and memory is freed if necessary.
+
+### Function: linkedList::pop_first()
+-----------------------------------
+**Purpose:** Removes the first element from the list.
+  
+**Parameters:** None
+  
+**Returns:** None
+  
+**Notes:** This function removes the node at the front of the list. If 
+list contains only one element, it sets both `first` and `last` pointers 
+to null, deallocating the single node. Otherwise, it updates the 
+pointer links to remove the first node.
+
+### Function: linkedList::pop_last()
+-----------------------------------
+**Purpose:** Removes the last element from the list.
+  
+**Parameters:** None
+  
+**Returns:** None
+  
+**Notes:** This function removes the node at the end of the list. If the 
+list contains only one element, it sets both `first` and `last` pointers 
+to null, deallocating the single node. Otherwise, it updates the 
+pointer links to remove the last node.
+
+### Function: linkedList::replace(T&, T&)
+----------------------------------------
+**Purpose:** Replaces a specified first matching element in the list with 
+another value.
+  
+**Parameters:**
+  - `oldEle` (`T`) The value of the element to be replaced.
+  - `newEle` (`T`) The new value that replaces the old one.
+
+**Returns:** None
+  
+**Notes:** This function finds and removes an existing node, then inserts 
+a new node with the replacement value. It handles edge cases such as when 
+multiple elements match the search criteria, ensuring all references are 
+correctly updated and memory is freed if necessary.
+
+### Function: linkedList::replace_all(T&, T&)
+---------------------------------------------------
+**Purpose:** Replaces all occurrences of one specified element with 
+another in the list.
+  
+**Parameters:**
+  - `oldEle` (`T`) The value to be replaced.
+  - `newEle` (`T`) The new value that replaces the old ones.
+
+**Returns:** None
+  
+**Notes:** This function iterates through the list and replaces each 
+occurrence of the specified element with a new one. It handles edge cases 
+such as when multiple occurrences are found, ensuring all references are 
+correctly updated and memory is freed if necessary.
+
+### Function: linkedList::remove(T&)
+-----------------------------------
+**Purpose:** Removes an element from the list.
+  
+**Parameters:**
+  - `element` (`T`) The value of the node to be removed.
+
+**Returns:** None
+  
+**Notes:** This function searches for a given value and removes all 
+occurrences of it. If multiple nodes with the same value are found, they 
+will all be removed. It handles edge cases such as when the element is at 
+either end or middle of list, ensuring that all pointers are correctly 
+updated and memory is freed if necessary.
+
+### Function: linkedList::clear()
+-----------------------------------
+**Purpose:** Clears the contents of the list.
+  
+**Parameters:** None
+  
+**Returns:** None
+  
+**Notes:** This function frees all dynamically allocated nodes used by 
+`linkedList`. It handles edge cases such as when the list contains only 
+one or two elements, setting both `first` and `last` pointers to null. If 
+multiple nodes are present, it iteratively removes them until no more are 
+found.
+
+### Function: linkedList::exist(T&)
+-----------------------------------
+**Purpose:** Checks whether a specified element exists in the list.
+  
+**Parameters:**
+  - `element` (`T`) The value to search for.
+
+**Returns:** True if the element is found; False otherwise.
+
+**Notes:** This function iterates through the list to check for the 
+existence of a given value. If an exact match is found, it returns true, 
+else false. It handles edge cases such as when the list contains only one 
+or two elements, returning appropriate results.
+
+### Function: linkedList::where(T&)
+-----------------------------------
+**Purpose:** Finds and returns the index of a specified element in the 
+list.
+  
+**Parameters:**
+  - `element` (`T`) The value to find.
+
+**Returns:** Index position where the element is found; 0 if not found, 
+per standard convention for indexing.
+
+**Notes:** This function iterates through the list to locate an exact 
+match of a given value. If an exact match is found, it returns its index 
+position. It handles edge cases such as when multiple occurrences are 
+present or no occurrence is found, providing appropriate feedback.
+
+### Function: linkedList::print()
+-----------------------------------
+**Purpose:** Prints the contents of the list.
+  
+**Parameters:** None
+  
+**Returns:** None
+  
+**Notes:** This function outputs a textual representation of the 
+`linkedList` to standard output. It handles different cases such as when 
+the list is empty, contains one or two elements, or has more than two 
+elements. The output format ensures clarity and readability for users.
+
+

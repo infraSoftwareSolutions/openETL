@@ -1,76 +1,256 @@
-﻿lite/exception.hpp
-	A comprehensive exception class hierarchy for the lite library.
-	Description
-		The exception class hierarchy provides a structured and consistent way to handle errors in the lite library.
-		The base class lite::exception serves as the foundation for all exceptions, while additional classes represent specific error conditions, such as internal library errors, outofrange access attempts, undefined behavior detection, wrong indexing operations, incorrect variable or type declarations, invalid object construction, and invalid input data.
-	Functions
-		exception
-		Constructs an exception with an optional message.
-				Parameters:
-					message: The error message (default: empty string)
-				Virtual destructor.
-				Returns: A pointer to the error message Cstring Gets the error message as a Cstring.
-				Returns: Reference to the error message string
-		internal_exception
-			Constructs an internal_exception with an optional message.
-				Parameters:
-					message: The error message (default: "Internal library error")
-				Virtual destructor.
-		OutOfRange
-			Constructs an OutOfRange exception with index and size information.
-				Parameters:
-					index: The outofrange index
-					size: The maximum valid size Gets the outofrange index that caused the exception.
-				Returns: The problematic index value
-		undefined_behavior
-			Constructs an undefined_behavior exception with an optional message.
-				Parameters:
-					message: The error message (default: "Undefined behavior detected")
-			Virtual destructor.
-		wrong_indexing
-			Constructs a wrong_indexing exception with the problematic index.
-				Parameters:
-					index: The invalid index value Gets the invalid index value that caused the exception.
-				Returns: The problematic index value
-		wrong_declaration
-			Constructs a wrong_declaration exception for type mismatches.
-				Parameters:
-					message: The error message (default: "Incorrect declaration")
-			Virtual destructor.
-		wrong_construction
-			Constructs a wrong_construction exception for construction failures.
-				Parameters:
-					message: The error message (default: "Object construction failed")
-			Virtual destructor.
-		wrong_input
-			Constructs a wrong_input exception with the problematic input.
-				Parameters:
-					input: The invalid input value Gets the invalid input value that caused the exception.
-				Returns: Reference to the problematic input string
-		Namespace Exception
-			Helper functions in this namespace provide convenient ways to create exceptions with predefined messages and context information.
-			out_of_range
-				Creates an OutOfRange exception with index and size information.
-				Parameters:
-					index: The outofrange index
-					size: The maximum valid size
-				Returns: OutOfRange exception object with formatted message
-			wrong_indexing
-				Creates a wrong_indexing exception with the problematic index.
-				Parameters:
-					index: The invalid index value
-				Returns: wrong_indexing exception object with formatted message
-			type_mismatch
-				Creates a wrong_declaration exception for type mismatches.
-				Returns: wrong_declaration exception object
-			construction_failed
-				Creates a wrong_construction exception for construction failures.
-				Returns: wrong_construction exception object
-			invalid_input
-				Creates a wrong_input exception with the problematic input.
-				Parameters:
-					input: The invalid input value
-				Returns: wrong_input exception object with formatted message
-			undefined
-				Creates an undefined_behavior exception.
-				Returns: undefined_behavior exception object
+### LIBRARY OVERVIEW
+
+This header defines comprehensive exception classes for the lite library. 
+The hierarchy of exceptions includes:
+- LITE___exception (base class): Provides a consistent interface for 
+handling with support for custom error messages and proper exception 
+hierarchy.
+- internal_exception: Internal library errors.
+- OutOfRange: Index or value out of valid range.
+- undefined_behavior: Undefined behavior detected.
+- wrong_indexing: Invalid indexing operations.
+- wrong_declaration: Incorrect declarations.
+- wrong_construction: Invalid object construction.
+- wrong_input: Invalid input data or parameters.
+
+### OBJECTS & DATA STRUCTURES
+
+#### Object: exception
+------------------
+
+Description: The base class for all lite library exceptions. It provides 
+consistent interface for error handling with support for custom error 
+messages and proper exception hierarchy.
+
+Members:
+  - message (type ocf::str): Stores the error message describing the 
+exception.
+  
+#### Object: internal_exception
+----------------------------
+
+Description: Exception for internal library errors. Thrown when an 
+internal error occurs within the lite library that indicates a logic 
+or implementation issue.
+
+Members:
+  - None
+  
+#### Object: OutOfRange
+----------------------
+
+Description: Exception for out-of-range access attempts. Stores index and 
+size information for context.
+
+Members:
+  - index_ (type size_t): The out-of-range index.
+  - valid_size_ (type size_t): The maximum valid size.
+
+#### Object: undefined_behavior
+----------------------------
+
+Description: Exception for undefined behavior detection. Thrown when 
+undefined behavior is detected during execution, such as null pointer 
+dereferences or invalid state transitions.
+
+Members:
+  - None
+  
+#### Object: wrong_indexing
+-------------------------
+
+Description: Exception for invalid indexing operations. Thrown when an 
+indexing operation is invalid, such as using negative indices where only 
+positive indices are expected, or accessing uninitialized indices.
+
+Members:
+  - invalid_index_ (type int): The problematic index value.
+
+#### Object: wrong_declaration
+----------------------------
+
+Description: Exception for incorrect variable or type declarations. 
+when a variable, function, or type declaration is incorrect or when there 
+is a type mismatch in declarations.
+
+Members:
+  - None
+  
+#### Object: wrong_construction
+-----------------------------
+
+Description: Exception for invalid object construction. Thrown when an 
+object cannot be constructed properly due to invalid parameters or 
+preconditions not being met.
+
+Members:
+  - None
+  
+#### Object: wrong_input
+----------------------
+
+Description: Exception for invalid input data or parameters. Thrown when 
+input data or parameters do not meet the expected requirements, 
+constraints, or format specifications.
+
+Members:
+  - input_value_ (type ocf::str): The problematic input value.
+
+### FUNCTIONS
+
+#### Function: internal_exception(const ocf::str& message = "")
+----------------------------------------------------
+
+Purpose: Constructs an instance of `internal_exception` with a custom 
+error message. If no message is provided, it defaults to "Internal 
+error".
+
+Parameters:
+  - message (type ocf::str): The optional error message for the exception.
+
+Returns: None
+
+Notes: 
+
+#### Function: ~internal_exception()
+----------------------------------
+
+Purpose: Virtual destructor for `internal_exception`. Ensures proper 
+cleanup in derived classes.
+
+Parameters: None
+
+Returns: None
+
+Notes:
+
+#### Function: what() const noexcept override
+--------------------------------------------------
+
+Purpose: Returns a pointer to the error message as a C-string. If the 
+message is empty, it returns "lite exception".
+
+Parameters: None
+
+Returns:
+  - Pointer to the error message C-string
+
+Notes: Override of the standard `what` method for custom exceptions.
+
+#### Function: get_message() const noexcept
+------------------------------------------
+
+Purpose: Returns a reference to the error message string. Allows 
+the stored error message without modifying it.
+
+Parameters: None
+
+Returns:
+  - Reference to the error message string
+
+Notes:
+
+#### Function: OutOfRange(const ocf::str& message = "Out of range", 
+index = 0, size_t valid_size = 0)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Purpose: Constructs an instance of `OutOfRange` with a custom error 
+message and out-of-range index. If no message or index is provided, it 
+defaults to "Out of range".
+
+Parameters:
+  - message (type ocf::str): The optional error message for the exception.
+  - index (type size_t): The problematic index value. Defaults to 0.
+  - valid_size (type size_t): The maximum valid size. Defaults to 0.
+
+Returns: None
+
+Notes:
+
+#### Function: what() const noexcept override
+---------------------------------------------------
+
+Purpose: Returns a pointer to the error message as a C-string. If the 
+message is empty, it returns "lite exception".
+
+Parameters: None
+
+Returns:
+  - Pointer to the error message C-string
+
+Notes: Override of the standard `what` method for custom exceptions.
+
+#### Function: get_index() const noexcept
+---------------------------------------------------
+
+Purpose: Retrieves the out-of-range index that caused the exception. The 
+index is a valid range value.
+
+Parameters: None
+
+Returns:
+  - The problematic index value (type size_t)
+
+Notes:
+
+#### Function: get_valid_size() const noexcept
+-------------------------------------------------
+
+Purpose: Retrieves the maximum valid size of the range. This information 
+helps in understanding where the out-of-range condition occurred.
+
+Parameters: None
+
+Returns:
+  - The valid range size (type size_t)
+
+Notes:
+
+#### Function: what() const noexcept override
+--------------------------------------------------
+
+Purpose: Returns a pointer to the error message as a C-string. If the 
+message is empty, it returns "lite exception".
+
+Parameters: None
+
+Returns:
+  - Pointer to the error message C-string
+
+Notes: Override of the standard `what` method for custom exceptions.
+
+#### Function: what() const noexcept override
+---------------------------------------------------
+
+Purpose: Returns a pointer to the error message as a C-string. If the 
+message is empty, it returns "lite exception".
+
+Parameters: None
+
+Returns:
+  - Pointer to the error message C-string
+
+Notes: Override of the standard `what` method for custom exceptions.
+
+#### Function: get_message() const noexcept
+---------------------------------------------------
+
+Purpose: Returns a reference to the error message string. Allows 
+the stored error message without modifying it.
+
+Parameters: None
+
+Returns:
+  - Reference to the error message string
+
+Notes:
+
+### Rules for Output
+
+- Use plain ASCII text only, no special formatting.
+- Clearly separate sections with lines of equals/dashes.
+- Be descriptive and professional in documentation.
+- Include all objects and functions found in the code.
+- Explain what each component does and how to use it.
+
+

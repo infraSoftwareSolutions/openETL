@@ -1,0 +1,183 @@
+# Library Overview:
+This PowerShell library, referred to as `Build`, encapsulates 
+functionality for managing and building projects using different 
+programming languages. Its primary purpose is to automate the process of 
+compiling source code into executables or scripts while handling 
+configurations specific to each target platform (Windows/Linux). It 
+supports C++, C, C#, and Python development environments with 
+compiler paths and includes. The library maintains a build cache for 
+optimization purposes and provides logging capabilities when verbose mode 
+is enabled.
+
+## Objects & Data Structures:
+The `build` class contains private members that store various aspects of 
+the project setup required to compile code, along with methods to 
+manipulate these settings.
+
+Object: `[string]$projectName` (hidden)
+- Stores the name of the current build project for identification 
+within builds and logs. It is not directly accessible from outside this 
+class.
+
+### Members ###:
+  - [void] SetProjectName([string]$name) { $this.projectName = $name }
+    Purpose: Assigns a name to the project being compiled, allowing 
+identification in logs and reports of build activities.
+
+Object: `[bool]$verbose` (hidden)
+- Keeps track of verbosity settings for detailed logging when enabled.
+  - Set via [void] SetVerbose([bool]$verbose) { $this.verbose = $verbose }
+
+### Build Library Functions ###:
+Function: `build()` (no parameters)
+- Purpose: Initializes the build object with default or provided settings.
+  - Automatically detects OS type and sets compiler paths accordingly 
+using either Windows API calls for Windows (`Get-Command`) or Unix 
+commands via `[which]` on Linux, ensuring compatibility. It also 
+initializes include and source path arrays.
+
+### Setters ###:
+Function: `SetProjectName([string]$name)` (no parameters)
+  - Purpose: Assigns a name to the project being compiled for 
+identification purposes within builds and logs.
+
+Object: `[bool]$verbose` (hidden)
+- Keeps track of verbosity settings, affecting detailed logging when 
+enabled. It can be set directly or through its Setter method.
+
+Function: `SetLanguage([string]$lang)` (no parameters)
+  - Purpose: Sets the programming language for which source files are 
+compiled and subsequently executable scripts/binaries will be generated.
+
+### Language Handlers ###:
+- Functions to handle different languages (`CompileCpp`, `CompileC`, 
+`CompileCSharp`, and `HandlePython`), each throwing an exception if the 
+language is unsupported or not found. These functions take a target path 
+as input where compiled binaries should be placed.
+  - Example:
+    ```powershell
+      function CompileCpp([string]$outputPath) { ... }
+    # This compiles C++ source files and generates the resulting 
+executable binary at $outputPath on Windows, linking object files 
+afterwards if present. It uses `$compiler` to locate the compiler.
+  - Function: `CompileC([string]$outputPath)` (no parameters)
+    Purpose: Similar function for compiling C language sources into `.o` 
+objects and then links them together into an executable at $outputPath, 
+also using a specified or auto-detected `$compiler`.
+  - This is typically used in embedded systems where the same source code 
+might be shared across multiple languages.
+    ```powershell
+      function CompileC([string]$outputPath) { ... }
+    # Function body here...
+  
+  - Function: `CompileCSharp([string]$outputPath)` (no parameters)
+    Purpose: Runs the C# compiler (`csc.exe` or `mcs`) on `.cs` source 
+files and generates an executable at $outputPath.
+    ```powershell
+      function CompileCSharp([string]$outputPath) { ... }
+  - This is a specialized handler for compiling .NET C# code with the 
+Microsoft compiler. It must have `csc.exe` or its Unix equivalent 
+available in PATH, and source files need to include `.cs` extensions.
+
+### Source Code Manipulation ###:
+- Functions like `AddIncludePath`, `GetSourceFiles`, etc., allow adding 
+paths for header/include directories (`*.h`) and listing of all the C++ 
+sources recursively within specified directory trees, excluding 
+subdirectories. This is to manage dependencies effectively.
+  - Example source code snippet:
+    ```powershell
+      function AddIncludePath([string]$path) { $this.includePaths += 
+}
+      # Other getters and setters follow a similar pattern...
+    ```powershell
+  
+- Function: `AddSourcePath` (no parameters)
+  - Purpose: Register additional source code files to compile by 
+paths or patterns of filenames.
+  - Example usage snippet: 
+`$project.addSourcePath("C:\path\to\source\.cpp")`.
+    
+- Functions like `GetIncludeFiles`, `GetSourceFiles` retrieve lists based 
+on the previously added include and source directories, respectively.
+
+### Versioning ###:
+Function: `mini_version([double]$version) { $this.mini_version = $version 
+}` (no parameters)
+  - Purpose: Sets a sub-version number for fine-grained version tracking 
+of builds within the project, separate from `$version`. It is used 
+internally and can be read but not modified directly.
+
+Function: `GetMiniVersion() { return $this.mini_version }` (no parameters)
+  - Purpose: Returns the mini-version number for debugging or logging 
+purposes to track sub-versions of build processes within a project, 
+distinct from the main `$version`.
+
+### Build Targeting ###:
+Functions like `addTargetConfig`, `GetTargetConfig`, and their 
+counterparts manage configurations per target platform (e.g., Windows). 
+They throw errors if attempting to set or retrieve non-existent targets.
+  - Example usages of these functions are not provided, as they rely on 
+internal logic for managing build settings.
+
+### Configuration Management ###:
+Functions like `ReplaceTargetConfig` and associated methods allow 
+modifying existing configurations within the map. They throw errors when 
+an attempt is made to replace or access non-existent targets in the 
+configuration.
+  - Example usage snippet: `$project.replaceTarget('Debug', @{'option1' = 
+'value1'; 'option2' = 'value2'})`.
+    
+Functions for adding, removing, and accessing individual build 
+configurations are provided to manage multiple builds with different 
+settings efficiently within the same project.
+  - Note: The configuration map uses a hashtable structure keyed by 
+names (e.g., "Debug", "Release").
+
+### Logging ###:
+Functions such as `WriteLog` provide formatted output, including 
+timestamps and log levels when verbose mode is active.
+  - Example usage snippet: `$project.writeLog("Starting C++ build")`. 
+used throughout the class to document important steps or errors during 
+execution for debugging purposes.
+
+### Error Handling ###:
+- The `ValidateSetup` function provides a validation process, checking if 
+all required information (name, language, compiler) is set before 
+proceeding with building. If not met, it throws an exception detailing 
+missing requirements or errors detected during setup validation.
+- Exceptions are thrown within both initialization and build functions to 
+ensure proper project configuration prior to any compilation step begins.
+
+### Build Execution ###:
+The `run` function orchestrates building logic for supported languages, 
+leveraging language handlers. It invokes each corresponding handler based 
+on the active programming language setting in `$language`. Errors or 
+warnings are thrown if unsupported languages are set or compilation fails 
+at any step.
+- This encapsulates all project build steps and logging within a single 
+method call when using this class.
+
+### Cleanup ###:
+The `Clean` function provides an easy way to clear the compiled files 
+previous builds, ensuring that subsequent compilations start fresh. It's 
+crucial for maintaining clean working environments between build attempts 
+on Unix-like systems.
+    
+```powershell
+class Build {
+  hidden [string]$projectName
+  # ... (Rest of the class code as provided)
+}
+```
+This documentation provides an overview and guidance on using each 
+member function, and procedure within this PowerShell library to manage 
+builds effectively. Users should adhere strictly to type checks for 
+parameters where applicable.
+Please note that error handling is designed to be robust with clear 
+feedback during script execution failure points.
+To compile projects of various languages supported by the `Build` class 
+using custom compiler paths or configurations, users must ensure all 
+required inputs are set before invoking build routines. The cleanup 
+should ideally follow after a successful run for Unix-like systems to 
+maintain environment integrity between builds.
+

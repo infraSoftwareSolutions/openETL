@@ -1,0 +1,192 @@
+LIBRARY OVERVIEW
+================
+This library provides a queue (first-in-first-out data structure) 
+implementation. The primary purpose of this class is to facilitate the 
+manipulation and storage of elements in a sequential manner, ensuring 
+the first element added will be removed next.
+
+OBJECTS & DATA STRUCTURES
+===========================
+
+Object: queue<T>
+-----------------
+**Description:** A template-based queue where T represents the type of 
+data stored within. It manages elements with a front pointer and a rear 
+pointer to ensure efficient addition (enqueue) and removal (dequeue) 
+operations, as well as maintaining length tracking for both fullness and 
+emptiness checks.
+
+Members:
+  - arr: Pointer to an array that holds the queue's elements.
+  - rear: Index of the last added element in the array.
+  - front: Index of the next position from where we can extract an 
+(front pointer).
+  - length: Current number of elements in the queue.
+  - maxSize: Maximum capacity of the internal array.
+
+FUNCTIONS
+==========
+
+Function: queue(int ArrSize)
+-----------------------------
+**Purpose:** Constructs a new instance of the `queue` with specified 
+initial size. The constructor ensures that the provided size is positive, 
+allocating an array accordingly and initializing pointers to manage 
+rear, length, and checking for fullness or emptiness.
+
+Parameters:
+  - ArrSize (int): The desired capacity of the internal array.
+
+Function: queue(initList<T> &vec)
+-----------------------------------
+**Purpose:** Constructs a `queue` from another collection. It is noexcept 
+because it does not throw exceptions, assuming that `initList<T>` 
+conversion to this type of queue.
+
+Parameters:
+  - vec (initList<T>): Collection containing the initial elements to be 
+added in the queue.
+
+Function: inline constexpr bool empty() const noexcept
+---------------------------------------------------
+**Purpose:** Checks if the queue is currently empty. Returns true if 
+are no elements stored, otherwise false.
+
+Notes: This function checks for emptiness without modifying the internal 
+state of the queue, making it a pure view into its current condition.
+
+Function: inline constexpr bool full() const noexcept
+--------------------------------------------------
+**Purpose:** Checks if the queue has reached its maximum capacity and is 
+therefore full. Returns true if there are no more elements that can be 
+added, otherwise false.
+
+Notes: This function ensures that adding new elements would cause an 
+error, preventing data loss or corruption during operations like enqueue.
+
+Function: void eque(T element)
+-----------------------------
+**Purpose:** Adds a new element to the end of the queue. If the queue is 
+already full, it throws an exception indicating that no more elements can 
+be added. The function updates the rear pointer and increments length 
+accordingly.
+
+Parameters:
+  - element (T): The value to be added to the queue.
+
+Function: procedure(dque)
+---------------------------
+**Purpose:** Removes the frontmost element from the queue. If the queue 
+empty, it throws an exception indicating that no elements are available 
+for removal. It updates the front pointer and decrements length 
+accordingly.
+
+Parameters:
+  - None
+
+Function: T get_front() const
+-----------------------------
+**Purpose:** Retrieves the value at the front of the queue without 
+modifying its state or altering the internal structure (front and rear 
+pointers). Throws an error if the queue is empty, ensuring that no 
+accesses occur during read operations.
+
+Notes: This function ensures that the queue remains in a valid state when 
+elements are being fetched for inspection but not removed from the queue.
+
+Function: procedure(get_front(T &element) const noexcept)
+-------------------------------------------------------
+**Purpose:** Retrieves the value at the front of the queue and stores it 
+in the provided reference. If the queue is empty, it throws an error 
+indicating that no elements to read are available.
+
+Parameters:
+  - element (T &): A non-const reference to a variable where the 
+value will be stored.
+
+Function: T get_rear() const
+-----------------------------
+**Purpose:** Retrieves the value at the rear of the queue without 
+modifying its state or altering the internal structure. Throws an error 
+the queue is empty, ensuring that no invalid accesses occur during read 
+operations.
+
+Notes: This function ensures that the queue remains in a valid state when 
+elements are being fetched for inspection but not removed from the queue.
+
+Function: procedure(print) const noexcept
+-----------------------------------------
+**Purpose:** Prints all elements currently stored in the queue. If the 
+queue is empty, it throws an error indicating that no elements to print 
+are available. The function outputs each element on a new line.
+
+Notes: This function ensures that the queue remains in a valid state when 
+its contents are being displayed without altering them for other 
+operations like reading or deletion.
+
+Function: T search(T element) const noexcept
+--------------------------------------------
+**Purpose:** Searches through all elements of the queue to find an exact 
+match. If found, it returns the index of the matching element; otherwise, 
+it throws an error indicating that no such element exists in the queue 
+returns -1 as a sentinel value for failure.
+
+Notes: This function assumes that `initList<T>` provides search 
+capabilities, which allows it to efficiently locate elements within the 
+queue.
+
+Function: void operator=(const vector<T> &vec)
+------------------------------------------------
+**Purpose:** Overloads the assignment operator to copy elements from 
+another `vector` into this queue. Only adds elements if the source 
+`vector` is not empty; otherwise, prints an error message indicating that 
+no valid elements were available for copying.
+
+Parameters:
+  - vec (vector<T>): Another collection containing the initial elements 
+be added in the queue.
+
+Function: void operator=(const queue &other) noexcept
+---------------------------------------------------
+**Purpose:** Overloads the assignment operator to copy elements from 
+another `queue` into this one. It only updates internal pointers and data 
+if the source queue is not itself (self-assignment), ensuring no 
+unintended side effects occur.
+
+Parameters:
+  - other (queue): Another instance of the same queue type for copying 
+contents.
+
+Function: T operator>>(T &element)
+-----------------------------------
+**Purpose:** Overloads the extraction operator to remove an element from 
+the front of the queue and return it. If the queue is empty, throws an 
+error indicating that no elements are available for removal. The function 
+updates length and returns the removed element.
+
+Parameters:
+  - element (T &): A non-const reference to a variable where the returned 
+value will be stored.
+
+Function: T operator<<(const T &element)
+------------------------------------------
+**Purpose:** Overloads the insertion operator to add an element to the 
+back of the queue. If the queue is already full, throws an error 
+indicating that no more elements can be added. The function updates rear 
+and length accordingly.
+
+Parameters:
+  - element (T const&): Value to be added to the end of the queue.
+
+Function: ~queue() = default
+-----------------------------
+**Purpose:** Provides a clean destructor for the `queue` class, ensuring 
+proper cleanup by deleting allocated memory and resetting pointers if 
+necessary. This is achieved through the default implementation provided 
+the compiler.
+
+Notes: The destructor ensures that the queue remains in a valid state 
+before it can be destroyed or reused, without leaving any dangling 
+references or memory leaks.
+
+

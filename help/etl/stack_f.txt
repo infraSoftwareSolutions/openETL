@@ -1,0 +1,187 @@
+LIBRARY OVERVIEW
+================
+
+This library provides a fixed-capacity stack implementation using a 
+array. The stack can push, pop, and access its top element within a 
+predefined size without requiring dynamic resizing.
+
+OBJECTS & DATA STRUCTURES
+===========================
+
+Object: stack_f<T, MaxSize>
+------------------------------------
+
+Description of what this object represents:
+- This class implements a fixed-capacity stack on a static array.
+- It supports operations like push, pop, and accessing the top element 
+within its predefined size limit.
+
+Members:
+  - top (size_t): Keeps track of the index where the top element resides 
+in the static array.
+  - item[MaxSize]: A statically allocated array to store elements. The 
+type T can be int, double, string, etc., based on how stack_f is 
+templated.
+
+FUNCTIONS
+==========
+
+Function: stack_f()
+--------------------
+
+Purpose:
+- Constructs an empty fixed-capacity stack with the top initialized at -1 
+(indicating no elements are pushed yet).
+
+Parameters:
+  - None
+
+Returns:
+  - void
+
+Notes:
+  - This constructor initializes the stack, ensuring that there are no 
+elements in it until push() is called.
+
+Function: push(T element)
+--------------------
+
+Purpose:
+- Adds an element to the top of the fixed-capacity stack. If the stack is 
+already at its maximum capacity (MaxSize), an error message will be 
+printed and nothing will happen.
+
+Parameters:
+  - T element: The value that needs to be pushed onto the stack.
+
+Returns:
+  - void
+
+Notes:
+  - This function checks whether the top of the stack is already set to 
+MaxSize-1, indicating it's full. If so, an error message is printed. 
+Otherwise, the new element is placed at the next available position in 
+array.
+  
+Function: isEmpty()
+-----------------
+
+Purpose:
+- Determines if the fixed-capacity stack is empty by checking whether top 
+is less than 0.
+
+Parameters:
+  - None
+
+Returns:
+  - bool: True if the stack is empty; False otherwise.
+
+Notes:
+  - The stack is considered empty when its index (top) is set to -1. If 
+element is pushed into a full stack, this function will return false even 
+though it technically contains elements at other indices.
+
+Function: pop()
+--------------
+
+Purpose:
+- Removes and returns the topmost element of the fixed-capacity stack if 
+not already empty. Otherwise, an error message is printed.
+
+Parameters:
+  - T &element: Reference to the variable where the popped value will be 
+stored (if not already empty).
+
+Returns:
+  - void
+
+Notes:
+  - This function first checks if the stack is empty before proceeding 
+with any operations. If it's not empty, it retrieves and stores the top 
+element in the reference provided. The index of the next element up would 
+then be decremented to make room for a new push.
+
+Function: pop()
+--------------
+
+Purpose:
+- Removes and returns the topmost element of the fixed-capacity stack if 
+not already empty. Otherwise, an error message is printed. This function 
+mimics C++'s 'pop' operation but uses the term "procedure" as per the 
+given code snippet for consistency with other functions.
+
+Parameters:
+  - T &element: Reference to the variable where the popped value will be 
+stored (if not already empty).
+
+Returns:
+  - void
+
+Notes:
+  - This function first checks if the stack is empty before proceeding. 
+it's not, it retrieves and stores the top element in the reference 
+provided. The index of the next element up would then be decremented to 
+make room for a new push.
+
+Function: getTop(T &stack_fTop)
+--------------------------------
+
+Purpose:
+- Retrieves the topmost element of the fixed-capacity stack without 
+removing it, returning its value through the given reference.
+  
+Parameters:
+  - T &stack_fTop: Reference where the value of the top-most element will 
+be stored if not already empty.
+
+Returns:
+  - void
+
+Notes:
+  - This function retrieves and stores the topmost element in a variable 
+passed by reference. It first checks whether the stack is empty before 
+proceeding with any operations.
+  
+Function: print()
+-----------------
+
+Purpose:
+- Prints all elements of the fixed-capacity stack to the standard output 
+stream (stdout), starting from the bottom-most element.
+
+Parameters:
+  - None
+
+Returns:
+  - void
+
+Notes:
+  - This function iterates through the static array, printing each 
+except for top. It begins with the bottommost element and ends before 
+reaching the last index (top). Elements are printed separated by commas. 
+If an empty stack is encountered during iteration, an error message is 
+printed.
+  
+Function: print()
+-----------------
+
+Purpose:
+- Prints all elements of the fixed-capacity stack to the standard output 
+stream (stdout), starting from the bottom-most element. This function 
+mimics C++'s 'print' operation but uses a different term for consistency 
+with other functions.
+
+Parameters:
+  - None
+
+Returns:
+  - void
+
+Notes:
+  - This function iterates through the static array, printing each 
+except for top. It begins with the bottommost element and ends before 
+reaching the last index (top). Elements are printed separated by commas. 
+If an empty stack is encountered during iteration, an error message is 
+printed.
+
+

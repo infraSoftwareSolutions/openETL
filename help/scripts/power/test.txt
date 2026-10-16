@@ -1,0 +1,133 @@
+# Library Overview
+The PowerShell script `PowerTest.psm1` is a comprehensive test generation 
+module designed to automate the creation of unit and integration tests 
+various programming languages using an AI model hosted by Ollama, with 
+aim of ensuring software functionality across diverse scenarios.
+
+# Objects & Data Structures
+## MetaTest Class
+- **ObjectName**: `MetaTest`
+    - **Description**: Represents a single test case within this library 
+that includes name, description, number (used to uniquely identify the 
+instance), result status (`$result`), and any associated error message.
+    - Members:
+        - `$name`: [String] Name of the test as defined when instantiated 
+with `MetaTest()` constructor. Defaults to empty string if not provided.
+        - `$description`: [String] Descriptive text for what the tests 
+intended to validate, defaults to an empty string upon creation.
+        - `$testNumber`: [UInt64] Unique number assigned when a test is 
+created via `MetaTest()`, starting at 0 and incrementing per new 
+Defaults to zero if not provided during instantiation.
+        - `$result`: [bool] Indicates the success or failure of this 
+specific test, defaults to false upon creation as it assumes no result 
+been tested yet. Set by calling `ValidateValue()`.
+        - `$errorMessage`: [String] Contains an error message detailing 
+what is expected versus actual results if a validation fails.
+    
+## MetaUnitTest Class
+- **ObjectName**: `MetaUnitTest`
+    - **Description**: Manages multiple test cases collected into a 
+unit of testing, provides summary statistics about passed and failed 
+within this group. Stores its own name (`$name`), description provided by 
+the user through constructor (`[MetaUnitTest()]`), an array collection of 
+`MetaTest` objects `$tests`, along with counters for passing and failing 
+test counts (`$passCount`, `[UInt64]`).
+    - Members:
+        - `$name`: [String] Name representing this unit, defaults to 
+string upon creation. Set by constructor.
+        - `$description`: String describing the purpose of this 
+of tests as set during instantiation with `MetaUnitTest()`. Defaults to 
+empty description when not provided.
+        - `$tests`: [MetaTest[]] Array holding all individual test cases 
+associated with this unit, defaults to an empty array upon creation. Test 
+instances are added via calling 
+`[MetaUnitTest()].AddTest([MetaTest]$test)`.
+        - `$passCount`: UInt64 counter for the number of tests passed 
+within this `MetaUnitTest`. Increments when individual test cases result 
+in success.
+        - `$failCount`: UInt64 counter for the total failures encountered 
+during testing, incremented upon failure regardless of specific reason 
+to absence of a conditional path based on outcome. Defaults to zero at 
+creation.
+    
+## Function: Get-FrameworkSpecificPrompt
+- **FunctionName**: `Get-FrameworkSpecificPrompt`
+    - **Purpose**: Provides users with language and framework specific 
+prompt templates for writing tests, which includes necessary setup 
+instructions. This function accepts parameters to identify the chosen 
+testing framework.
+        - Parameters:
+            - `$Framework`: [ValidateSet('CTest', 'GTest', 'Jest', 
+'Pytest', 'NUnit', 'unittest', 'Pester', 'Mocha')] Parameter accepting 
+strings representing various test frameworks. Defaults to a generic 
+generation message.
+            - `Language`: [ValidateSet('C', 'C++', 'C#', 'Java', 
+'PowerShell', 'JavaScript', 'TypeScript')] Parameter allowing the 
+of programming language for which tests are generated, defaulting to all 
+languages if not provided.
+        - Returns: String formatted as a detailed prompt specific to 
+chosen framework and supported by that testing methodology
+    
+## Functions & Code Output Documentation
+- **FunctionName**: `New-Test`
+    - Purpose: Orchestrates the entire test generation process for 
+different frameworks, libraries (language), with guidance on best 
+practices.
+        - Parameters:
+            - `$Docs`: [Parameter(Mandatory = $true)] Path to 
+documentation file containing API specifications and descriptions. 
+Required textual input as a prerequisite for test generation.
+            - `$Lib`: [Parameter(Mandatory = $true)] Absolute or relative 
+path pointing to the source code of library being tested, which is read 
+without modification.
+            - Optional parameters include:
+                - `$Out` (Output file path with default behavior based on 
+language extension if unspecified): Outputs test files; see below for 
+details. Default value sets this parameter as `null`.
+                - `$AI`: [Parameter(Mandatory = $false)] API endpoint 
+to generate AI-driven tests via Ollama, defaults to 
+`"http://localhost:11434/api/generate"`. Assumed running for test 
+generation.
+                - `$Model` (Optional): String defining the model name or 
+version of language understanding desired by AI; affects accuracy. 
+is `unspecified`, and if omitted it falls back to `"llama2"` as a generic 
+setting.
+        
+    ```
+    Function New-Test {
+        [CmdletBinding()] Param( ... )  # Complete function parameters 
+here...
+            $userPrompt = @"
+@ 'TASK' section for user interaction with the testing philosophy and 
+expected output format guidelines.
+    
+     Write-Host "🔗 Connecting to Ollama: $AI" -ForegroundColor Magenta  
+Connection establishment message...
+        if ($_resp.response) { $tests = ... }
+    ```
+```
+- **Output File Handling**
+    The script manages the generation, storage, or appending of test 
+based on user input via a command line prompt for interaction.
+
+# Framework Specific Prompts (as returned by 
+`Get-FrameworkSpecificPrompt`) are structured to provide clear guidance 
+syntax and best practices according to frameworks used. These include: 
+CTest/Google Test, GTest, Jest, Pytest, NUnit, unittest from Python's 
+standard library, Pester for PowerShell testing with detailed notes on 
+expected test structures.
+
+The script does not modify the original source code but rather generates 
+collection of tests that should be manually reviewed and executed to 
+validate functionality. The output can either append new generated tests 
+or create fresh files as instructed by user interaction within the 
+line interface, providing guidance through well-commented examples for 
+clarity.
+
+```plaintext
+New PowerShell test generation module using local AI (Ollama) script: 
+Comprehensive test case creation. No modification of original code 
+allowed; strictly outputs generated tests following framework conventions 
+with appropriate setup and assert statements as per user-selected 
+language, testing methodology.
+```

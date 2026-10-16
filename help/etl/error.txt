@@ -1,45 +1,97 @@
-﻿lite/error.hpp
-    error Management and Reporting System
-    Overview
+```plaintext
+LIBRARY OVERVIEW
+=================
 
-        This file provides a comprehensive error handling system with an error class that tracks error information including name, description, and occurrence time.
-        It also provides helper functions for creating common error types through the err namespace.
-    Classes
-        error: Main error class for storing and managing error information.
-        err: Helper functions for creating predefined error types.
-    Functions
-        Constructors
-            error(): Default constructor that creates an unknown error.
-            error(const std::string& name) noexcept: Constructor that creates an error with a name.
-            error(const std::string& name, const std::string& description) noexcept: Constructor that creates an error with name and description.
-        Accessor Functions
-            empty(bool isName) noexcept: Checks if the error name or description is empty.
-            length(bool isName) noexcept: Returns the length of the error name or description.
-        Output Functions
-            operator<<(std::ostream& os, const error& e) noexcept: Stream output operator for the error class.
-            std::ostream& operator<<(std::ostream& os, const error& e) noexcept: Stream output operator for the error class.
-        Error Creation Functions
-            errTimer: Benchmark code timer for measuring execution time.
-            wrong_indexing(), wrong_declaration(), wrong_construction(), bad_input(), undefined_behavior(), invalid_argument(), OutOfRange(), internal_problem(): Helper functions for creating predefined error types.
-    Key Functions
-        Error Class Methods
-            printingFormat(): Generates a formatted string representation of the error.
-            operator<<(): Multiple constructors for error initialization.
-        Code Structure
-        The code is organized into namespaces:
-            lite: Main namespace containing the error class and helper functions.
-            err: Helper namespace providing predefined error types.
-        err Namespace Functions
-            wrong_indexing()
-            wrong_declaration()
-            wrong_construction()
-            bad_input()
-            undefined_behavior()
-            invalid_argument()
-            OutOfRange()
-            internal_problem()
-        These functions create predefined error types with specific descriptions and attributes.
-        error Class Methods
-            empty(bool isName)
-            length(bool isName)
-            printingFormat()
+This library provides an error management system. It includes a `error` 
+class for tracking error information such as the name, description, and 
+occurrence time. The library also includes helper functions to create 
+common error types through the `err` namespace.
+
+OBJECTS & DATA STRUCTURES
+==========================
+
+Object: error
+------------------
+- **Description:** Main error class for storing and managing error 
+information.
+- **Members:**
+  - **name (ocf::str):** Stores the name/type of the error.
+  - **description (ocf::str):** Stores a detailed description of the 
+error.
+  - **errLocation:** Source location where the error occurred, 
+providing file and line numbers.
+  - **event (float):** Timestamp when the error occurred in milliseconds.
+
+FUNCTIONS
+==========
+
+Function: error()
+---------------------------------
+- **Purpose:** Constructor for creating an error object with either a 
+or a name plus description. The default constructor creates an unknown 
+error.
+- **Parameters:**
+  - **Name (ocf::str):** Name of the error, optional.
+  - **Description (ocf::str):** Description of the error, required if 
+`Name` is not provided.
+
+Function: empty(bool isName)
+---------------------------------
+- **Purpose:** Checks whether the name or description fields are empty. 
+The check can be performed for either field by setting `isName` to true 
+false.
+- **Parameters:**
+  - **isName (bool):** Boolean indicating which field to check. True 
+checking the error name, False means checking the error description.
+
+Function: length(bool isName)
+---------------------------------
+- **Purpose:** Returns the length of either the error name or 
+depending on whether `isName` is true or false.
+- **Parameters:**
+  - **isName (bool):** Boolean indicating which field to check. True 
+checking the error name, False means checking the error description.
+
+Function: get_time()
+---------------------------------
+- **Purpose:** Returns a timestamp of when the error occurred in 
+milliseconds.
+- **Returns:** A float value representing time since program start in 
+milliseconds.
+
+Function: get_file()
+---------------------------------
+- **Purpose:** Returns the file where the error occurred.
+- **Returns:** An ocf::str containing the file name as it appears in the 
+source code.
+
+Function: get_line()
+---------------------------------
+- **Purpose:** Returns the line number of the source location where the 
+error occurred.
+- **Returns:** A size_t representing the line number as an integer.
+
+Function: printingFormat()
+---------------------------------
+- **Purpose:** Generates a formatted string representation of the error, 
+including the name, description, and time it occurred.
+- **Returns:** An ocf::str containing the formatted error details.
+
+Function: operator<< (std::ostream& os, const error& e)
+---------------------------------
+- **Purpose:** Stream output operator for error objects. Outputs 
+information about the error to a stream, including its type, name, 
+description, and occurrence time.
+- **Parameters:**
+  - **os (std::ostream&):** The output stream where the error data will 
+written.
+  - **e (error):** The error object whose details are being output.
+
+Notes:
+- Ensure that both name and description fields are provided when creating 
+an error, unless a default unknown error is desired.
+- Use helper functions in the `err` namespace to create common error 
+like "Wrong Indexing," "Wrong Declaration," etc.
+```
+
+

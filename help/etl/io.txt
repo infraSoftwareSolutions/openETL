@@ -1,47 +1,223 @@
-﻿lite/io.hpp
-    This is the io namespace in C++.
-    Here's a high-level overview of its contents:
-    Function Declarations
-        The io namespace contains several function declarations that perform various I/O operations. These include:
-        print_char_str: prints characters to a string individually
-        separator: prints a separator line
-        separators: prints multiple separator lines with specified lengths and characters
-        print_category: prints a formatted category name with separators and indentation
-        print_if: executes a function based on the return value of another function or lambda expression
-        println_if: executes a function based on the return value of another function or lambda expression
-        print_char_str and println_if are part of the lite::io::print class
-    Member Functions
-        The io namespace also contains several member functions that provide additional functionality:
-        separator(int length, char ch): prints a separator line with specified length and character
-        Tabs(int n): prints a number of tab characters
-        lite::io::print(T data): evaluates the provided value using a given function pointer (or lambda expression)
-        lite::io::println(T data): evaluates the provided value using a given function pointer (or lambda expression)
-    Helper Functions
-        The io namespace also contains several helper functions that are used by other member functions:
-        print_category(const std::string &category_s, int tabs_num, int seplen, char sepch): prints a formatted category name with separators and indentation
-        println_if(bool result, const T& data): evaluates the provided value using a given function pointer (or lambda expression)
-    Example Usage
-        #include <iostream>
-        #include <vector>
-        struct Data {
-            std::string str;
-        };
-        int main() {
-            // Example usage of print_char_str
-            lite::io::print_char_str("Hello, World!", 4);
-            // Example usage of separator
-            lite::io::separator(20, '=');
-            // Example usage of separators
-            lite::io::separators(5, 10, '~');
-            // Example usage of print_category
-            std::cout << "Categories:" << std::endl;
-            lite::io::print_category("Category1", 2, 10, '-');
-            lite::io::print_category("Category2", 3, 15, '*');
-            // Example usage of println_if
-            bool result = true;
-            if (result) {
-                lite::io::println_if(result, "Hello");
-            }
-            return 0;
-        }
-    This example shows how you can use the io namespace to print individual characters, separate lines, format category names, and evaluate values using function pointers.
+### LIBRARY OVERVIEW
+
+A simple I/O utility class for handling standard input and output 
+operations. It includes methods for printing to the console, taking user 
+input, and formatting output. The library offers functions for printing 
+values with or without newLines, printing error messages, and taking user 
+input for different types of variables and vectors. Additionally, it 
+provides functions for printing formatted test outputs and separators for 
+better readability.
+
+### OBJECTS & DATA STRUCTURES
+
+#### Object: io
+------------------
+
+This class encapsulates various functions for handling standard I/O 
+operations such as printing to the console, taking user input, and 
+formatting output. It includes methods for printing values with or 
+newLines, printing error messages, and taking user input of different 
+types including vectors.
+
+#### Function: println()
+----------------------------
+
+- **Purpose:** Prints a value followed by a newline to standard output.
+- **Parameters:** 
+  - `T &output`: The value to be printed.
+  
+- **Returns:** None
+- **Notes:** None
+
+#### Function: print()
+-----------------------------
+
+- **Purpose:** Prints a value without a newline to standard output.
+- **Parameters:** 
+  - `T &output`: The value to be printed.
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: println_error()
+--------------------------------
+
+- **Purpose:** Prints an error message followed by a newline to standard 
+error.
+- **Parameters:** 
+  - `T &output`: The error message to be printed.
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: print_error()
+---------------------------------
+
+- **Purpose:** Prints an error message without a newline to standard 
+error.
+- **Parameters:** 
+  - `T &output`: The error message to be printed.
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: input()
+-------------------------------
+
+- **Purpose:** Prints a prompt message and takes user input of the same 
+type.
+- **Parameters:** 
+  - `ocf::str output`: The prompt message to display.
+
+- **Returns:** `T var`: The user input as specified type T.
+
+#### Function: input(const ocf::str &output, size_t size)
+---------------------------------------------------
+
+- **Purpose:** Prints a prompt message and takes user input for a vector 
+of the same type.
+- **Parameters:** 
+  - `ocf::str output`: The prompt message to display.
+  - `size_t size`: Number of elements in the vector.
+
+- **Returns:** `ocf::vec<T> &input`: User input as specified type T.
+
+#### Function: input_2d(const ocf::str &output, size_t rows, size_t cols)
+--------------------------------------------------------------------------
+
+- **Purpose:** Prompts the user for input to fill a 2D vector.
+- **Parameters:** 
+  - `ocf::str output`: The prompt message to display.
+  - `size_t rows`: Number of rows in the vector.
+  - `size_t cols`: Number of columns in the vector.
+
+- **Returns:** `ocf::vec<ocf::vec<T>> &input`: User input as a 2D vector.
+
+#### Function: input_3d(const ocf::str &output, size_t x, size_t y, 
+z)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- **Purpose:** Prompts the user for input to fill a 3D vector.
+- **Parameters:** 
+  - `ocf::str output`: The prompt message to display.
+  - `size_t x`: Number of elements in the first dimension (rows).
+  - `size_t y`: Number of elements in the second dimension (columns).
+  - `size_t z`: Number of elements in the third dimension.
+
+- **Returns:** `ocf::vec<ocf::vec<ocf::vec<T>>> &input`: User input as a 
+3D vector.
+  
+#### Function: newLines()
+------------------------------------
+
+- **Purpose:** Prints a specified number of newline characters.
+- **Parameters:** 
+  - `size_t num = 1`: Number of new lines to print (default is 1).
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: separator()
+-----------------------------------
+
+- **Purpose:** Prints a horizontal line using a specific character.
+- **Parameters:** 
+  - `size_t length`: The number of characters in the line.
+  - `char ch = '-'`: The character to use (must be one of ~, -, #, *, =).
+
+- **Returns:** None
+- **Notes:** If an invalid character is provided, an exception is thrown.
+
+#### Function: separators()
+----------------------------------
+
+- **Purpose:** Prints multiple separator lines.
+- **Parameters:** 
+  - `size_t numsep`: Number of separator lines to print.
+  - `size_t length`: The number of characters in each separator line.
+  - `char ch = '-'`: The character used for the separator lines (must be 
+one of ~, -, #, *, =).
+
+- **Returns:** None
+- **Notes:** If an invalid character is provided, an exception is thrown.
+
+#### Function: tabs()
+----------------------------------
+
+- **Purpose:** Prints a specified number of tab characters.
+- **Parameters:** 
+  - `size_t num = 1`: Number of tabs to print (default is 1).
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: print_test()
+---------------------------------
+
+- **Purpose:** Prints a standardized test output with optional vector 
+content.
+- **Parameters:** 
+  - `size_t testNum`: The test number.
+  - `const T &OutPut`: The value to be printed (default is '[]').
+  
+- **Returns:** None
+- **Notes:** None
+
+#### Function: print()
+---------------------------------
+
+- **Purpose:** Prints a value with optional formatting as needed.
+- **Parameters:** 
+  - `T &input`: The vector to print.
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: println()
+-----------------------------------
+
+- **Purpose:** Prints a value followed by a newline to standard output.
+- **Parameters:** 
+  - `T &output`: The value to be printed.
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: print()
+-----------------------------------
+
+- **Purpose:** Prints a vector of values without new lines to standard 
+output.
+- **Parameters:** 
+  - `const ocf::vec<T> &input`: The vector elements.
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: println_if(ocf::func<bool(T)> Fp, const T& data)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- **Purpose:** Evaluates the provided value using a given function 
+or lambda and prints it to standard output if the condition is true.
+- **Parameters:** 
+  - `ocf::func<bool(T)> Fp`: The function that takes a value of type T 
+returns a boolean indicating whether to print the value.
+  - `const T &data`: The value to be evaluated and potentially printed.
+
+- **Returns:** None
+- **Notes:** None
+
+#### Function: println_if(bool result, const T& data)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- **Purpose:** Evaluates the provided value using a given function 
+or lambda and prints it to standard output if the condition is true. Adds 
+newline at the end.
+- **Parameters:** 
+  - `bool result`: Boolean indicating whether to print the value.
+  - `const T &data`: The value to be evaluated and potentially printed.
+
+- **Returns:** None
+- **Notes:** None
+
+

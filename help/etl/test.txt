@@ -1,0 +1,75 @@
+# LIBRARY OVERVIEW
+
+## Overview
+
+This library, named `test.hpp`, provides a comprehensive and easy-to-use 
+unit testing framework for C++23 projects. It includes utilities for 
+validating functions, vectors (1D, 2D, 3D), and basic data type 
+comparisons. The framework is designed with simplicity and efficiency in 
+mind, offering clear reporting without introducing significant overhead.
+
+## Main Components
+
+### TEST Class
+
+The `TEST` class encapsulates a test case with metadata like name, 
+description, and result. It supports various logical operations such as 
+equality comparison (`==`, `!=`, `||`, `&&`, etc.) and provides copy 
+construction and assignment operators for easy manipulation of test 
+results.
+
+### test Namespace
+
+The `test` namespace contains several important structures and utility 
+functions:
+
+- **count struct**: Tracks test counts for different categories 
+vector, basic).
+- **index**: Global counter instance to manage test counters across the 
+entire application.
+- **basic<T>()** function: Compares single values with optional metadata.
+- **vector<T>()**, **vector_2d<T>()**, and **vector_3d<T>()** functions: 
+Compare vectors of various dimensions, both with metadata and without.
+- **function<T>()**, **function<T1, T2>()**, and **function<T1, T2, 
+T3>()**: Test parameterless functions as well as those with single or 
+multiple parameters. Functions also support type conversion where 
+necessary.
+
+## Features
+
+The framework features include:
+
+- Template-based for type flexibility.
+- No-throw guarantee (noexcept).
+- Support for parameterized tests and names descriptions.
+- Automatic test counting and categorization.
+- Works seamlessly with STL containers, specifically ocf::vec.
+- Compile-time evaluation support (constexpr).
+
+## Usage Example
+
+Here is a simple example of how to use the `TEST` class:
+
+```cpp
+#include "test.hpp"
+
+int main() {
+    TEST result = lite::test::basic<int>(42, 42, "Integer Test", "Testing 
+if 42 equals 42");
+    std::cout << result.get(true) << ": " << 
+lite::test::test_message(result.get()) << std::endl;
+    return 0;
+}
+```
+
+## Notes
+
+- Requires C++23 or later for full compatibility.
+
+---
+
+This documentation outlines the features, components, and usage of the 
+`lite::test` unit testing framework, ensuring clarity and ease-of-use for 
+developers who wish to integrate it into their projects.
+
+

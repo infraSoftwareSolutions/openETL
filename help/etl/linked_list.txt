@@ -1,0 +1,281 @@
+## LIBRARY OVERVIEW
+================
+
+This library defines a singly linked list implementation with various 
+operations including insertion, removal, and lookup. The structure is 
+designed to be efficient while maintaining the basic functionality needed 
+for common list manipulations.
+
+## OBJECTS & DATA STRUCTURES
+=========================
+
+### Object: linked_list
+------------------
+
+Description of what this object represents and its purpose:
+
+- `linked_list`: A singly linked list data structure that supports 
+operations such as insertion, removal, lookup, replacement, and traversal.
+  
+Members:
+  - `first` (node*): Pointer to the first node in the list. The list is 
+empty if `first` points to `nullptr`.
+  - `last` (node*): Pointer to the last node in the list.
+  - `length` (size_t): Number of nodes in the list.
+
+### Object: node
+--------------
+
+Structure representing a single element within the linked list:
+
+- `item` (T): The value stored at this node.
+  
+Members:
+  - `next` (node*): Pointer to the next node in the list. Points to 
+`nullptr` if there are no further nodes after this one.
+
+## FUNCTIONS
+=========
+
+### Function: linked_list()
+-------------------------------------
+
+Purpose: Constructs an empty linked list object or initializes it from a 
+given initializer list of values.
+
+Parameters:
+  - None
+
+Returns: A reference to the newly created linked list.
+
+Notes: The constructor initializes all members, and the other 
+initialize according to provided data. The destructor ensures all nodes 
+are deleted properly when the object is destroyed.
+
+### Function: insertFirst(T element)
+---------------------------------
+
+Purpose: Inserts an element at the front of the linked list.
+
+Parameters:
+  - `element` (T): The value to be inserted into the first position of 
+list.
+  
+Notes: The function does not modify the length if a new node was added. 
+creates and inserts a new node before `first`. If the list is initially 
+empty, this operation also sets `last` to point to the same new node.
+
+### Function: insertLast(T element)
+---------------------------------
+
+Purpose: Inserts an element at the end of the linked list.
+
+Parameters:
+  - `element` (T): The value to be inserted into the last position of the 
+list.
+  
+Notes: Similar to the previous function, this one does not modify length 
+if a new node was added. It creates and appends a new node after `last`.
+
+### Function: insert(size_t pos, T element)
+----------------------------------------
+
+Purpose: Inserts an element at a specified zero-based index within the 
+linked list.
+
+Parameters:
+  - `pos` (size_t): The position where to insert the element.
+  - `element` (T): The value to be inserted into the list.
+
+Returns: None
+
+Notes: Insertion fails if the provided index is out of bounds. It uses a 
+loop to find the appropriate node before which the new node should be 
+inserted, and updates pointers accordingly. If an existing element 
+occupies this position, it will replace that element first.
+
+### Function: removeFirst()
+---------------------------------
+
+Purpose: Removes the first node from the linked list if there are 
+present in the list.
+
+Parameters:
+  - None
+
+Returns: None
+
+Notes: The function checks for empty list and handles special cases 
+(single-element list) appropriately. If the operation succeeds, it 
+`first` to point to the next element after this one; otherwise, the last 
+node becomes the new first. Length is decremented accordingly.
+
+### Function: removeLast()
+---------------------------------
+
+Purpose: Removes the last node from the linked list if there are elements 
+present in the list.
+
+Parameters:
+  - None
+
+Returns: None
+
+Notes: Similar to `removeFirst`, but it handles cases where the remaining 
+nodes form a single-element list. It updates pointers and decrement 
+appropriately.
+
+### Function: remove(T element)
+---------------------------------
+
+Purpose: Removes the first occurrence of an element from the linked list 
+if found; otherwise, prints an error message.
+
+Parameters:
+  - `element` (T): The value to be removed from the list.
+  
+Returns: None
+
+Notes: This function iterates through the nodes looking for a match. Once 
+it finds the matching node and removes it safely by adjusting pointers 
+between nodes. If no such element is found, an error message is printed.
+
+### Function: exist(T element)
+---------------------------------
+
+Purpose: Checks whether a given value exists in the list or not.
+
+Parameters:
+  - `element` (T): The value to search for within the list.
+  
+Returns: `true` if the element exists; otherwise, returns `false`.
+
+Notes: This function scans through the nodes to check for matches. It's 
+efficient due to linear traversal until a match is found or all nodes are 
+checked.
+
+### Function: where(T element)
+---------------------------------
+
+Purpose: Locates and returns the zero-based index of an element within 
+list if present; otherwise, prints an error message and returns `0`.
+
+Parameters:
+  - `element` (T): The value to search for within the list.
+  
+Returns: The zero-based index of the element or `0` if not found.
+
+Notes: This function uses a loop to traverse through the nodes checking 
+each one against the target value. If a match is found, its position is 
+returned; otherwise, an error message and return 0 are handled gracefully.
+
+### Function: clear_items()
+---------------------------------
+
+Purpose: Clears all values stored within list elements without affecting 
+the node structure.
+
+Parameters:
+  - None
+
+Returns: None
+
+Notes: This function simply sets each item of the nodes to `T()`, 
+effectively removing the value but not destroying the nodes themselves. 
+The length is decremented appropriately for consistency with other 
+operations.
+
+### Function: clear()
+---------------------------------
+
+Purpose: Removes all elements from the list and resets its state, leaving 
+only the node structure intact.
+
+Parameters:
+  - None
+
+Returns: None
+
+Notes: This function deletes every single item of each node in the list 
+while preserving its underlying data structures. Length is reset to zero 
+for consistency with user expectations after all values are removed.
+
+### Function: replaceFirst(T newElement)
+---------------------------------
+
+Purpose: Replaces the value stored at the first node with a given new 
+value if not empty; otherwise, prints an error message.
+
+Parameters:
+  - `newElement` (T): The new value to set as the item of the first node.
+  
+Returns: None
+
+Notes: This function checks for emptiness and handles special cases. If 
+valid, it updates the item of `first`. Otherwise, it outputs an error 
+message.
+
+### Function: replaceLast(T newElement)
+---------------------------------
+
+Purpose: Replaces the value stored at the last node with a given new 
+if not empty; otherwise, prints an error message.
+
+Parameters:
+  - `newElement` (T): The new value to set as the item of the last node.
+  
+Returns: None
+
+Notes: Similar to the previous function but targets the final element 
+instead. It updates the appropriate pointer and handles emptiness 
+correctly.
+
+### Function: replace(T oldElement, T newElement)
+--------------------------------------------
+
+Purpose: Replaces all occurrences of a given old value with a specified 
+new value within the list.
+
+Parameters:
+  - `oldElement` (T): The existing value to be replaced.
+  - `newElement` (T): The replacement value.
+  
+Returns: None
+
+Notes: This function performs an efficient search for any instances of 
+old element and replaces them accordingly. It iterates through all nodes, 
+checking each one against the target value. If found, it updates the 
+otherwise, no changes are made.
+
+### Function: replace_all(T oldElement, T newElement)
+--------------------------------------------
+
+Purpose: Replaces every occurrence of a given old value with a specified 
+new value within the list.
+
+Parameters:
+  - `oldElement` (T): The existing value to be replaced.
+  - `newElement` (T): The replacement value.
+  
+Returns: None
+
+Notes: This function scans through all nodes, searching for each instance 
+of the old element and updating its value. It's efficient as it only 
+to find and replace elements rather than check individual ones.
+
+### Function: reverse()
+---------------------------------
+
+Purpose: Reverses the order of elements within the linked list.
+
+Parameters:
+  - None
+
+Returns: None
+
+Notes: The function iterates from `first` through `last`, reversing 
+pointers. It handles corner cases like empty lists or single-element 
+separately and ensures proper updates to maintain correct forward 
+traversal after reversal.
+
+
