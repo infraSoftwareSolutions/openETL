@@ -22,10 +22,10 @@ namespace etl
     {
     private:
         /// Stores the underlying numeric value of the index.
-        size_t ind = size_t();
+        size_t ind;
 
         /// Indicates whether the index is currently usable.
-        bool is_valid = true;
+        bool is_valid;
 
     public:
         /**
@@ -34,7 +34,7 @@ namespace etl
          * The resulting object uses the default-initialized value and remains
          * valid by default.
          */
-        index() = default;
+        index() : ind(0), is_valid(true) {}
 
         /**
          * @brief Destroys the index object.

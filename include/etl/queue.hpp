@@ -1,4 +1,5 @@
-#include "io.hpp"
+#include <iostream>
+#include "cfrost/types.h"
 #include "cfrost/structure.h"
 
 #pragma once
@@ -8,29 +9,202 @@
 namespace etl
 {
 
+    /// @brief Represents a queue implemented with a singly linked list.
+    ///
+    /// The class supports enqueuing, dequeuing, and inspecting the front and rear items.
     template <typename T>
     class queue
     {
     private:
-        T *arr;
+        struct node
+        {
+            T item;
+            node *next;
+        };
+        node *front;
+        node *rear;
+        size_t size;
+
+    public:
+        /// @brief Constructs an empty queue.
+        queue()
+        {
+            front = rear = nullptr;
+            size = 0;
+        }
+
+        queue(T element)
+        {
+            front = new node;
+            front->item = element;
+            front->next = nullptr;
+            rear = front;
+            size++;
+        }
+
+        queue(ocf::initList<T> list)
+        {
+            for (T element : list)
+                enque(element);
+        }
+
+        /// @brief Checks whether the queue is empty.
+        inline bool empty() const noexcept
+        {
+            if (rear == nullptr)
+                return true;
+            return false;
+        }
+
+        /// @brief Adds an element to the rear of the queue.
+        ///
+        /// @param element The value to enqueue.
+        void enque(T element) noexcept
+        {
+            if (empty())
+            {
+                front = new node;
+                front->item = element;
+                front->next = nullptr;
+                rear = front;
+            }
+            else
+            {
+                node *new_ptr = new node;
+                new_ptr->item = element;
+                new_ptr->next = nullptr;
+                rear->next = new_ptr;
+                rear = new_ptr;
+            }
+            size++;
+        }
+
+        /// @brief Removes the element at the front of the queue.
+        procedure(deque)
+        {
+            if (empty())
+            {
+                throw std::invalid_argument("empty que can\'t deque");
+            }
+            else
+            {
+                node *temp_ptr = front;
+                if (front == rear)
+                {
+                    rear = nullptr;
+                    front = nullptr;
+                    size--;
+                }
+                else
+                {
+                    front = front->next;
+                    size--;
+                }
+                temp_ptr->next = nullptr;
+                delete temp_ptr;
+            }
+        }
+
+        /// @brief Returns the value stored at the front of the queue.
+        inline T get_front() const
+        {
+            if (empty())
+                throw std::invalid_argument("empty que");
+            return front->item;
+        }
+
+        /// @brief Returns the value stored at the rear of the queue.
+        inline T get_rear() const
+        {
+            if (empty())
+                throw std::invalid_argument("empty que");
+            return rear->item;
+        }
+
+        /// @brief Removes all elements from the queue.
+        procedure(clear)
+        {
+            node *current;
+            while (front != nullptr)
+            {
+                current = front;
+                front = front->next;
+                delete current;
+            }
+            rear = nullptr;
+            size = 0;
+        }
+
+        void operator=(const ocf::vec<T> &elements)
+        {
+            clear();
+            for (const T &element : elements)
+                enque(element);
+        }
+
+        void operator=(const ocf::str &s)
+        {
+            clear();
+            for (const char &c : s)
+                enque(static_cast<T>(c));
+        }
+
+        inline void operator<<(T element) { enque(element); }
+
+        inline void operator<<(ocf::vec<T> &elements)
+        {
+            enque(elements[elements.size() - 1]);
+            elements.pop_back();
+        }
+
+        inline void operator<<(ocf::str &s)
+        {
+            enque(s[s.size() - 1]);
+            s.pop_back();
+        }
+
+        inline void operator>>(T &element)
+        {
+            element = get_front();
+            deque();
+        }
+
+        inline void operator>>(ocf::vec<T> &elements)
+        {
+            elements.push_back(get_front());
+            deque();
+        }
+
+        inline void operator>>(ocf::str &s)
+        {
+            s += static_cast<char>(get_front());
+            deque();
+        }
+
+        ~queue() { clear(); }
+    };
+
+    template <typename T, size_t maxSize>
+    class Queue
+    {
+    private:
+        T arr[maxSize];
         size_t rear;
         size_t front;
         size_t length;
-        size_t maxSize;
 
     public:
-        queue(int ArrSize)
+        Queue(int ArrSize)
         {
             if (ArrSize < 0)
                 throw invalid_argument("the size have to be bigger then zero");
             front = 0;
-            arr = new T[ArrSize];
             maxSize = ArrSize;
             rear = maxSize - 1;
             length = 0;
         }
 
-        queue(initList<T> &vec) noexcept : arr(vec) {};
+        Queue(ocf::initList<T> &vec) noexcept : arr(vec) {};
 
         inline constexpr bool empty() const noexcept { return length == 0; }
 
@@ -39,7 +213,7 @@ namespace etl
         void eque(T element) noexcept
         {
             if (full())
-                meta::lite::io::println_error("Queue Full Can't Enqueue");
+                io::println_error("Queue Full Can't Enqueue");
             else
             {
                 rear = (rear + 1) % maxSize;
@@ -51,7 +225,7 @@ namespace etl
         procedure(dque) noexcept
         {
             if (empty())
-                meta::lite::io::println_error("Empty Queue Can't Dequeue");
+                io::println_error("Empty Queue Can't Dequeue");
             else
             {
                 front = (front + 1) % maxSize;
@@ -63,7 +237,7 @@ namespace etl
         {
             if (empty())
             {
-                meta::lite::io::println_error("the queue is empty, no elements to get");
+                io::println_error("the queue is empty, no elements to get");
                 throw std::invalid_argument("Queue is empty, no front element available.");
             }
             return arr[front];
@@ -73,7 +247,7 @@ namespace etl
         {
             if (empty())
             {
-                meta::lite::io::println_error("the queue is empty, no elements to get");
+                io::println_error("the queue is empty, no elements to get");
                 return;
             }
             element = arr[front];
@@ -83,7 +257,7 @@ namespace etl
         {
             if (empty())
             {
-                meta::lite::io::println_error("the queue is empty, no elements to get");
+                io::println_error("the queue is empty, no elements to get");
                 throw std::invalid_argument("Queue is empty, no rear element available.");
             }
             return arr[rear];
@@ -93,7 +267,7 @@ namespace etl
         {
             if (empty())
             {
-                meta::lite::io::println_error("the queue is empty, no elements to print");
+                io::println_error("the queue is empty, no elements to print");
                 return;
             }
             std::cout << "Queue elements: ";
@@ -115,11 +289,11 @@ namespace etl
                     return rear;
             }
             else
-                meta::lite::io::println_error("Q is empty ! ");
+                io::println_error("Q is empty ! ");
             return -1;
         }
 
-        void operator=(const vector<T> &vec)
+        void operator=(const ocf::vec<T> &vec)
         {
             if (!vec.empty())
             {
@@ -127,7 +301,7 @@ namespace etl
                     addQueue(vec[i]);
             }
             else
-                meta::lite::io::println_error("Empty Error");
+                io::println_error("Empty Error");
         }
 
         void operator=(const queue &other) noexcept
@@ -146,7 +320,7 @@ namespace etl
         {
             if (empty())
             {
-                meta::lite::io::println_error("the queue is empty, no elements to read");
+                io::println_error("the queue is empty, no elements to read");
                 throw std::invalid_argument("Queue is empty, no elements to read.");
             }
             element = get_front();
@@ -158,16 +332,15 @@ namespace etl
         {
             if (full())
             {
-                meta::lite::io::println_error("Queue Full Can't Enqueue");
+                io::println_error("Queue Full Can't Enqueue");
                 throw std::out_of_range("Queue is full, cannot add more elements.");
             }
             addQueue(element);
             return element;
         }
 
-        ~queue() = default;
+        ~Queue() = default;
     };
-
 }
 
 #endif // ETL___QUEUE_HPP

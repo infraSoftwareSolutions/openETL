@@ -1,7 +1,10 @@
-#pragma once
 #include "cfrost/types.h"
 #include "function.hpp"
 #include "io.hpp"
+
+#pragma once
+#ifndef ETL___ENUM_HPP
+#define ETL___ENUM_HPP
 
 namespace etl
 {
@@ -49,12 +52,12 @@ namespace etl
     class enum_ascii
     {
     private:
-        ocf::vec<size_t> count;
+        std::vector<size_t> count;
 
     protected:
         inline void allocate_ascii() noexcept
         {
-            for (char start = ' '; start < '~'; start++)
+            for (char start = '\0'; start <= '~'; start++)
                 count.push_back(0);
         }
 
@@ -62,13 +65,20 @@ namespace etl
         enum_ascii() { allocate_ascii(); }
         ~enum_ascii() = default;
 
-        constexpr void operator<<(const char &c) noexcept
-        {
-            if (c >= ' ' && c <= '~')
-                count[c - ' ']++;
+        enum_ascii(const std::string& s) {
+            allocate_ascii();
+            for(char c : s) {
+                count[c]++;
+            }
         }
 
-        inline void operator<<(const ocf::str &s) noexcept
+        constexpr void operator<<(const char &c) noexcept
+        {
+            if (c >= '\0' && c <= '~')
+                count[c]++;
+        }
+
+        inline void operator<<(const std::string &s) noexcept
         {
             for (const char &c : s)
                 *this << c;
@@ -76,10 +86,10 @@ namespace etl
 
         constexpr size_t operator[](const char &c) noexcept
         {
-            return (c >= ' ' && c <= '~') ? count[c - ' '] : 0;
+            return (c >= '\0' && c <= '~') ? count[c] : 0;
         }
 
-        inline bool operator==(const enum_ascii &other) noexcept
+        constexpr bool operator==(const enum_ascii &other) noexcept
         {
             for (size_t i = 0; i < count.size(); i++)
             {
@@ -88,12 +98,34 @@ namespace etl
             }
             return true;
         }
+        
+        constexpr void operator+=(const std::pair<char, size_t>& value) noexcept {
+            count[value.first] += value.second;
+        }
 
-        inline bool operator!=(const enum_ascii &other) { return !(*this == other); }
+        constexpr void operator-=(const std::pair<char, size_t>& value) noexcept {
+            count[value.first] -= value.second;
+        }
+
+        inline void operator+=(const std::pair<std::string, size_t>& value) {
+            for(char c : value.first) count[c] += value.second;
+        }
+
+        inline void operator-=(const std::pair<std::string, size_t>& value) {
+            for(char c : value.first) count[c] -= value.second;
+        }
+
+        constexpr bool operator!=(const enum_ascii &other) { return !(*this == other); }
 
         constexpr bool contains(const char &c) noexcept
         {
-            return (c >= ' ' && c <= '~') ? count[c - ' '] > 0 : false;
+            return (c >= '\0' && c <= '~') ? count[c] > 0 : false;
+        }
+
+        inline void clear() noexcept {
+            for(char c = '\0'; c <= '~'; c++) count[c] = 0;
         }
     };
 }
+
+#endif // ETL___ENUM_HPP

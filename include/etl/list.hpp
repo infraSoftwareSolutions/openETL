@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <initializer_list>
-#include <string>
 #include "cfrost/structure.h"
 
 #pragma once
@@ -62,7 +61,7 @@ namespace etl
             max_size = v.size();
             length = v.size();
             size_set = false;
-            for (int i = 0; i < v.size(); i++)
+            for (iter_less(i, v.size()))
                 *(arr + i) = v[i];
         }
 
@@ -72,7 +71,7 @@ namespace etl
             max_size = list.size();
             length = list.size();
             size_set = false;
-            for (int i = 0; i < list.size(); i++)
+            for (iter_less(i, list.size()))
                 *(arr + i) = *(list.begin() + i);
         }
 
@@ -84,11 +83,11 @@ namespace etl
             max_size = v.size();
             length = v.size();
             size_set = false;
-            for (int i = 0; i < v.size(); i++)
+            for (iter_less(i, v.size()))
                 *(arr + i) = v[i];
         }
 
-        void set(const std::vector<T> &v, int s) noexcept
+        void set(const std::vector<T> &v, size_t s) noexcept
         {
             if (v.empty())
                 return;
@@ -100,7 +99,7 @@ namespace etl
             arr = new T[s];
             max_size = s;
             length = s;
-            for (int i = 0; i < s; i++)
+            for (iter_less(i, s))
                 *(arr + i) = v[i];
         }
 
@@ -114,23 +113,13 @@ namespace etl
             size_set = false;
         }
 
-        void set(int s)
-        {
-            if (!size_set)
-                throw std::invalid_argument("size reset error");
-            if (s < 0)
-                throw std::invalid_argument("the size can not be zero or less");
-            max_size = static_cast<size_t>(s);
-            size_set = false;
-        }
-
         /// @brief Checks whether the list is empty.
         inline constexpr bool empty() const noexcept { return length == 0; }
 
         /// @brief Checks whether the list has reached its capacity.
         inline constexpr bool full() const noexcept
         {
-            if (max_size == -1)
+            if (max_size == 0)
                 std::cerr << "the array is dynamic allocation,\n so no max size available" << std::endl;
             return length == max_size;
         }
@@ -145,11 +134,11 @@ namespace etl
         ///
         /// @param pos The zero-based insertion position.
         /// @param element The value to insert.
-        void insert(int pos, T element)
+        void insert(size_t pos, T element)
         {
             if (full())
                 throw std::length_error("list full");
-            else if (pos < 0 || pos > length)
+            else if (pos >= length)
                 throw std::out_of_range("pos parameter is bigger then length or less than zero");
             else
                 for (int i = length; i > pos; i--)
@@ -161,11 +150,11 @@ namespace etl
         /// @brief Removes the element at the specified position.
         ///
         /// @param pos The zero-based index of the element to remove.
-        void remove(int pos)
+        void remove(size_t pos)
         {
             if (empty())
                 throw std::invalid_argument("Empty list");
-            else if (pos < 0 || pos > length)
+            else if (pos >= length)
                 throw std::out_of_range("pos parameter is bigger then length or less than zero");
             else
                 for (int i = pos; i < length; i++)
@@ -199,9 +188,9 @@ namespace etl
             length++;
         }
 
-        void inseratNoDuplicate(int pos, T element)
+        void inseratNoDuplicate(size_t pos, T element)
         {
-            if (search(element) == -1)
+            if (search(element) == 0)
                 insert(pos, element);
         }
 
@@ -209,9 +198,9 @@ namespace etl
         ///
         /// @param pos The zero-based index to update.
         /// @param element The replacement value.
-        void update(int pos, T element)
+        void update(size_t pos, T element)
         {
-            if (pos < 0 || pos >= length)
+            if (pos >= length)
                 throw std::out_of_range("pos parameter is bigger then length or less than zero");
             else
                 arr[pos] = element;
@@ -220,9 +209,9 @@ namespace etl
         /// @brief Returns the element stored at the specified position.
         ///
         /// @param pos The zero-based index.
-        int get(int pos) const
+        int get(size_t pos) const
         {
-            if (pos < 0 || pos > length)
+            if (pos >= length)
                 throw std::out_of_range("pos parameter is bigger then length or less than zero");
             return arr[pos];
         }

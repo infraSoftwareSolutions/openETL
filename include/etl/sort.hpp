@@ -5,58 +5,58 @@
 #ifndef ETL___SORT_HPP
 #define ETL___SORT_HPP
 
-namespace etl {        
-        bool is_sorted(const std::string& value, bool increasing) noexcept {
-            if(value.empty()) return true;
-            for(size_t i = 1; i < value.length(); i++) {
-                if(increasing) {
-                    if(value[i] < value[i - 1]) return false;
-                } else {
-                    if(value[i] > value[i - 1]) return false;
-                }
+namespace etl {
+    bool is_sorted(const std::string& value, bool increasing) noexcept {
+        if(value.empty()) return true;
+        for(size_t i = 1; i < value.length(); i++) {
+            if(increasing) {
+                if(value[i] < value[i - 1]) return false;
+            } else {
+                if(value[i] > value[i - 1]) return false;
             }
-            return true;
         }
+        return true;
+    }
 
-        template<typename T>
-        bool is_sorted(const std::vector<T>& value, bool increasing) noexcept {
-            if(value.empty()) return true;
-            for(size_t i = 1; i < value.size(); i++) {
-                if(increasing) {
-                    if(value[i] < value[i - 1]) return false;
-                } else {
-                    if(value[i] > value[i - 1]) return false;
-                }
+    template<typename T>
+    bool is_sorted(const std::vector<T>& value, bool increasing) noexcept {
+        if(value.empty()) return true;
+        for(size_t i = 1; i < value.size(); i++) {
+            if(increasing) {
+                if(value[i] < value[i - 1]) return false;
+            } else {
+                if(value[i] > value[i - 1]) return false;
             }
-            return true;
         }
+        return true;
+    }
 
-        std::string bubble_sort(const std::string& value) noexcept;
-        template<typename T>
-        std::vector<T> bubble_sort(const std::vector<T>& value) noexcept;
+    std::string bubble_sort(const std::string& value) noexcept;
+    template<typename T>
+    std::vector<T> bubble_sort(const std::vector<T>& value) noexcept;
 
-        std::string selection_sort(const std::string& value) noexcept;
-        template<typename T>
-        std::vector<T> selection_sort(const std::vector<T>& value) noexcept;
+    std::string selection_sort(const std::string& value) noexcept;
+    template<typename T>
+    std::vector<T> selection_sort(const std::vector<T>& value) noexcept;
 
-        std::string comb_sort(const std::string& value) noexcept;
-        template<typename T>
-        std::vector<T> comb_sort(const std::vector<T>& value) noexcept;
+    std::string comb_sort(const std::string& value) noexcept;
+    template<typename T>
+    std::vector<T> comb_sort(const std::vector<T>& value) noexcept;
 
-        std::string heap_sort(const std::string& value) noexcept;
-        template<typename T>
-        std::vector<T> heap_sort(const std::vector<T>& value) noexcept;
+    std::string heap_sort(const std::string& value) noexcept;
+    template<typename T>
+    std::vector<T> heap_sort(const std::vector<T>& value) noexcept;
 
-        std::string insertion_sort(const std::string& value) noexcept;
-        template<typename T>
-        std::vector<T> insertion_sort(const std::vector<T>& value) noexcept;
+    std::string insertion_sort(const std::string& value) noexcept;
+    template<typename T>
+    std::vector<T> insertion_sort(const std::vector<T>& value) noexcept;
 
-        std::string merge_sort(const std::string& value) noexcept;
-        template<typename T>
-        std::vector<T> merge_sort(const std::vector<T>& value) noexcept;
+    std::string merge_sort(const std::string& value) noexcept;
+    template<typename T>
+    std::vector<T> merge_sort(const std::vector<T>& value) noexcept;
 
-        std::string quick_sort(const std::string& value) noexcept;
-        template<typename T>
-        std::vector<T> quick_sort(const std::vector<T>& value) noexcept;
+    std::string quick_sort(const std::string& value) noexcept;
+    template<typename T>
+    std::vector<T> quick_sort(const std::vector<T>& value) noexcept;
 }
 #endif // ETL___SORT_HPP

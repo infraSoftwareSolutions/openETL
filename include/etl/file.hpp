@@ -11,7 +11,6 @@
  * @brief A simple text file manager class for creating, reading, appending, checking existence, and removing text files in a specified directory.
  */
 
-
 #include <fstream>
 #include <string>
 #include <filesystem>
@@ -165,7 +164,7 @@ namespace etl {
                     file.open(fileName, std::ios::in |
                                             std::ios::out | std::ios::app);
                 }
-                file << "#include " << "\"metaCore/cgen/micros/object_data.h\"\n";
+                file << "#include " << "\"cfrost/data.h\"\n";
                 file.close();
             }
 
@@ -300,4 +299,5 @@ namespace etl {
             }
         }   
 }
+
 #endif // ETL___FILE_HPP

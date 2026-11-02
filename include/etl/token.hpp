@@ -1,124 +1,73 @@
 #include <unordered_map>
 #include <string>
-#include <ctype.h>
 #include <iostream>
-#include <initializer_list>
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
-
+#include "hash.hpp"
+ 
 #pragma once
 #ifndef ETL___TOKEN_HPP
 #define ETL___TOKEN_HPP
 
 namespace etl {        
-        using token = std::pair<ocf::str, uint8_t>;
+    using token = std::pair<ocf::str, uint8_t>;
 
-        class hash_enum {
-            private:
-            uint8_t counter = 0;
-            std::unordered_map<ocf::str, uint8_t> objectMap;
-
-            public:
-            hash_enum() = default;
-            ~hash_enum() = default;
-
-            hash_enum(const std::initializer_list<ocf::str> &list) noexcept {
-                for(ocf::str element : list) {
-                    objectMap[element] = counter;
-                    counter++;
-                }
-            }
-
-            hash_enum(const hash_enum& other) noexcept : objectMap(other.objectMap) {}
-
-            constexpr inline void add(const ocf::str& enum_val) noexcept {
-                if(counter == UINT8_MAX) {
-                    std::cerr << "out of limit issue: can't add to full enum hast map.\n";
-                }
-                objectMap[enum_val] = counter;
-                counter++;
-            }
-
-            constexpr inline size_t size() noexcept {
-                return objectMap.size();
-            }
-
-            inline auto begin() noexcept {
-                return objectMap.begin();
-            }
-
-            inline auto end() noexcept {
-                return objectMap.end();
-            }
-
-            constexpr inline void operator<<(const ocf::str& enum_val) noexcept { add(enum_val); }
+    class key_map {
+        private:
+        ocf::str keyWord;
+        std::unordered_map<ocf::str, ocf::str> elements;
         
-            constexpr inline uint8_t operator[](const ocf::str& enum_val) noexcept { return objectMap.at(enum_val); }
+        public:
+        key_map() = default;
+        
+        ~key_map() = default;
+        
+        key_map(const ocf::str& element) noexcept : 
+        keyWord(element) {}
 
-            inline void operator=(const hash_enum& other) noexcept {
-                counter = other.counter;
-                objectMap = other.objectMap;
-            }
-        };
+        key_map(const key_map& other) noexcept : 
+        keyWord(other.keyWord), 
+        elements(other.elements) {}
 
-        class key_map {
-            private:
-            ocf::str keyWord;
-            std::unordered_map<ocf::str, ocf::str> elements;
-            
-            public:
-            key_map() = default;
-            
-            ~key_map() = default;
-            
-            key_map(const ocf::str& element) noexcept : 
-            keyWord(element) {}
+        void set(const ocf::str& element) noexcept { keyWord = element; }
 
-            key_map(const key_map& other) noexcept : 
-            keyWord(other.keyWord), 
-            elements(other.elements) {}
+        const ocf::str& get() noexcept { return keyWord; }
 
-            void set(const ocf::str& element) noexcept { keyWord = element; }
+        size_t size() noexcept { return elements.size(); }
 
-            const ocf::str& get() noexcept { return keyWord; }
+        ocf::str operator[](const ocf::str& key) { return elements.at(key); }
 
-            size_t size() noexcept { return elements.size(); }
+        void operator<<(const ocf::str& element) noexcept { elements[element] = keyWord; }
 
-            ocf::str operator[](const ocf::str& key) { return elements.at(key); }
+        void operator=(const key_map& other) {
+            keyWord = other.keyWord;
+            elements = other.elements;
+        }
+    };
 
-            void operator<<(const ocf::str& element) noexcept { elements[element] = keyWord; }
+    class tokenizer {
+        private:
+        hash_enum id_number;
+        ocf::vec<token> result;
 
-            void operator=(const key_map& other) {
-                keyWord = other.keyWord;
-                elements = other.elements;
-            }
-        };
+        public:
+        tokenizer() noexcept = default;
+        ~tokenizer() noexcept = default;
 
-        class tokenizer {
-            private:
-            hash_enum id_number;
-            ocf::vec<token> result;
+        tokenizer(const hash_enum& idNum) noexcept : id_number(idNum) {}
 
-            public:
-            tokenizer() noexcept = default;
-            ~tokenizer() noexcept = default;
+        inline const ocf::vec<token>& get() noexcept { return result; }
 
-            tokenizer(const hash_enum& idNum) noexcept : id_number(idNum) {}
+        inline void operator<<(const ocf::str& token_name) noexcept {
+            result.push_back(token(token_name, id_number[token_name]));
+        }
 
-            inline const ocf::vec<token>& get() noexcept { return result; }
-
-            inline void operator<<(const ocf::str& token_name) noexcept {
+        inline void operator<<(const ocf::vec<ocf::str>& tokens) noexcept {
+            for(ocf::str token_name : tokens) {
                 result.push_back(token(token_name, id_number[token_name]));
             }
+        }
 
-            inline void operator<<(const ocf::vec<ocf::str>& tokens) noexcept {
-                for(ocf::str token_name : tokens) {
-                    result.push_back(token(token_name, id_number[token_name]));
-                }
-            }
-
-            inline token operator[](const size_t index) noexcept { return result[index]; }
-        };
+        inline token operator[](const size_t index) noexcept { return result[index]; }
+    };
 }
 
 #endif // ETL___TOKEN_HPP

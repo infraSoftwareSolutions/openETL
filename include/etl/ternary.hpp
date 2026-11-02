@@ -21,7 +21,6 @@ const int unknown = 2;
 /// The class provides methods for setting, getting, and manipulating ternary logic values.
 namespace etl
 {
-
     /**
      * @class ternary
      * @brief A class to represent ternary logic values: true, false, and unknown

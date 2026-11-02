@@ -24,9 +24,9 @@
 
         },
 
-        // ─── C++ (lite) ──────────────────────────────────────
+        // ─── C++ (openETL) ──────────────────────────────────────
         {
-            "name": "lite",
+            "name": "openETL",
             "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
             "cppStandard": "c++20",
             "intelliSenseMode": "windows-gcc-x64",
