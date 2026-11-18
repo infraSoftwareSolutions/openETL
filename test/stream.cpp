@@ -1,5 +1,5 @@
 #include "etl/stream.hpp"
-#include "cfrost.h"
+#include "cformat.h"
 
 TEST_MAIN(etl_stream);
 

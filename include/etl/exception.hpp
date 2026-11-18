@@ -29,8 +29,8 @@
 #include <stdexcept>
 #include <string>
 
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
+#include "cformat/structure.h"
+#include "cformat/types.h"
 
 #pragma once
 #ifndef ETL___EXCEPTION_HPP

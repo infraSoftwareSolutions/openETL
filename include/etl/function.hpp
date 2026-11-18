@@ -4,20 +4,19 @@
  * @author Ali Lafi
  */
 
-#include <vector>
 #include <iostream>
 #include <stdexcept>
 #include <algorithm>
-#include <functional>
-#include <cinttypes>
-#include "cfrost/types.h"
+
+#include "cformat/structure.h"
+#include "cformat/types.h"
 
 #pragma once
 #ifndef ETL___FUNCTION_HPP
 #define ETL___FUNCTION_HPP
 
 namespace etl {
-    size_t to_hash(const std::string& s) {
+    size_t to_hash(const ocf::str& s) {
         short shift = 0;
         size_t xor_val = 1;
         size_t result = 0;
@@ -43,8 +42,8 @@ namespace etl {
     {
         if(input.empty()) return ocf::vec<T>();
         ocf::vec<T> result;
-        for(size_t i = input.size() - 1; i >= 0; i--) {
-            result.push_back(input[i]);
+        for(iter_high(i, input.size())) {
+            result.push_back(input[i - 1]);
         }
         return result;
     }
@@ -57,10 +56,10 @@ namespace etl {
     template <typename T>
     ocf::vec<ocf::vec<T>>& reverse_2d(const ocf::vec<ocf::vec<T>> &input) noexcept
     {
-        if(input.empty()) std::verstor<ocf::vec<T>>();
+        if(input.empty()) ocf::vec<ocf::vec<T>>();
         ocf::vec<ocf::vec<T>> result;
-        for(size_t i = input.size() - 1; i >= 0; i--) {
-            result.push_back(reverse_v(input[i]));
+        for(iter_high(i, input.size())) {
+            result.push_back(reverse_v(input[i - 1]));
         }
         return result;
     }
@@ -75,8 +74,8 @@ namespace etl {
     {
         if(input.empty()) return ocf::vec<ocf::vec<ocf::vec<T>>>();
         ocf::vec<ocf::vec<ocf::vec<T>>> result;
-        for(size_t i = input.size() - 1; i >= 0; i--) {
-            result.push_back(reverse_v(input[i]));
+        for(iter_high(i, input.size())) {
+            result.push_back(reverse_v(input[i - 1]));
         }
         return result;
     }
@@ -132,7 +131,7 @@ namespace etl {
     {
         if(in1.empty() && in2.empty()) return true;
         if(in1.size() != in2.size()) return false;
-        for(size_t i = 0; i < in2.size(); i++)
+        for(iter_less(i, in1.size()))
         {
             if(in2[i] != in1[i])
                 return false;
@@ -159,7 +158,7 @@ namespace etl {
         if(v.empty()) return ocf::vec<T>();
         if(end >= input.size()) end = input.length();
         ocf::vec<T> result;
-        for(size_t i = start; i <= end; i++) {
+        for(iter_in_range(i, start, end, 1)) {
             result.push_back(input[i]);
         }
         return result;
@@ -206,7 +205,7 @@ namespace etl {
         if(index > static_cast<int>(v.size()) || index < 0)
             throw std::out_of_range("the vector erase index is begger than the vector size or is equal or less than zero");
         ocf::vec<ocf::vec<T>> result;
-        for(size_t i = 0; i < v.size(); i++)
+        for(iter_less(i, v.size()))
         {
             if(static_cast<int>(i) == index)
                 continue;
@@ -238,12 +237,12 @@ namespace etl {
         }
         ocf::vec<ocf::vec<T>> result;
         int erase_count = 0;
-        for(size_t i = 0; i < v.size(); i++)
+        for(iter_less(i, v.size()))
         {
             if(static_cast<int>(v[i].size()) < index)
                 continue;
             result.push_back({});
-            for(size_t j = 0; j < v[i].size(); j++)
+            for(iter_less(j, v[i].size()))
             {
                 if(static_cast<int>(j) != index)
                     result[i].push_back(v[i][j]);
@@ -302,7 +301,7 @@ namespace etl {
     ocf::vec<T1> vector_cast(const ocf::vec<T2> &input) noexcept
     {
         ocf::vec<T1> result;
-        for(size_t i = 0; i < input.size(); i++)
+        for(iter_less(i, input.size()))
             result.push_back(static_cast<T1>(input[i]));
         return result;
     }
@@ -326,7 +325,7 @@ namespace etl {
     ocf::vec<ocf::vec<T1>> vector_cast(const ocf::vec<ocf::vec<T2>> &input) noexcept
     {
         ocf::vec<ocf::vec<T1>> result;
-        for(size_t i = 0; i < input.size(); i++)
+        for(iter_less(i, input.size()))
             result.push_back(vector_cast<T1, T2>(input[i]));
         return result;
     }
@@ -349,7 +348,7 @@ namespace etl {
     ocf::vec<ocf::vec<ocf::vec<T1>>> vector_cast(const ocf::vec<ocf::vec<ocf::vec<T2>>> &input) noexcept
     {
         ocf::vec<ocf::vec<ocf::vec<T1>>> result;
-        for(size_t i = 0; i < input.size(); i++)
+        for(iter_less(i, input.size()))
             result.push_back(vector_cast<T1, T2>(input[i]));
         return result;
     }
@@ -373,7 +372,7 @@ namespace etl {
             return size_t();
         if(end == 0 || end > input.length())
             end = input.length();
-        for(size_t i = start; i < end; i++)
+        for(iter_in_range(i, start, end, 1))
         {
             if(input[i] == element)
                 return i;
@@ -396,9 +395,9 @@ namespace etl {
     bool exist(const ocf::vec<T> &input, const T &element,
             size_t end = 0, size_t start = 0) noexcept
     {
-        if(end == 0 || end > input.length())
-            end = input.length();
-        for(size_t i = start; i < end; i++)
+        if(end == 0 || end > input.size())
+            end = input.size();
+        for(iter_in_range(i, start, end, 1))
         {
             if(input[i] == element)
                 return true;
@@ -437,7 +436,7 @@ namespace etl {
             return input;
         }
         status = 0;
-        for(size_t i = 0; i < input.size(); i++)
+        for(iter_less(i, input.size()))
         {
             if(input[i][i] == 0)
             {
@@ -451,7 +450,7 @@ namespace etl {
                 }
                 std::swap(input[i], input[i + c]);
             }
-            for(size_t j = 0; j < input.size(); j++)
+            for(iter_less(j, input.size()))
             {
                 if(i != j)
                 {
@@ -464,10 +463,10 @@ namespace etl {
         if(status == 1)
         {
             status = 3;
-            for(size_t i = 0; i < input.size(); i++)
+            for(iter_less(i, input.size()))
             {
                 double sum = 0;
-                for(size_t j = 0; j < input.size(); j++)
+                for(iter_less(j, input.size()))
                     sum += input[i][j];
                 if(sum == input[i][input.size()])
                     status = 2;
@@ -485,7 +484,7 @@ namespace etl {
     const ocf::str& new_lines(size_t input = 1) noexcept
     {
         ocf::str result;
-        for(size_t i = 0; i < input; i++)
+        for(iter_less(i, input))
             result += '\n';
         return result;
     }
@@ -499,7 +498,7 @@ namespace etl {
     const ocf::str& Tabs(size_t input = 1) noexcept
     {
         ocf::str result;
-        for(size_t i = 0; i < input; i++)
+        for(iter_less(i, input))
             result += '\t';
         return result;
     }
@@ -520,8 +519,7 @@ namespace etl {
      */
     size_t last_index(const ocf::str &input) noexcept
     {
-        return input.empty() ? 0 : 
-        input.size() - 1;
+        return input.empty() ? 0 : input.size() - 1;
     }
 
     /**
@@ -540,8 +538,7 @@ namespace etl {
      */
     char last_element(const ocf::str &input) noexcept
     {
-        return input.empty() ? '\0' : 
-        input[last_index(input)];
+        return input.empty() ? '\0' : input[last_index(input)];
     }
 
     /**
@@ -565,7 +562,7 @@ namespace etl {
             return input;
         }
         ocf::str result;
-        for(size_t i = 0; i < input.size(); i++)
+        for(iter_less(i, input.size()))
         {
             if(i != index)
                 result += input[i];
@@ -658,7 +655,7 @@ namespace etl {
         if(start > end) return input;
         if(start == end) return ocf::str("");
         ocf::str result;
-        for(size_t i = start; i <= end; i++)
+        for(iter_in_range(i, start, end, 1))
             result += input[i];
         return result;
     }
@@ -722,8 +719,8 @@ namespace etl {
         if(input.empty())
             return input;
         ocf::str result;
-        for(size_t i = last_index(input); i >= 0; i--)
-            result += input[i];
+        for(iter_high(i, input.length()))
+            result += input[i - 1];
         return result;
     }
 
@@ -753,7 +750,7 @@ namespace etl {
         if(index >= input.size())
             return input;
         ocf::str result;
-        for(size_t i = 0; i < input.size(); i++)
+        for(iter_less(i, input.size()))
         {
             if(i == index)
             {
@@ -796,7 +793,7 @@ namespace etl {
         if(first == second)
             throw std::invalid_argument("can not swap in the same index for first and second");
         ocf::str result;
-        for(size_t i = 0; i < s.size(); i++)
+        for(iter_less(i, s.length()))
         {
             if(i == first)
                 result += s[second];
@@ -996,7 +993,7 @@ namespace etl {
             return {};
         ocf::vec<ocf::str> result;
         ocf::str temp;
-        for(size_t i = 0; i < s.size(); i++)
+        for(iter_less(i, s.length()))
         {
             if(s[i] == c || i == s.size() - 1)
             {
@@ -1023,7 +1020,7 @@ namespace etl {
     {
         if(end == 0)
             end = s.length();
-        for(size_t i = start; i < end; i++)
+        for(iter_in_range(i, start, end, 1))
         {
             if(s[i] == c)
                 return true;
@@ -1053,7 +1050,8 @@ namespace etl {
             il = input1.length();
         }
         bool seq = bool();
-        for(size_t i = 0, j = 0; i < ll; i++)
+        size_t j = 0;
+        for(iter_less(i, ll))
         {
             if(seq && input1[i] == input2[j])
             {
@@ -1102,7 +1100,8 @@ namespace etl {
         }
         std::pair<size_t, size_t> result;
         bool sequence = bool();
-        for(size_t i = 0, j = 0; i < ll; i++)
+        size_t j = 0;
+        for(iter_less(i, ll))
         {
             if(input1[i] == input2[j] && sequence)
             {
@@ -1145,7 +1144,7 @@ namespace etl {
         ocf::vec<size_t> result;
         if(end == 0)
             end = s.length();
-        for(size_t i = start; i < end; i++)
+        for(iter_in_range(i, start, end, 1))
         {
             if(c == s[i])
                 result.push_back(i);
@@ -1169,7 +1168,7 @@ namespace etl {
             return 0;
         if(end == 0)
             end = s.length();
-        for(size_t i = start; i < end; i++)
+        for(iter_in_range(i, start, end, 1))
         {
             if(s[i] == c)
                 return i;
@@ -1209,7 +1208,7 @@ namespace etl {
             return s;
         ocf::vec<ocf::str> vs = split(s);
         ocf::str result;
-        for(size_t i = 0; i < vs.size(); i++)
+        for(iter_less(i, vs.size()))
         {
             result += standard_word(vs[i]);
             if(i != vs.size() - 1)

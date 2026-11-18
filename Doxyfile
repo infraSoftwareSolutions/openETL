@@ -1,0 +1,28 @@
+PROJECT_NAME           = openETL
+PROJECT_BRIEF          = Header-only C++ utility library
+OUTPUT_DIRECTORY       = output/doxygen
+INPUT                  = include/etl.hpp include/etl documentation/doxygen-mainpage.md
+FILE_PATTERNS          = *.hpp *.md
+RECURSIVE              = YES
+EXCLUDE                =
+EXCLUDE_PATTERNS       =
+INPUT_ENCODING         = UTF-8
+
+MARKDOWN_SUPPORT       = YES
+USE_MDFILE_AS_MAINPAGE = documentation/doxygen-mainpage.md
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+JAVADOC_AUTOBRIEF       = YES
+FULL_PATH_NAMES        = NO
+SORT_MEMBER_DOCS       = YES
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_AS_ERROR          = NO
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+GENERATE_TREEVIEW      = YES

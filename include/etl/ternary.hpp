@@ -10,7 +10,7 @@
  * @author Ali Lafi
  */
 
-#include "cfrost/structure.h"
+#include "cformat/structure.h"
 
 #pragma once
 #ifndef ETL___TERNARY_HPP

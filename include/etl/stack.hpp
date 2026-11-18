@@ -1,6 +1,5 @@
 #include <algorithm>
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
+#include "cformat/structure.h"
 
 #pragma once
 #ifndef ETL___STACK_HPP
@@ -94,7 +93,7 @@ namespace etl
         }
 
         void sort(const bool& decreasing_order) {
-            ocf::vec<T> temp;
+            std::vector<T> temp;
             while(!empty()) {
                 T stackTop;
                 this.pop(stackTop);
@@ -112,8 +111,8 @@ namespace etl
             }
         }
 
-        ocf::vec<T> to_vec() {
-            ocf::vec<T> result;
+        std::vector<T> to_vec() {
+            std::vector<T> result;
             node* temp = current;
             while(temp != nullptr) {
                 result.push_back(temp->item);

@@ -17,8 +17,8 @@
 // local headers
 #include "io.hpp"
 #include "benchmark.hpp"
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
+#include "cformat/structure.h"
+#include "cformat/types.h"
 
 #pragma once
 #ifndef ETL___WARNING_HPP
@@ -67,7 +67,7 @@ namespace etl {
         warning(const warning& other) noexcept {
             name = other.name;
             description = other.description;
-            warningLocation = std::source_location::current();
+            warningLocation = other.warningLocation;
             event = other.event;
         }
 
@@ -197,6 +197,11 @@ namespace etl {
         os << w.get();
         os << "Time: " << w.get_time() << " ms.\n";
         return os;
+    }
+
+    void exit(const warning& w) noexcept {
+        std::cerr << w;
+        std::exit(EXIT_FAILURE);
     }
 
     namespace Warning {

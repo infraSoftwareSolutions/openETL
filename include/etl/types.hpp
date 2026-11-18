@@ -14,9 +14,7 @@
  * file defines the actual logic for the functions declared in CXXType.hpp, including specializations for common types and the boolean_msg() function.
  */
 
-#include "error.hpp"
-#include "warning.hpp"
-#include "cfrost/types.h"
+#include "cformat/types.h"
 
 #pragma once
 #ifndef ETL___TYPE_HPP
@@ -39,25 +37,46 @@ namespace etl {
     template <>
     inline ocf::str type<char>() noexcept { return "char"; }
 
+    template <>
+    inline ocf::str type<unsigned char>() noexcept { return "unsigned char"; }
+
+    template <>
+    inline ocf::str type<ocf::byte>() noexcept { return "byte"; }
+
+    template <>
+    inline ocf::str type<ocf::ubyte>() noexcept { return "ubyte"; }
+
     /// @brief Specializations for common types.
     /// @return The name of the type as a string.
     template <>
     inline ocf::str type<short>() noexcept { return "short"; }
+
+    template <>
+    inline ocf::str type<unsigned short>() noexcept { return "unsigned short"; }
 
     /// @brief Specializations for common types.
     /// @return The name of the type as a string.
     template <>
     inline ocf::str type<int>() noexcept { return "int"; }
 
+    template <>
+    inline ocf::str type<unsigned int>() noexcept { return "unsigned int"; }
+
     /// @brief Specializations for common types.
     /// @return The name of the type as a string.
     template <>
     inline ocf::str type<long>() noexcept { return "long"; }
 
+    template <>
+    inline ocf::str type<unsigned long>() noexcept { return "unsigned long"; }
+
     /// @brief Specializations for common types.
     /// @return The name of the type as a string.
     template <>
     inline ocf::str type<long long>() noexcept { return "long long"; }
+
+    template <>
+    inline ocf::str type<unsigned long long>() noexcept { return "unsigned long long"; }
 
     /// @brief Specializations for common types.
     /// @return The name of the type as a string.
@@ -79,67 +98,6 @@ namespace etl {
     template <>
     inline ocf::str type<ocf::str>() noexcept { return "str"; }
 
-    /// @brief function to get type name from variable.
-    /// @tparam T the type of the input.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <typename T>
-    inline ocf::str type(const T &input) noexcept { return "unkown"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<bool>(const bool &input) noexcept { return "bool"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<char>(const char &input) noexcept { return "char"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<short>(const short &input) noexcept { return "short"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<int>(const int &input) noexcept { return "int"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<long>(const long &input) noexcept { return "long"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<float>(const float &input) noexcept { return "float"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<double>(const double &input) noexcept { return "double"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<long double>(const long double &input) noexcept { return "long double"; }
-
-    /// @brief Specializations for common types.
-    /// @param input The input variable.
-    /// @return The name of the type as a string.
-    template <>
-    inline ocf::str type<ocf::str>(const ocf::str &input) noexcept { return "std: string"; }
-
     /// @brief Type checking functions.
     /// @tparam T the type to check.
     /// @return true if T matches the checked type, false otherwise.
@@ -149,19 +107,7 @@ namespace etl {
     /// @brief Specialization for bool type.
     /// @return true since T is bool.
     template <>
-    constexpr bool is_bool<bool>() noexcept { return true; }
-
-    /// @brief Type checking functions.
-    /// @tparam T the type to check.
-    /// @return true if T matches the checked type, false otherwise.
-    template <typename T>
-    constexpr bool is_bool(const T &input) noexcept { return false; }
-
-    /// @brief Specialization for bool type.
-    /// @param input The input variable.
-    /// @return true since T is bool.
-    template <>
-    constexpr bool is_bool<bool>(const bool &input) noexcept { return true; }
+    inline constexpr bool is_bool<bool>() noexcept { return true; }
 
     /// @brief Type checking functions.
     /// @tparam T the type to check.
@@ -172,20 +118,7 @@ namespace etl {
     /// @brief specialization for char type.
     /// @return true since T is char.
     template <>
-    constexpr bool is_char<char>() noexcept { return true; }
-
-    /// @brief Type checking functions.
-    /// @param input The input variable.
-    /// @tparam T the type to check.
-    /// @return true if T matches the checked type, false otherwise.
-    template <typename T>
-    constexpr bool is_char(const T &input) noexcept { return false; }
-
-    /// @brief specialization for char type.
-    /// @param input The input variable.
-    /// @return true since T is char.
-    template <>
-    constexpr bool is_char<char>(const char &input) noexcept { return true; }
+    inline constexpr bool is_char<char>() noexcept { return true; }
 
     /// @brief Type checking functions.
     /// @tparam T the type to check.
@@ -196,20 +129,7 @@ namespace etl {
     /// @brief specialization for short type.
     /// @return true since T is short.
     template <>
-    constexpr bool is_short<short>() noexcept { return true; }
-
-    /// @brief Type checking functions.
-    /// @param input The input variable.
-    /// @tparam T the type to check.
-    /// @return true if T matches the checked type, false otherwise.
-    template <typename T>
-    constexpr bool is_short(const T &input) noexcept { return false; }
-
-    /// @brief specialization for short type.
-    /// @param input The input variable.
-    /// @return true since T is short.
-    template <>
-    constexpr bool is_short<short>(const short &input) noexcept { return true; }
+    inline constexpr bool is_short<short>() noexcept { return true; }
 
     /// @brief Type checking functions.
     /// @tparam T type of to check.
@@ -220,20 +140,7 @@ namespace etl {
     /// @brief specialization for int type.
     /// @return true since T is int.
     template <>
-    constexpr bool is_int<int>() noexcept { return true; }
-
-    /// @brief Type checking functions.
-    /// @tparam T type of to check.
-    /// @param input The input variable.
-    /// @return the true if T matches the checked type, false otherwise.
-    template <typename T>
-    constexpr bool is_int(const T &input) noexcept { return false; }
-
-    /// @brief specialization for int type.
-    /// @param input The input variable.
-    /// @return true since T is int.
-    template <>
-    constexpr bool is_int<int>(const int &input) noexcept { return true; }
+    inline constexpr bool is_int<int>() noexcept { return true; }
 
     /// @brief Type checking functions.
     /// @tparam T type of to check.
@@ -244,20 +151,7 @@ namespace etl {
     /// @brief specialization for float type.
     /// @return true since T is float.
     template <>
-    constexpr bool is_float<float>() noexcept { return true; }
-
-    /// @brief Type checking functions.
-    /// @tparam T type of to check.
-    /// @param input The input variable.
-    /// @return the true if T matches the checked type, false otherwise.
-    template <typename T>
-    constexpr bool is_float(const T &input) noexcept { return false; }
-
-    /// @brief Specialization for float type.
-    /// @param input the input variable.
-    /// @return true since T is float.
-    template <>
-    constexpr bool is_float<float>(const float &input) noexcept { return true; }
+    inline constexpr bool is_float<float>() noexcept { return true; }
 
     /// @brief Type checking functions.
     /// @tparam T type of to check.
@@ -268,20 +162,7 @@ namespace etl {
     /// @brief Specialization for double type.
     /// @return true since T is double.
     template <>
-    constexpr bool is_double<double>() noexcept { return true; }
-
-    /// @brief Type checking functions.
-    /// @tparam T type of to check.
-    /// @param input The input variable.
-    /// @return the true if T matches the checked type, false otherwise.
-    template <typename T>
-    constexpr bool is_double(const T &input) noexcept { return false; }
-
-    /// @brief Specialization for double type.
-    /// @param input The input variable.
-    /// @return true since T is double.
-    template <>
-    constexpr bool is_double<double>(const double &input) noexcept { return true; }
+    inline constexpr bool is_double<double>() noexcept { return true; }
 
     /// @brief Type checking functions.
     /// @tparam T type of to check.
@@ -292,20 +173,7 @@ namespace etl {
     /// @brief Specialization for inline ocf::str type.
     /// @return true since T is str.
     template <>
-    bool is_string<ocf::str>() noexcept { return true; }
-
-    /// @brief Type checking functions.
-    /// @tparam T type of to check.
-    /// @param input The input variable.
-    /// @return the true if T matches the checked type, false otherwise.
-    template <typename T>
-    constexpr bool is_string(const T &input) noexcept { return false; }
-
-    /// @brief Specialization for inline ocf::str type.
-    /// @param input The input variable.
-    /// @return true since T is str.
-    template <>
-    bool is_string<ocf::str>(const ocf::str &input) noexcept { return true; }
+    inline constexpr bool is_string<ocf::str>() noexcept { return true; }
 
     /// @brief Type checking functions.
     /// @tparam T type of to check.
@@ -316,86 +184,58 @@ namespace etl {
     /// @brief Specializations for numeric types.
     /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<short>() noexcept { return true; }
+    inline constexpr bool is_numeric<short>() noexcept { return true; }
 
     /// @brief Specializations for numeric types.
     /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<int>() noexcept { return true; }
+    inline constexpr bool is_numeric<int>() noexcept { return true; }
 
     /// @brief Specializations for numeric types.
     /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<long>() noexcept { return true; }
+    inline constexpr bool is_numeric<long>() noexcept { return true; }
 
     /// @brief Specializations for numeric types.
     /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<long long>() noexcept { return true; }
+    inline constexpr bool is_numeric<long long>() noexcept { return true; }
 
     /// @brief Specializations for numeric types.
     /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<float>() noexcept { return true; }
+    inline constexpr bool is_numeric<float>() noexcept { return true; }
 
     /// @brief Specializations for numeric types.
     /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<double>() noexcept { return true; }
+    inline constexpr bool is_numeric<double>() noexcept { return true; }
 
     /// @brief  Specializations for numeric types.
     /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<long double>() noexcept { return true; }
+    inline constexpr bool is_numeric<long double>() noexcept { return true; }
 
-    /// @brief Type checking functions.
-    /// @tparam T type of to check.
-    /// @param input The input variable.
-    /// @return the true if T matches the checked type, false otherwise.
     template <typename T>
-    constexpr bool is_numeric(const T &input) noexcept { return false; }
+    inline constexpr bool is_unsigned() noexcept { return false; }
 
-    /// @brief Specializations for numeric types.
-    /// @param input The input variable.
-    /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<short>(const short &input) noexcept { return true; }
+    inline constexpr bool is_unsigned<unsigned char>() noexcept { return true; }
 
-    /// @brief Specializations for numeric types.
-    /// @param input The input variable.
-    /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<int>(const int &input) noexcept { return true; }
+    inline constexpr bool is_unsigned<unsigned short>() noexcept { return true; }
 
-    /// @brief Specializations for numeric types.
-    /// @param input The input variable.
-    /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<long>(const long &input) noexcept { return true; }
+    inline constexpr bool is_unsigned<unsigned int>() noexcept { return true; }
 
-    /// @brief Specializations for numeric types.
-    /// @param input The input variable.
-    /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<long long>(const long long &input) noexcept { return true; }
+    inline constexpr bool is_unsigned<unsigned long>() noexcept { return true; }
 
-    /// @brief Specializations for numeric types.
-    /// @param input The input variable.
-    /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<float>(const float &input) noexcept { return true; }
+    inline constexpr bool is_unsigned<unsigned long long>() noexcept { return true; }
 
-    /// @brief Specializations for numeric types.
-    /// @param input The input variable.
-    /// @return true since T is a numeric type.
     template <>
-    constexpr bool is_numeric<double>(const double &input) noexcept { return true; }
-
-    /// @brief Specializations for numeric types.
-    /// @param input The input variable.
-    /// @return true since T is a numeric type.
-    template <>
-    constexpr bool is_numeric<long double>(const long double &input) noexcept { return true; }
+    inline constexpr bool is_unsigned<ocf::ubyte>() noexcept { return true; }
 
     /// @brief Converts a boolean value to its string representation.
     /// @param value The boolean value to convert.

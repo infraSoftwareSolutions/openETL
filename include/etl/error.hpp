@@ -32,14 +32,12 @@
  */
 
 
-#include <string>
 #include <iostream>
 #include <cstdlib>
 #include <source_location>
 
 #include "benchmark.hpp"
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
+#include "cformat/types.h"
 
 #pragma once
 #ifndef ETL___ERROR_HPP
@@ -183,6 +181,11 @@ namespace etl {
         }
         os << ocf::str("Error Time: " + std::to_string(e.event) + " ms.\n");
         return os;
+    }
+
+    void exit(const error& e) noexcept {
+        std::cerr << e;
+        std::exit(EXIT_FAILURE);
     }
 
     /**

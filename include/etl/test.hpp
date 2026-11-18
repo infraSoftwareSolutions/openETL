@@ -50,7 +50,7 @@
  * - No-throw guarantee (noexcept)
  * - Support for parameterized tests with names and descriptions
  * - Automatic test counting and categorization
- * - Works with STL containers (ocf::vec)
+ * - Works with STL containers (std::vector)
  * - Compile-time evaluation support (constexpr)
  * 
  * @usage_example
@@ -65,8 +65,6 @@
 #include <string>
 #include <memory>
 #include "io.hpp"
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
 
 #pragma once
 #ifndef ETL___TEST_HPP
@@ -82,8 +80,8 @@ namespace etl {
     class TEST
     {
     private:
-        ocf::str name;
-        ocf::str description;
+        std::string name;
+        std::string description;
         bool result;
     public:
         /**
@@ -106,7 +104,7 @@ namespace etl {
          * @brief Constructor with test name only.
          * @param name The name/identifier of the test
          */
-        TEST(const ocf::str& Name) noexcept : 
+        TEST(const std::string& Name) noexcept : 
         name(Name), 
         description("no description"), 
         result(false) {}
@@ -116,7 +114,7 @@ namespace etl {
          * @param name The name/identifier of the test
          * @param description The detailed description of the test
          */
-        TEST(const ocf::str& name, const ocf::str& description) noexcept {
+        TEST(const std::string& name, const std::string& description) noexcept {
             this->name = name;
             this->description = description;
             result = false;
@@ -128,8 +126,8 @@ namespace etl {
          * @param description The detailed description of the test
          * @param result The boolean result of the test
          */
-        TEST(const ocf::str& Name,
-            const ocf::str& Description,
+        TEST(const std::string& Name,
+            const std::string& Description,
             bool Result) noexcept : 
             name(Name),
             description(Description),
@@ -153,7 +151,7 @@ namespace etl {
          * @brief Set the test name.
          * @param name The new test name
          */
-        void set(const ocf::str& name) noexcept {
+        void set(const std::string& name) noexcept {
             this->name = name;
         }
 
@@ -170,7 +168,7 @@ namespace etl {
          * @param isName If true, returns the name; if false, returns the description
          * @return The requested string property
          */
-        ocf::str get(bool isName) noexcept {
+        std::string get(bool isName) noexcept {
             return isName ? name : description;
         }
 
@@ -343,7 +341,7 @@ namespace etl {
          * @param name The test name to look up
          * @return The test result if name matches, bool() otherwise with error message
          */
-        bool operator[](const ocf::str& name) noexcept {
+        bool operator[](const std::string& name) noexcept {
             if(name == this->name) return result;
             std::cerr << "Name Error: Unknown name." << std::endl;
             return bool();
@@ -379,7 +377,7 @@ namespace etl {
          * @return const char* A string message representing the test result.
          * @note This function is noexcept and guarantees not to throw exceptions.
          */
-        const ocf::str test_message(bool test_result) noexcept
+        const std::string test_message(bool test_result) noexcept
         {
             return test_result ? 
             "Success" : "Failed";
@@ -414,8 +412,8 @@ namespace etl {
         TEST equal(
             const T& realvalue,
             const T& expvalue,
-            const ocf::str& name,
-            const ocf::str& description) noexcept
+            const std::string& name,
+            const std::string& description) noexcept
         {
             index.basic++;
             return !(name.empty()) && !(description.empty()) ?
@@ -430,7 +428,7 @@ namespace etl {
 
         template <typename T>
         TEST range(T realvalue, T uplimit, T downlimit,
-            const ocf::str& name, const ocf::str& description) noexcept {
+            const std::string& name, const std::string& description) noexcept {
             return name.empty() && description.empty() ? 
             TEST{range(realvalue, uplimit, downlimit)} : 
             TEST{name, description, range(realvalue, uplimit, downlimit)};
@@ -445,7 +443,7 @@ namespace etl {
          * @note Increments the vector test counter
          */
         template <typename T>
-        bool vector(const ocf::vec<T>& real_v, const ocf::vec<T>& expected_v) noexcept
+        bool vector(const std::vector<T>& real_v, const std::vector<T>& expected_v) noexcept
         {
             index.vector++;
             if (real_v.size() != expected_v.size()) {
@@ -470,10 +468,10 @@ namespace etl {
          */
         template <typename T>
         TEST vector(
-            const ocf::vec<T>& real_v,
-            const ocf::vec<T>& expected_v,
-            const ocf::str& name,
-            const ocf::str& description) noexcept
+            const std::vector<T>& real_v,
+            const std::vector<T>& expected_v,
+            const std::string& name,
+            const std::string& description) noexcept
         {
             index.vector++;
             if (real_v.size() != expected_v.size()) {
@@ -499,8 +497,8 @@ namespace etl {
          * @note Increments the vector test counter
          */
         template <typename T>
-        bool vector_2d(const ocf::vec<ocf::vec<T>>& real_2dv,
-                    const ocf::vec<ocf::vec<T>>& expected_2dv) noexcept
+        bool vector_2d(const std::vector<std::vector<T>>& real_2dv,
+                    const std::vector<std::vector<T>>& expected_2dv) noexcept
         {
             index.vector++;
             if (real_2dv.size() != expected_2dv.size()) {
@@ -530,10 +528,10 @@ namespace etl {
          * @note Increments the vector test counter
          */
         template <typename T>
-        TEST vector_2d(const ocf::vec<ocf::vec<T>>& real_2dv,
-                    const ocf::vec<ocf::vec<T>>& expected_2dv,
-                    const ocf::str& name,
-                    const ocf::str& description) noexcept
+        TEST vector_2d(const std::vector<std::vector<T>>& real_2dv,
+                    const std::vector<std::vector<T>>& expected_2dv,
+                    const std::string& name,
+                    const std::string& description) noexcept
         {
             index.vector++;
             if (real_2dv.size() != expected_2dv.size()) {
@@ -565,8 +563,8 @@ namespace etl {
          * @note Increments the vector test counter
          */
         template <typename T>
-        bool vector_3d(const ocf::vec<ocf::vec<ocf::vec<T>>>& real_3dv,
-                    const ocf::vec<ocf::vec<ocf::vec<T>>>& expected_3dv) noexcept
+        bool vector_3d(const std::vector<std::vector<std::vector<T>>>& real_3dv,
+                    const std::vector<std::vector<std::vector<T>>>& expected_3dv) noexcept
         {
             index.vector++;
             if (real_3dv.size() != expected_3dv.size()) {
@@ -601,9 +599,9 @@ namespace etl {
          * @note Increments the vector test counter
          */
         template <typename T>
-        TEST vector_3d(const ocf::vec<ocf::vec<ocf::vec<T>>>& real_3dv,
-                    const ocf::vec<ocf::vec<ocf::vec<T>>>& expected_3dv,
-                    const ocf::str& name, const ocf::str& description) noexcept
+        TEST vector_3d(const std::vector<std::vector<std::vector<T>>>& real_3dv,
+                    const std::vector<std::vector<std::vector<T>>>& expected_3dv,
+                    const std::string& name, const std::string& description) noexcept
         {
             if (real_3dv.size() != expected_3dv.size()) {
                 return !(name.empty()) && !(description.empty()) ? 
@@ -658,8 +656,8 @@ namespace etl {
          */
         template <typename T>
         TEST function(std::function<T()> fx, T expected,
-                    const ocf::str& name,
-                    const ocf::str& description) noexcept
+                    const std::string& name,
+                    const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -696,8 +694,8 @@ namespace etl {
          */
         template <typename T>
         TEST function(std::function<T(T)> fx, T value, T expected,
-                    const ocf::str& name,
-                    const ocf::str& description) noexcept
+                    const std::string& name,
+                    const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -736,7 +734,7 @@ namespace etl {
          */
         template <typename T1, typename T2>
         TEST function(std::function<T1(T2)> fx, T2 value, T1 expected,
-                    const ocf::str& name, const ocf::str& description) noexcept
+                    const std::string& name, const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -779,8 +777,8 @@ namespace etl {
          */
         template <typename T1, typename T2, typename T3>
         TEST function(std::function<T1(T2, T3)> fx, T1 expected,
-                    T2 value1, T3 value2, const ocf::str& name,
-                    const ocf::str& description) noexcept
+                    T2 value1, T3 value2, const std::string& name,
+                    const std::string& description) noexcept
         {
             index.function++;
             return !(name.empty()) && !(description.empty()) ? 
@@ -824,12 +822,12 @@ namespace etl {
         class stream
         {
         private:
-            ocf::vec<TEST> container;
+            std::vector<TEST> container;
             bool result_ts = true;
             size_t total_tests = 0;
             size_t passed_tests = 0;
             size_t failed_tests = 0;
-            ocf::vec<ocf::str> error_log;
+            std::vector<std::string> error_log;
 
         public:
             stream() = default;
@@ -872,7 +870,7 @@ namespace etl {
                     }
                     catch (const std::invalid_argument &e)
                     {
-                        ocf::str err_msg = "invalid argument: " + ocf::str(e.what());
+                        std::string err_msg = "invalid argument: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -880,7 +878,7 @@ namespace etl {
                     }
                     catch (const std::length_error &e)
                     {
-                        ocf::str err_msg = "length error: " + ocf::str(e.what());
+                        std::string err_msg = "length error: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -888,7 +886,7 @@ namespace etl {
                     }
                     catch (const std::exception &e)
                     {
-                        ocf::str err_msg = "Exception: " + ocf::str(e.what());
+                        std::string err_msg = "Exception: " + std::string(e.what());
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -896,7 +894,7 @@ namespace etl {
                     }
                     catch (const char *msg)
                     {
-                        ocf::str err_msg = "Error: " + ocf::str(msg);
+                        std::string err_msg = "Error: " + std::string(msg);
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -904,7 +902,7 @@ namespace etl {
                     }
                     catch (...)
                     {
-                        ocf::str err_msg = "Unknown error occurred";
+                        std::string err_msg = "Unknown error occurred";
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -936,7 +934,7 @@ namespace etl {
                     }
                     catch (const std::invalid_argument &e)
                     {
-                        ocf::str err_msg = "invalid argument: " + ocf::str(e.what());
+                        std::string err_msg = "invalid argument: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -944,7 +942,7 @@ namespace etl {
                     }
                     catch (const std::length_error &e)
                     {
-                        ocf::str err_msg = "length error: " + ocf::str(e.what());
+                        std::string err_msg = "length error: " + std::string(e.what());
                         std::cerr << err_msg << std::endl;
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -952,7 +950,7 @@ namespace etl {
                     }
                     catch (const std::exception &e)
                     {
-                        ocf::str err_msg = "Exception: " + ocf::str(e.what());
+                        std::string err_msg = "Exception: " + std::string(e.what());
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -960,7 +958,7 @@ namespace etl {
                     }
                     catch (const char *msg)
                     {
-                        ocf::str err_msg = "Error: " + ocf::str(msg);
+                        std::string err_msg = "Error: " + std::string(msg);
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -968,7 +966,7 @@ namespace etl {
                     }
                     catch (...)
                     {
-                        ocf::str err_msg = "Unknown error occurred";
+                        std::string err_msg = "Unknown error occurred";
                         std::cerr << err_msg << "\n";
                         error_log.push_back(err_msg);
                         test_result = false;
@@ -1051,7 +1049,7 @@ namespace etl {
              * @brief Retrieves the error log
              * @return Vector containing all error messages
              */
-            const ocf::vec<ocf::str> &get_error_log() const noexcept { return error_log; }
+            const std::vector<std::string> &get_error_log() const noexcept { return error_log; }
 
             /**
              * @brief Clears all test statistics and error log
@@ -1066,8 +1064,8 @@ namespace etl {
                 result_ts = true;
             }
 
-            ocf::vec<size_t> findIndex(bool isFailed) noexcept {
-                ocf::vec<size_t> result;
+            std::vector<size_t> findIndex(bool isFailed) noexcept {
+                std::vector<size_t> result;
                 for(size_t i = 0; i < container.size(); i++) {
                     if(!isFailed && container[i].get()) {
                         result.push_back(i);

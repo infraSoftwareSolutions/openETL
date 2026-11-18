@@ -1,6 +1,7 @@
 #include <iostream>
-#include "cfrost/types.h"
-#include "cfrost/structure.h"
+#include <initializer_list>
+#include "cformat/types.h"
+#include "cformat/structure.h"
 
 #pragma once
 #ifndef ETL___QUEUE_HPP
@@ -42,9 +43,9 @@ namespace etl
             size++;
         }
 
-        queue(ocf::initList<T> list)
+        queue(std::initializer_list<T> list)
         {
-            for (T element : list)
+            for (const T &element : list)
                 enque(element);
         }
 
@@ -135,14 +136,14 @@ namespace etl
             size = 0;
         }
 
-        void operator=(const ocf::vec<T> &elements)
+        void operator=(const std::vector<T> &elements)
         {
             clear();
             for (const T &element : elements)
                 enque(element);
         }
 
-        void operator=(const ocf::str &s)
+        void operator=(const std::string &s)
         {
             clear();
             for (const char &c : s)
@@ -151,13 +152,13 @@ namespace etl
 
         inline void operator<<(T element) { enque(element); }
 
-        inline void operator<<(ocf::vec<T> &elements)
+        inline void operator<<(std::vector<T> &elements)
         {
             enque(elements[elements.size() - 1]);
             elements.pop_back();
         }
 
-        inline void operator<<(ocf::str &s)
+        inline void operator<<(std::string &s)
         {
             enque(s[s.size() - 1]);
             s.pop_back();
@@ -169,13 +170,13 @@ namespace etl
             deque();
         }
 
-        inline void operator>>(ocf::vec<T> &elements)
+        inline void operator>>(std::vector<T> &elements)
         {
             elements.push_back(get_front());
             deque();
         }
 
-        inline void operator>>(ocf::str &s)
+        inline void operator>>(std::string &s)
         {
             s += static_cast<char>(get_front());
             deque();
@@ -204,7 +205,7 @@ namespace etl
             length = 0;
         }
 
-        Queue(ocf::initList<T> &vec) noexcept : arr(vec) {};
+        Queue(std::initializer_list<T> list) noexcept : arr(list) {};
 
         inline constexpr bool empty() const noexcept { return length == 0; }
 
@@ -293,7 +294,7 @@ namespace etl
             return -1;
         }
 
-        void operator=(const ocf::vec<T> &vec)
+        void operator=(const std::vector<T> &vec)
         {
             if (!vec.empty())
             {

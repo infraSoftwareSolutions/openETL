@@ -38,8 +38,8 @@
 #include <memory>
 #include <algorithm>
 
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
+#include "cformat/structure.h"
+#include "cformat/types.h"
 
 #pragma once
 #ifndef ETL___BENCHMARK_HPP

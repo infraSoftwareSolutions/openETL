@@ -1,8 +1,6 @@
-#include <cstddef>
 #include <stdexcept>
-#include <string>
-#include <vector>
-#include "cfrost/structure.h"
+#include "cformat/types.h"
+#include "cformat/structure.h"
 
 #pragma once
 #ifndef ETL___INDEX_HPP
@@ -129,7 +127,7 @@ namespace etl
          * @param context The string being checked.
          * @return true if the index is within the string bounds, false otherwise.
          */
-        bool validFor(const std::string &context) const noexcept
+        bool validFor(const ocf::str &context) const noexcept
         {
             if (context.length() < ind)
                 return false;
@@ -144,7 +142,7 @@ namespace etl
          * @return true if the index is within the container bounds, false otherwise.
          */
         template <typename Y>
-        bool validFor(const std::vector<Y> &context) const noexcept
+        bool validFor(const ocf::vec<Y> &context) const noexcept
         {
             if (context.size() < ind)
                 return false;

@@ -29,17 +29,11 @@
  */
 
 #include <iostream>
-#include <string>
-#include <vector>
-#include <limits>
 #include <algorithm>
-#include <functional>
-#include <type_traits>
-#include <climits>
 #include <stdexcept>
 
-#include "cfrost/structure.h"
-#include "cfrost/types.h"
+#include "cformat/structure.h"
+#include "cformat/types.h"
 
 
 #pragma once
@@ -576,7 +570,7 @@ namespace etl {
         /**
          * @brief Prints characters of a string individually starting from a given
          * index.
-         * @param ocf::str The string to print.
+         * @param input ocf::str The string to print.
          * @param index Starting index (default = 0). If out of range, starts from 0.
          */
         inline void print_char_str(const ocf::str &input, size_t index) noexcept

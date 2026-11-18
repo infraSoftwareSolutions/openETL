@@ -1,6 +1,5 @@
-#include <unordered_map>
-#include <string>
 #include <iostream>
+#include "cformat/types.h"
 #include "hash.hpp"
  
 #pragma once
@@ -13,7 +12,7 @@ namespace etl {
     class key_map {
         private:
         ocf::str keyWord;
-        std::unordered_map<ocf::str, ocf::str> elements;
+        ocf::hash_map<ocf::str, ocf::str> elements;
         
         public:
         key_map() = default;

@@ -19,8 +19,6 @@
 
 #include <vector>
 #include <random>
-#include "cfrost/types.h"
-
 
 #pragma once
 #ifndef ETL___RANDOM_HPP
@@ -52,9 +50,9 @@ namespace etl {
     /// @param start The lower bound of the range (inclusive).
     /// @param end The upper bound of the range (inclusive).
     /// @return A vector containing ele_num random integers between start and end (inclusive).
-    ocf::vec<int> GRV(size_t ele_num, int start, int end) noexcept
+    std::vector<int> GRV(size_t ele_num, int start, int end) noexcept
     {
-        ocf::vec<int> result;
+        std::vector<int> result;
         for (size_t i = 0; i < ele_num; i++)
             result.push_back(GRN(start, end));
         return result;
@@ -66,9 +64,9 @@ namespace etl {
     /// @param start The lower bound of the range (inclusive).
     /// @param end The upper bound of the range (inclusive).
     /// @return A 2D vector containing vec_num vectors, each with ele_num random integers between start and end (inclusive).
-    ocf::vec<ocf::vec<int>> GRV(size_t vec_num, size_t ele_num, int start, int end) noexcept
+    std::vector<std::vector<int>> GRV(size_t vec_num, size_t ele_num, int start, int end) noexcept
     {
-        ocf::vec<ocf::vec<int>> result;
+        std::vector<std::vector<int>> result;
         for (size_t i = 0; i < vec_num; i++)
             result.push_back(GRV(ele_num, start, end));
         return result;
@@ -81,9 +79,9 @@ namespace etl {
     /// @param start The lower bound of the range (inclusive).
     /// @param end The upper bound of the range (inclusive).
     /// @return A 3D vector containing vv_num 2D vectors, each with
-    ocf::vec<ocf::vec<ocf::vec<int>>> GRV(size_t vv_num, size_t vec_num, size_t ele_num, int start, int end) noexcept
+    std::vector<std::vector<std::vector<int>>> GRV(size_t vv_num, size_t vec_num, size_t ele_num, int start, int end) noexcept
     {
-        ocf::vec<ocf::vec<ocf::vec<int>>> result;
+        std::vector<std::vector<std::vector<int>>> result;
         for (size_t i = 0; i < vv_num; i++)
             result.push_back(GRV(vec_num, ele_num, start, end));
         return result;
@@ -93,9 +91,9 @@ namespace etl {
     // GRCV: generaterandom char vector
     /// @brief Generates a vector of random printable ASCII characters.
     /// @return A vector containing random characters in the range of printable ASCII characters (32 to 126).
-    ocf::vec<char> GRCV() noexcept {
-        ocf::vec<int> temp = GRV(94, 32, 126);
-        ocf::vec<char> result;
+    std::vector<char> GRCV() noexcept {
+        std::vector<int> temp = GRV(94, 32, 126);
+        std::vector<char> result;
         for(size_t i = 0; i < 94; i++)
             result.push_back(static_cast<char>(temp[i]));
         return result;
@@ -104,8 +102,8 @@ namespace etl {
     // GRC2DV: generate random char 2d vector
     /// @brief Generates a 2D vector of random printable ASCII characters.
     /// @return A 2D vector containing random characters in the range of printable ASCII characters
-    ocf::vec<ocf::vec<char>> GRC2DV() noexcept {
-        ocf::vec<ocf::vec<char>> result;
+    std::vector<std::vector<char>> GRC2DV() noexcept {
+        std::vector<std::vector<char>> result;
         for(size_t i = 0; i < 94; i++)
             result.push_back(GRCV());
         return result;
@@ -114,8 +112,8 @@ namespace etl {
     // GRC3DV: generate random char 3d vector
     /// @brief Generates a 3D vector of random printable ASCII characters.
     /// @return A 3D vector containing random characters in the range of printable ASCII characters
-    ocf::vec<ocf::vec<ocf::vec<char>>> GRC3DV() noexcept {
-        ocf::vec<ocf::vec<ocf::vec<char>>> result;
+    std::vector<std::vector<std::vector<char>>> GRC3DV() noexcept {
+        std::vector<std::vector<std::vector<char>>> result;
         for(size_t i = 0; i < 94; i++)
             result.push_back(GRC2DV());
         return result;

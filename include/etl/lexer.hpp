@@ -1,6 +1,5 @@
 #include "token.hpp"
-#include "function.hpp"
-#include "cfrost/types.h"
+#include "cformat/types.h"
 
 #pragma once
 #ifndef ETL___LEXER_HPP

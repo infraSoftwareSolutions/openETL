@@ -59,6 +59,20 @@ To successfully run and compile the framework along with its automation suite, y
 
 ---
 
+## 📚 API Documentation
+
+The public headers include Doxygen comments. To generate the HTML API reference,
+install [Doxygen](https://www.doxygen.nl/) and run this command from the
+repository root:
+
+```text
+doxygen Doxyfile
+```
+
+The generated reference is available at `output/doxygen/html/index.html`.
+
+---
+
 ## 📜 License
 
 This project is licensed under its respective terms - see the [LICENSE](LICENSE.md) file for details.
